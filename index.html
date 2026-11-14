@@ -15,47 +15,54 @@
 
 <body>
 
-   <!-- 1. Шапка сайту (Header) -->
-   <header class="header">
-      <div class="container header__container">
-         <a href="#" class="logo">
-            DETAILING <span>FAMILY IF</span>
-         </a>
-   
-         <nav class="nav">
-            <ul class="nav__list">
-               <li class="nav__item nav__item--dropdown">
-                  <a href="#services" class="nav__link">
-                     Послуги
-                     <svg class="nav__arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                     </svg>
-                  </a>
-                  <ul class="dropdown__menu">
-                     <li><a href="#wash" class="dropdown__link">3-ох фазна мийка</a></li>
-                     <li><a href="#polishing" class="dropdown__link">Полірування</a></li>
-                     <li><a href="#cleaning" class="dropdown__link">Хімчистка</a></li>
-                     <li><a href="#protection" class="dropdown__link">Захист</a></li>
-                  </ul>
-               </li>
-               <li><a href="#gallery" class="nav__link">Роботи до/після</a></li>
-               <li><a href="#pricing" class="nav__link">Вартість</a></li>
-               <li><a href="#reviews" class="nav__link">Відгуки</a></li>
-               <li><a href="#contacts" class="nav__link">Контакти</a></li>
-            </ul>
-         </nav>
-   
-         <div class="header__contacts">
-            <li>
-            <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б" target="_blank"
-               rel="noopener noreferrer" class="header__city-link"> м. Івано-Франківськ
-            </a>
+<!-- 1. Шапка сайту (Header) -->
+<header class="header">
+   <div class="container header__container">
+      <a href="#" class="logo">
+         <img src="logo.svg" alt="Detailing Family IF">
+      </a>
+
+      <!-- Навігація -->
+      <nav class="nav" id="navMenu">
+         <ul class="nav__list">
+            <li class="nav__item nav__item--dropdown">
+               <a href="#services" class="nav__link">
+                  Послуги
+                  <svg class="nav__arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                     <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+               </a>
+               <ul class="dropdown__menu">
+                  <li><a href="#wash" class="dropdown__link">3-ох фазна мийка</a></li>
+                  <li><a href="#polishing" class="dropdown__link">Полірування</a></li>
+                  <li><a href="#cleaning" class="dropdown__link">Хімчистка</a></li>
+                  <li><a href="#protection" class="dropdown__link">Захист</a></li>
+               </ul>
             </li>
-            <a href="tel:+380756741184" class="btn btn--header">Зателефонувати</a>
-         </div>
-      </div>]
-   </header>
+            <li><a href="#gallery" class="nav__link">Роботи до/після</a></li>
+            <li><a href="#pricing" class="nav__link">Вартість</a></li>
+            <li><a href="#reviews" class="nav__link">Відгуки</a></li>
+            <li><a href="#contacts" class="nav__link">Контакти</a></li>
+         </ul>
+      </nav>
+
+      <div class="header__contacts">
+         <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б" target="_blank"
+            rel="noopener noreferrer" class="header__city-link">
+            📍 м. Івано-Франківськ
+         </a>
+         <a href="tel:+380756741184" class="btn btn--header">Зателефонувати</a>
+
+         <!-- Гамбургер-кнопка для мобільного меню -->
+         <button class="burger" id="burgerBtn" aria-label="Відкрити меню">
+            <span></span>
+            <span></span>
+            <span></span>
+         </button>
+      </div>
+   </div>
+</header>
    
 <!-- 2. Головний екран (Hero Section) -->
 <section class="hero">
@@ -917,6 +924,25 @@
       </div>
    </div>
 </footer>
+
+<script>
+   const burgerBtn = document.getElementById('burgerBtn');
+   const navMenu = document.getElementById('navMenu');
+
+   burgerBtn.addEventListener('click', () => {
+      burgerBtn.classList.toggle('active');
+      navMenu.classList.toggle('active');
+   });
+
+   // Закривати меню при кліку на будь-яке посилання в ньому
+   document.querySelectorAll('.nav__link, .dropdown__link').forEach(link => {
+      link.addEventListener('click', () => {
+         burgerBtn.classList.remove('active');
+         navMenu.classList.remove('active');
+      });
+   });
+</script>
+
 </body>
 
 </html>
