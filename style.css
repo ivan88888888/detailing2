@@ -1376,7 +1376,7 @@ html {
 .footer__socials .social-link:nth-child(1):hover {
    background-color: #d62976;
    border-color: #d62976;
-   color: #d62976;
+   color: #111111;
    box-shadow: 0 6px 18px rgba(225, 48, 108, 0.4);
 }
 
@@ -1642,5 +1642,27 @@ html {
    .btn--header {
       padding: 8px 12px;
       font-size: 0.8rem;
+   }
+}
+
+/* Оптимізація та прискорення скролу для мобільних пристроїв */
+@media (max-width: 900px) {
+
+   /* Вимикаємо важке розмиття фону (бо воно гальмує мобільний процессор при скролі) */
+   .nav,
+   .hero__badge,
+   .gallery-card__badge {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+   }
+
+   /* Робимо фон мобільного меню повністю непрозорим або звичайним напівпрозорим */
+   .nav {
+      background-color: rgba(11, 12, 14, 0.98) !important;
+   }
+
+   /* Увімкнення апаратної інерційної прокрутки для iOS / Android */
+   body {
+      -webkit-overflow-scrolling: touch;
    }
 }
