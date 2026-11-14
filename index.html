@@ -24,10 +24,23 @@
    
          <nav class="nav">
             <ul class="nav__list">
-               <li><a href="#services" class="nav__link">Послуги</a></li>
-               <li><a href="#benefits" class="nav__link">Про нас</a></li>
-               <li><a href="#calculator" class="nav__link">Калькулятор</a></li>
-               <li><a href="#gallery" class="nav__link">Результати</a></li>
+               <li class="nav__item nav__item--dropdown">
+                  <a href="#services" class="nav__link">
+                     Послуги
+                     <svg class="nav__arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                     </svg>
+                  </a>
+                  <ul class="dropdown__menu">
+                     <li><a href="#wash" class="dropdown__link">3-ох фазна мийка</a></li>
+                     <li><a href="#polishing" class="dropdown__link">Полірування</a></li>
+                     <li><a href="#cleaning" class="dropdown__link">Хімчистка</a></li>
+                     <li><a href="#protection" class="dropdown__link">Захист</a></li>
+                  </ul>
+               </li>
+               <li><a href="#gallery" class="nav__link">Роботи до/після</a></li>
+               <li><a href="#pricing" class="nav__link">Вартість</a></li>
                <li><a href="#contacts" class="nav__link">Контакти</a></li>
             </ul>
          </nav>
