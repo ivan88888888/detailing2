@@ -1,3 +1,25 @@
+html,
+body {
+   overflow-x: hidden;
+   width: 100%;
+   max-width: 100%;
+   margin: 0;
+   padding: 0;
+}
+
+html,
+body {
+   overflow-x: hidden;
+   width: 100%;
+   max-width: 100%;
+}
+
+@media (max-width: 900px) {
+   html {
+      scroll-behavior: auto;
+   }
+}
+
 :root {
    --accent: #FF4D00;
    --accent-rgb: 255, 77, 0;
@@ -1713,15 +1735,3 @@ html {
    }
 }
 
-html,
-body {
-   overflow-x: hidden;
-   width: 100%;
-   max-width: 100%;
-}
-
-@media (max-width: 900px) {
-   html {
-      scroll-behavior: auto;
-   }
-}
