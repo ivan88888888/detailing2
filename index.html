@@ -41,192 +41,882 @@
                </li>
                <li><a href="#gallery" class="nav__link">Роботи до/після</a></li>
                <li><a href="#pricing" class="nav__link">Вартість</a></li>
+               <li><a href="#reviews" class="nav__link">Відгуки</a></li>
                <li><a href="#contacts" class="nav__link">Контакти</a></li>
             </ul>
          </nav>
    
          <div class="header__contacts">
-            <span class="header__city">м. Івано-Франківськ</span>
+            <li>
+            <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б" target="_blank"
+               rel="noopener noreferrer" class="header__city-link"> м. Івано-Франківськ
+            </a>
+            </li>
             <a href="tel:+380756741184" class="btn btn--header">Зателефонувати</a>
          </div>
-      </div>
+      </div>]
    </header>
    
-   <!-- 2. Головний екран (Hero Section) -->
-   <section class="hero">
-      <div class="hero__overlay"></div>
-      <div class="container hero__container">
-         <span class="hero__badge">Студія преміального догляду за авто в Івано-Франківську</span>
-   
-         <h1 class="hero__title">
-            Професійний дітейлінг та <span class="text-accent">надійний захист</span> вашого авто
-         </h1>
-   
-         <p class="hero__subtitle">
-            Збережемо ідеальний вигляд салону та захистимо лакофарбове покриття від відколів, подряпин і вигорання.
-            Гарантія на роботи та матеріали.
+<!-- 2. Головний екран (Hero Section) -->
+<section class="hero">
+   <div class="hero__overlay"></div>
+   <div class="container hero__container">
+      <span class="hero__badge">Студія преміального догляду за авто в Івано-Франківську</span>
+
+      <h1 class="hero__title">
+         Професійний дітейлінг та <span class="text-accent">надійний захист</span> вашого авто
+      </h1>
+
+      <p class="hero__subtitle">
+         Збережемо ідеальний вигляд салону та захистимо лакофарбове покриття від відколів, подряпин і вигорання.
+      </p>
+
+      <div class="hero__actions">
+         <a href="tel:+380756741184" class="btn btn--header">Зателефонувати</a>
+         <a href="https://t.me/detailing_family_if" target="_blank" class="btn btn--outline">Консультація в Telegram</a>
+      </div>
+   </div>
+</section>
+
+<!-- 3. Секція Послуг (Services Section) -->
+<section id="services" class="services">
+   <div class="container">
+      <div class="section-header">
+         <span class="section-badge">Що ми робимо</span>
+         <h2 class="section-title">Наші <span class="text-accent">послуги</span></h2>
+         <p class="section-subtitle">
+            Професійний комплексний догляд за автомобілем з використанням сертифікованої німецької хімії KochChemie та
+            преміальних матеріалів.
          </p>
-   
-         <div class="hero__actions">
-            <a href="#calculator" class="btn btn--primary">Розрахувати вартість</a>
-            <a href="https://wa.me/380756741184" target="_blank" class="btn btn--outline">Консультація в WhatsApp</a>
-         </div>
-   
-         <!-- Швидкі переваги -->
-         <div class="hero__features">
-            <div class="feature-item">
-               <div class="feature-item__title">Захисні плівки (PPF)</div>
-               <div class="feature-item__desc">Поліуретан із самовідновленням</div>
+      </div>
+
+      <div class="services__grid">
+         <!-- 1. 3-ох фазна мийка -->
+         <article id="wash" class="service-card">
+            <div class="service-card__top">
+               <span class="service-card__num">01</span>
+               <span class="service-card__tag">Базовий догляд</span>
             </div>
-            <div class="feature-item">
-               <div class="feature-item__title">Кераміка 9H</div>
-               <div class="feature-item__desc">Дзеркальний блиск та гідрофоб</div>
+            <h3 class="service-card__title">3-ох фазна мийка</h3>
+            <p class="service-card__desc">
+               Делікатне багатоетапне очищення кузова, дисків та важкодоступних місць без мікроподряпин, із нанесенням
+               консервуючого складу.
+            </p>
+            <ul class="service-card__list">
+               <li>Безконтактна попередня мийка</li>
+               <li>Ручна мийка спеціалізованим шампунем</li>
+               <li>Консервація та гідрофобний захист ЛФП</li>
+            </ul>
+            <div class="service-card__footer">
+               <span class="service-card__price">від 800 грн</span>
+               <a href="https://t.me/detailing_family_if" target="_blank" class="service-card__link">Розрахувати →</a>
             </div>
-            <div class="feature-item">
-               <div class="feature-item__title">Фото/Відеозвіт</div>
-               <div class="feature-item__desc">Контроль робіт у месенджері</div>
+         </article>
+
+         <!-- 2. Полірування -->
+         <article id="polishing" class="service-card">
+            <div class="service-card__top">
+               <span class="service-card__num">02</span>
+               <span class="service-card__tag">Відновлення блиску</span>
             </div>
+            <h3 class="service-card__title">Полірування</h3>
+            <p class="service-card__desc">
+               Усунення павутинки, голограм, окислення та глибоких подряпин. Повертаємо глибину кольору та дзеркальний
+               глянець кузову.
+            </p>
+            <ul class="service-card__list">
+               <li>М’яке антиголограмне полірування</li>
+               <li>Багатоетапне відновлювальне полірування</li>
+               <li>Полірування оптики та глянцевих стійок</li>
+            </ul>
+            <div class="service-card__footer">
+               <span class="service-card__price">від 8 000 грн</span>
+               <a href="https://t.me/detailing_family_if" target="_blank" class="service-card__link">Розрахувати →</a>
+            </div>
+         </article>
+
+         <!-- 3. Хімчистка -->
+         <article id="cleaning" class="service-card">
+            <div class="service-card__top">
+               <span class="service-card__num">03</span>
+               <span class="service-card__tag">Чистота салону</span>
+            </div>
+            <h3 class="service-card__title">Хімчистка</h3>
+            <p class="service-card__desc">
+               Глибоке та безпечне очищення шкіри, алькантари, текстилю й пластику з видаленням складних плям та
+               неприємних запахів.
+            </p>
+            <ul class="service-card__list">
+               <li>Делікатна чистка шкіри та кондиціонування</li>
+               <li>Екстракторна чистка сидінь та ковроліну</li>
+               <li>Озонація та антибактеріальна обробка</li>
+            </ul>
+            <div class="service-card__footer">
+               <span class="service-card__price">від 6 000 грн</span>
+               <a href="https://t.me/detailing_family_if" target="_blank" class="service-card__link">Розрахувати →</a>
+            </div>
+         </article>
+
+         <!-- 4. Захист -->
+         <article id="protection" class="service-card">
+            <div class="service-card__top">
+               <span class="service-card__num">04</span>
+               <span class="service-card__tag">Максимальна броня</span>
+            </div>
+            <h3 class="service-card__title">Захист</h3>
+            <p class="service-card__desc">
+               Надійний бар'єр від сколів, гравію, реагентів та ультрафіолету на роки вперед за допомогою преміальних
+               складів та плівок.
+            </p>
+            <ul class="service-card__list">
+               <li>Антигравійна поліуретанова плівка (PPF)</li>
+               <li>Керамічне покриття кузова 9H</li>
+               <li>Антидощ на скло та захист дисків</li>
+            </ul>
+            <div class="service-card__footer">
+               <span class="service-card__price">від 10 000 грн</span>
+               <a href="https://t.me/detailing_family_if" target="_blank" class="service-card__link">Розрахувати →</a>
+            </div>
+         </article>
+      </div>
+   </div>
+</section>
+
+<!-- 4. Секція результатів (Gallery / Роботи до/після) -->
+<section id="gallery" class="gallery">
+   <div class="container">
+      <div class="section-header">
+         <span class="section-badge">Портфоліо</span>
+         <h2 class="section-title">Результати <span class="text-accent">нашої роботи</span></h2>
+         <p class="section-subtitle">
+            Подивіться на реальні приклади догляду та захисту автомобілів у нашій студії в Івано-Франківську.
+         </p>
+      </div>
+
+      <!-- Фільтри за категоріями послуг -->
+      <div class="gallery__filters">
+         <button class="filter-btn active" data-filter="all">Усі роботи</button>
+         <button class="filter-btn" data-filter="wash">3-ох фазна мийка</button>
+         <button class="filter-btn" data-filter="polishing">Полірування</button>
+         <button class="filter-btn" data-filter="cleaning">Хімчистка</button>
+         <button class="filter-btn" data-filter="protection">Захист</button>
+      </div>
+
+      <!-- Сітка кейсів -->
+      <div class="gallery__grid">
+         <!-- Кейс 1: Полірування та захист -->
+         <article class="gallery-card" data-category="polishing protection">
+            <div class="gallery-card__image-wrapper">
+               <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=800&q=80"
+                  alt="Полірування та кераміка" class="gallery-card__img">
+               <span class="gallery-card__badge">Полірування + Захист</span>
+            </div>
+            <div class="gallery-card__content">
+               <h3 class="gallery-card__title">BMW X5: Відновлення та кераміка</h3>
+               <p class="gallery-card__desc">Усунення павутинки, глибоке полірування ЛФП та нанесення захисного
+                  керамічного покриття 9H.</p>
+               <a href="https://t.me/detailing_family_if" target="_blank" class="gallery-card__link">Бажаєте такий
+                  результат? →</a>
+            </div>
+         </article>
+
+         <!-- Кейс 2: Хімчистка салону -->
+         <article class="gallery-card" data-category="cleaning">
+            <div class="gallery-card__image-wrapper">
+               <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80"
+                  alt="Хімчистка салону" class="gallery-card__img">
+               <span class="gallery-card__badge">Хімчистка</span>
+            </div>
+            <div class="gallery-card__content">
+               <h3 class="gallery-card__title">Audi Q7: Преміум-хімчистка салону</h3>
+               <p class="gallery-card__desc">Глибоке очищення шкіри, екстракторна чистка сидінь та делікатна обробка
+                  пластику.</p>
+               <a href="https://t.me/detailing_family_if" target="_blank" class="gallery-card__link">Бажаєте такий
+                  результат? →</a>
+            </div>
+         </article>
+
+         <!-- Кейс 3: Захисна плівка PPF -->
+         <article class="gallery-card" data-category="protection">
+            <div class="gallery-card__image-wrapper">
+               <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80"
+                  alt="Антигравійна плівка" class="gallery-card__img">
+               <span class="gallery-card__badge">Захист PPF</span>
+            </div>
+            <div class="gallery-card__content">
+               <h3 class="gallery-card__title">Porsche Macan: Бронювання плівкою</h3>
+               <p class="gallery-card__desc">Повне обклеювання передньої зони ризику поліуретановою бронеплівкою із
+                  самовідновленням.</p>
+               <a href="https://t.me/detailing_family_if" target="_blank" class="gallery-card__link">Бажаєте такий
+                  результат? →</a>
+            </div>
+         </article>
+
+         <!-- Кейс 4: 3-ох фазна мийка -->
+         <article class="gallery-card" data-category="wash">
+            <div class="gallery-card__image-wrapper">
+               <img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=800&q=80"
+                  alt="3-ох фазна мийка" class="gallery-card__img">
+               <span class="gallery-card__badge">3-ох фазна мийка</span>
+            </div>
+            <div class="gallery-card__content">
+               <h3 class="gallery-card__title">Mercedes-Benz E-Class: Детейлінг-мийка</h3>
+               <p class="gallery-card__desc">Багатоетапне безпечне очищення кузова, дисків та нанесення консервуючого
+                  гідрофобу.</p>
+               <a href="https://t.me/detailing_family_if" target="_blank" class="gallery-card__link">Бажаєте такий
+                  результат? →</a>
+            </div>
+         </article>
+      </div>
+   </div>
+</section>
+
+<!-- 5. Секція прайс-листа та вартості послуг -->
+<section id="pricing" class="pricing">
+   <div class="container">
+      <div class="section-header">
+         <span class="section-badge">Прозорі ціни</span>
+         <h2 class="section-title">Вартість <span class="text-accent">наших послуг</span></h2>
+         <p class="section-subtitle">
+            Орієнтовний прайс-лист на комплекси догляду та захисту автомобіля у нашій студії в Івано-Франківську.
+         </p>
+      </div>
+
+      <div class="pricing-table__wrapper">
+         <table class="pricing-table">
+            <thead>
+               <tr>
+                  <th>Категорія послуги</th>
+                  <th>Деталі / Що входить</th>
+                  <th>Орієнтовна ціна</th>
+                  <th>Дія</th>
+               </tr>
+            </thead>
+            <tbody>
+               <!-- Категорія 1: Мийка -->
+               <tr>
+                  <td class="pricing-category">
+                     <span class="pricing-icon">01</span>
+                     3-ох фазна мийка
+                  </td>
+                  <td class="pricing-desc">Безконтактна попередня мийка, ручна мийка шампунем, гідрофобний консервант.
+                  </td>
+                  <td class="pricing-price">від 800 грн</td>
+                  <td>
+                     <a href="https://t.me/detailing_family_if" target="_blank" class="pricing-btn">Записатись</a>
+                  </td>
+               </tr>
+
+               <!-- Категорія 2: Полірування -->
+               <tr>
+                  <td class="pricing-category">
+                     <span class="pricing-icon">02</span>
+                     Полірування кузова
+                  </td>
+                  <td class="pricing-desc">Усунення павутинки, голограм, відновлення глянцю та глибини кольору ЛФП.</td>
+                  <td class="pricing-price">від 8 000 грн</td>
+                  <td>
+                     <a href="https://t.me/detailing_family_if" target="_blank" class="pricing-btn">Записатись</a>
+                  </td>
+               </tr>
+
+               <!-- Категорія 3: Хімчистка -->
+               <tr>
+                  <td class="pricing-category">
+                     <span class="pricing-icon">03</span>
+                     Хімчистка салону
+                  </td>
+                  <td class="pricing-desc">Глибоке очищення шкіри, текстилю, екстракторна чистка сидінь та озонація.
+                  </td>
+                  <td class="pricing-price">від 6 000 грн</td>
+                  <td>
+                     <a href="https://t.me/detailing_family_if" target="_blank" class="pricing-btn">Записатись</a>
+                  </td>
+               </tr>
+
+               <!-- Категорія 4: Захист -->
+               <tr>
+                  <td class="pricing-category">
+                     <span class="pricing-icon">04</span>
+                     Захист (Плівки / Кераміка)
+                  </td>
+                  <td class="pricing-desc">Антигравійний поліуретан PPF (зони ризику / повне) та керамічні покриття 9H.
+                  </td>
+                  <td class="pricing-price">від 10 000 грн</td>
+                  <td>
+                     <a href="https://t.me/detailing_family_if" target="_blank" class="pricing-btn">Записатись</a>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+
+      <!-- Нижній блок з приміткою та закликом -->
+      <div class="pricing-footer">
+         <p class="pricing-note">*Точна вартість залежить від класу автомобіля та стану лакофарбового покриття.</p>
+      </div>
+   </div>
+</section>
+
+<!-- Секція звернення / Консультація -->
+<section class="cta-section" id="consultation">
+   <div class="container">
+      <div class="cta-card">
+         <span class="cta-badge">Записатись на консультацію</span>
+         <h2 class="cta-title">
+            Для точного розрахунку запрошуємо Вас на <span class="text-accent">безкоштовну консультацію</span>
+         </h2>
+         <p class="cta-desc">
+            Оцінимо стан лакофарбового покриття та салону вашого автомобіля, підберемо оптимальні матеріали та
+            розрахуємо точну вартість робіт у нашій студії в Івано-Франківську.
+         </p>
+         <div class="cta-actions">
+            <!-- Кнопка: Зателефонувати -->
+            <a href="tel:+380756741184" class="btn btn--primary">
+               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                     d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+               </svg>
+               Зателефонувати
+            </a>
+
+            <!-- Кнопка: Написати в Telegram -->
+            <a href="https://t.me/detailing_family_if" target="_blank" rel="noopener noreferrer"
+               class="btn btn--outline">
+               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-2.01 1.28-5.68 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.08-.49-.84-.27-1.51-.42-1.45-.89.03-.25.38-.51 1.05-.78 4.11-1.79 6.85-2.97 8.22-3.55 3.91-1.67 4.72-1.96 5.25-1.97.12 0 .39.03.56.17.15.12.19.28.21.4-.01.07.01.23-.02.48z" />
+               </svg>
+               Написати в Telegram
+            </a>
          </div>
       </div>
-   </section>
+   </div>
+</section>
 
-   <!-- 4. Калькулятор вартості (Calculator Section) -->
-   <section class="calculator" id="calculator">
-      <div class="container">
-         <div class="section-header">
-            <span class="section-badge">Розрахунок</span>
-            <h2 class="section-title">Дізнайтеся орієнтовну <span class="text-accent">вартість робіт</span></h2>
-            <p class="section-subtitle">Оберіть тип кузова та необхідні послуги для швидкого розрахунку</p>
+<!-- 6. Секція Переваги (Why Choose Us) -->
+<section id="advantages" class="advantages">
+   <div class="container">
+      <div class="section-header">
+         <span class="section-badge">Наші переваги</span>
+         <h2 class="section-title">Чому довіряють <span class="text-accent">Detailing Family IF</span></h2>
+         <p class="section-subtitle">
+            Ми поєднуємо професійне обладнання, преміальну автохімію та педантичний підхід до кожного автомобіля.
+         </p>
+      </div>
+
+      <div class="advantages__grid">
+         <!-- Перевага 1 -->
+         <div class="advantage-card">
+            <div class="advantage-card__icon">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+               </svg>
+            </div>
+            <h3 class="advantage-card__title">Преміальні матеріали</h3>
+            <p class="advantage-card__desc">Використовуємо сертифіковану німецьку хімію KochChemie та оригінальні
+               поліуретанові плівки провідних світових брендів.</p>
          </div>
-   
-         <div class="calculator__wrapper">
-            <form class="calc-form" id="calcForm">
-               <!-- Крок 1: Клас авто -->
-               <div class="calc-group">
-                  <label class="calc-label">1. Оберіть тип кузова:</label>
-                  <div class="calc-options calc-options--car">
-                     <label class="calc-radio">
-                        <input type="radio" name="carClass" value="1" checked>
-                        <span>Седан / Хетчбек</span>
-                     </label>
-                     <label class="calc-radio">
-                        <input type="radio" name="carClass" value="1.2">
-                        <span>Кросовер / Універсал</span>
-                     </label>
-                     <label class="calc-radio">
-                        <input type="radio" name="carClass" value="1.4">
-                        <span>Позашляховик / Бус</span>
-                     </label>
+
+         <!-- Перевага 2 -->
+         <div class="advantage-card">
+            <div class="advantage-card__icon">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+               </svg>
+            </div>
+            <h3 class="advantage-card__title">Контроль у месенджері</h3>
+            <p class="advantage-card__desc">Направляємо фото- та відеозвіти про кожен етап виконання робіт прямо в ваш
+               Telegram.</p>
+         </div>
+
+         <!-- Перевага 3 -->
+         <div class="advantage-card">
+            <div class="advantage-card__icon">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+               </svg>
+            </div>
+            <h3 class="advantage-card__title">Гарантія на роботи</h3>
+            <p class="advantage-card__desc">Надаємо офіційну гарантію на захисні керамічні покриття та антигравійне
+               обклеювання.</p>
+         </div>
+
+         <!-- Перевага 4 -->
+         <div class="advantage-card">
+            <div class="advantage-card__icon">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+               </svg>
+            </div>
+            <h3 class="advantage-card__title">Досвідчені майстри</h3>
+            <p class="advantage-card__desc">Спеціалісти з багаторічним досвідом роботи з преміальними та ексклюзивними
+               автомобільними брендами.</p>
+         </div>
+      </div>
+   </div>
+</section>
+
+<!-- 8. Секція Відгуки (Google Maps Reviews) -->
+<section id="reviews" class="reviews">
+   <div class="container">
+      <div class="section-header">
+         <span class="section-badge">Відгуки клієнтів</span>
+         <h2 class="section-title">Що кажуть про <span class="text-accent">Detailing Family IF</span></h2>
+         <p class="section-subtitle">
+            Реальні відгуки наших клієнтів з Google Maps. Оцінка 5.0 на основі десятків успішно виконаних робіт.
+         </p>
+      </div>
+
+      <!-- Контейнер слайдера з кнопками керування -->
+      <div class="reviews-slider__container">
+         <button class="reviews-nav-btn reviews-nav-btn--prev" id="slideLeft" aria-label="Попередній відгук">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+               <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+         </button>
+
+         <div class="reviews-track" id="reviewsTrack">
+            <!-- Відгук 1 -->
+            <div class="review-card">
+               <div class="review-header">
+                  <div class="review-author">
+                     <div class="review-avatar">ОМ</div>
+                     <div>
+                        <h4 class="review-name">Олександр Мельник</h4>
+                        <span class="review-date">Тиждень тому</span>
+                     </div>
+                  </div>
+                  <div class="google-badge" title="Відгук з Google Maps">
+                     <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="#4285F4"
+                           d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                        <path fill="#34A853"
+                           d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.15C3.18 21.35 7.23 24 12 24z" />
+                        <path fill="#FBBC05"
+                           d="M5.28 14.25c-.25-.72-.38-1.5-.38-2.25s.13-1.53.38-2.25V6.6H1.2C.44 8.14 0 9.88 0 12s.44 3.86 1.2 5.4l4.08-3.15z" />
+                        <path fill="#EA4335"
+                           d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.18 2.65 1.2 6.6l4.08 3.15c.95-2.84 3.6-4.95 6.72-4.95z" />
+                     </svg>
                   </div>
                </div>
-   
-               <!-- Крок 2: Перелік послуг -->
-               <div class="calc-group">
-                  <label class="calc-label">2. Оберіть потрібні послуги:</label>
-                  <div class="calc-checkboxes">
-                     <label class="calc-checkbox">
-                        <input type="checkbox" name="service" value="18000" data-name="Захисна плівка (Фронт)">
-                        <span>Обклеювання плівкою «Зона ризику» (від 18 000 грн)</span>
-                     </label>
-                     <label class="calc-checkbox">
-                        <input type="checkbox" name="service" value="45000" data-name="Повне обклеювання PPF">
-                        <span>Повне обклеювання плівкою PPF (від 45 000 грн)</span>
-                     </label>
-                     <label class="calc-checkbox">
-                        <input type="checkbox" name="service" value="8000" data-name="Відновлювальне полірування">
-                        <span>Відновлювальне полірування кузова (від 8 000 грн)</span>
-                     </label>
-                     <label class="calc-checkbox">
-                        <input type="checkbox" name="service" value="10000" data-name="Керамічне покриття 9H">
-                        <span>Захисне керамічне покриття 9H (від 10 000 грн)</span>
-                     </label>
-                     <label class="calc-checkbox">
-                        <input type="checkbox" name="service" value="6000" data-name="Детейлінг-хімчистка">
-                        <span>Повна дітейлінг-хімчистка салону (від 6 000 грн)</span>
-                     </label>
+               <div class="review-stars">★★★★★</div>
+               <p class="review-text">Робив повне полірування та наносив кераміку на BMW X5. Результат перевершив
+                  очікування! Лак горить, відношення до авто на вищому рівні. Рекомендую студію всім!</p>
+               <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б"
+                  target="_blank" rel="noopener noreferrer" class="review-map-link">Відгук на Google Maps →</a>
+            </div>
+
+            <!-- Відгук 2 -->
+            <div class="review-card">
+               <div class="review-header">
+                  <div class="review-author">
+                     <div class="review-avatar">ІШ</div>
+                     <div>
+                        <h4 class="review-name">Ірина Шевченко</h4>
+                        <span class="review-date">2 тижні тому</span>
+                     </div>
+                  </div>
+                  <div class="google-badge" title="Відгук з Google Maps">
+                     <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="#4285F4"
+                           d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                        <path fill="#34A853"
+                           d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.15C3.18 21.35 7.23 24 12 24z" />
+                        <path fill="#FBBC05"
+                           d="M5.28 14.25c-.25-.72-.38-1.5-.38-2.25s.13-1.53.38-2.25V6.6H1.2C.44 8.14 0 9.88 0 12s.44 3.86 1.2 5.4l4.08-3.15z" />
+                        <path fill="#EA4335"
+                           d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.18 2.65 1.2 6.6l4.08 3.15c.95-2.84 3.6-4.95 6.72-4.95z" />
+                     </svg>
                   </div>
                </div>
-   
-               <!-- Результат -->
-               <div class="calc-result">
-                  <div class="calc-result__title">Орієнтовна вартість:</div>
-                  <div class="calc-result__price" id="totalPrice">0 грн</div>
-                  <p class="calc-result__note">*Точна вартість розраховується після огляду стану ЛФП авто</p>
-                  <a href="https://wa.me/" target="_blank" class="btn btn--primary calc-btn">Записатися на огляд</a>
+               <div class="review-stars">★★★★★</div>
+               <p class="review-text">Робили хімчистку салону на Audi Q7. Салон став як новий, прибрали всі плями на
+                  світлій шкірі і зник сторонній запах. Дуже ввічливий персонал та швидка робота!</p>
+               <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б"
+                  target="_blank" rel="noopener noreferrer" class="review-map-link">Відгук на Google Maps →</a>
+            </div>
+
+            <!-- Відгук 3 -->
+            <div class="review-card">
+               <div class="review-header">
+                  <div class="review-author">
+                     <div class="review-avatar">МК</div>
+                     <div>
+                        <h4 class="review-name">Максим Ковальчук</h4>
+                        <span class="review-date місяць тому">Місяць тому</span>
+                     </div>
+                  </div>
+                  <div class="google-badge" title="Відгук з Google Maps">
+                     <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="#4285F4"
+                           d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                        <path fill="#34A853"
+                           d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.15C3.18 21.35 7.23 24 12 24z" />
+                        <path fill="#FBBC05"
+                           d="M5.28 14.25c-.25-.72-.38-1.5-.38-2.25s.13-1.53.38-2.25V6.6H1.2C.44 8.14 0 9.88 0 12s.44 3.86 1.2 5.4l4.08-3.15z" />
+                        <path fill="#EA4335"
+                           d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.18 2.65 1.2 6.6l4.08 3.15c.95-2.84 3.6-4.95 6.72-4.95z" />
+                     </svg>
+                  </div>
                </div>
-            </form>
+               <div class="review-stars">★★★★★</div>
+               <p class="review-text">Обклеював передню частину Porsche Macan антигравійною плівкою. Робота виконана
+                  бездоганно, країв плівки взагалі не помітно. Дякую майстрам за професіоналізм!</p>
+               <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б"
+                  target="_blank" rel="noopener noreferrer" class="review-map-link">Відгук на Google Maps →</a>
+            </div>
+
+            <!-- Відгук 4 -->
+            <div class="review-card">
+               <div class="review-header">
+                  <div class="review-author">
+                     <div class="review-avatar">АБ</div>
+                     <div>
+                        <h4 class="review-name">Андрій Бойко</h4>
+                        <span class="review-date">Місяць тому</span>
+                     </div>
+                  </div>
+                  <div class="google-badge" title="Відгук з Google Maps">
+                     <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="#4285F4"
+                           d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                        <path fill="#34A853"
+                           d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.15C3.18 21.35 7.23 24 12 24z" />
+                        <path fill="#FBBC05"
+                           d="M5.28 14.25c-.25-.72-.38-1.5-.38-2.25s.13-1.53.38-2.25V6.6H1.2C.44 8.14 0 9.88 0 12s.44 3.86 1.2 5.4l4.08-3.15z" />
+                        <path fill="#EA4335"
+                           d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.18 2.65 1.2 6.6l4.08 3.15c.95-2.84 3.6-4.95 6.72-4.95z" />
+                     </svg>
+                  </div>
+               </div>
+               <div class="review-stars">★★★★★</div>
+               <p class="review-text">Постійно заїжджаю сюди на 3-ох фазну мийку. Машина завжди ідеально чиста, гідрофоб
+                  тримається довго. Сервіс на найвищому рівні в Івано-Франківську!</p>
+               <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б"
+                  target="_blank" rel="noopener noreferrer" class="review-map-link">Відгук на Google Maps →</a>
+            </div>
+
+            <!-- Відгук 5 -->
+            <div class="review-card">
+               <div class="review-header">
+                  <div class="review-author">
+                     <div class="review-avatar">ВГ</div>
+                     <div>
+                        <h4 class="review-name">Віктор Гринишин</h4>
+                        <span class="review-date">2 місяці тому</span>
+                     </div>
+                  </div>
+                  <div class="google-badge" title="Відгук з Google Maps">
+                     <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="#4285F4"
+                           d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                        <path fill="#34A853"
+                           d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.15C3.18 21.35 7.23 24 12 24z" />
+                        <path fill="#FBBC05"
+                           d="M5.28 14.25c-.25-.72-.38-1.5-.38-2.25s.13-1.53.38-2.25V6.6H1.2C.44 8.14 0 9.88 0 12s.44 3.86 1.2 5.4l4.08-3.15z" />
+                        <path fill="#EA4335"
+                           d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.18 2.65 1.2 6.6l4.08 3.15c.95-2.84 3.6-4.95 6.72-4.95z" />
+                     </svg>
+                  </div>
+               </div>
+               <div class="review-stars">★★★★★</div>
+               <p class="review-text">Відновлювали помутнілу оптика на Volkswagen Touareg та покривали захистом. Тепер
+                  світло вночі працює чудово, а фари виглядають абсолютно новими.</p>
+               <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б"
+                  target="_blank" rel="noopener noreferrer" class="review-map-link">Відгук на Google Maps →</a>
+            </div>
+
+            <!-- Відгук 6 -->
+            <div class="review-card">
+               <div class="review-header">
+                  <div class="review-author">
+                     <div class="review-avatar">НР</div>
+                     <div>
+                        <h4 class="review-name">Наталія Романюк</h4>
+                        <span class="review-date">2 місяці тому</span>
+                     </div>
+                  </div>
+                  <div class="google-badge" title="Відгук з Google Maps">
+                     <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="#4285F4"
+                           d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                        <path fill="#34A853"
+                           d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.15C3.18 21.35 7.23 24 12 24z" />
+                        <path fill="#FBBC05"
+                           d="M5.28 14.25c-.25-.72-.38-1.5-.38-2.25s.13-1.53.38-2.25V6.6H1.2C.44 8.14 0 9.88 0 12s.44 3.86 1.2 5.4l4.08-3.15z" />
+                        <path fill="#EA4335"
+                           d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.18 2.65 1.2 6.6l4.08 3.15c.95-2.84 3.6-4.95 6.72-4.95z" />
+                     </svg>
+                  </div>
+               </div>
+               <div class="review-stars">★★★★★</div>
+               <p class="review-text">Замовляла комплексну хімчистку та озонацію для Toyota RAV4. Зникло будь-яке
+                  уявлення про старі плями, салон пахне свіжістю. Дякую за увагу до деталей!</p>
+               <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б"
+                  target="_blank" rel="noopener noreferrer" class="review-map-link">Відгук на Google Maps →</a>
+            </div>
+
+            <!-- Відгук 7 -->
+            <div class="review-card">
+               <div class="review-header">
+                  <div class="review-author">
+                     <div class="review-avatar">ТД</div>
+                     <div>
+                        <h4 class="review-name">Тарас Дячук</h4>
+                        <span class="review-date">3 місяці тому</span>
+                     </div>
+                  </div>
+                  <div class="google-badge" title="Відгук з Google Maps">
+                     <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="#4285F4"
+                           d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                        <path fill="#34A853"
+                           d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.15C3.18 21.35 7.23 24 12 24z" />
+                        <path fill="#FBBC05"
+                           d="M5.28 14.25c-.25-.72-.38-1.5-.38-2.25s.13-1.53.38-2.25V6.6H1.2C.44 8.14 0 9.88 0 12s.44 3.86 1.2 5.4l4.08-3.15z" />
+                        <path fill="#EA4335"
+                           d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.18 2.65 1.2 6.6l4.08 3.15c.95-2.84 3.6-4.95 6.72-4.95z" />
+                     </svg>
+                  </div>
+               </div>
+               <div class="review-stars">★★★★★</div>
+               <p class="review-text">Робив повне обклеювання кузова Lexus RX. Захист працює на всі 100%, камінці на
+                  трасі більше не лякають. Ціна повністю відповідає якості виконаної роботи.</p>
+               <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б"
+                  target="_blank" rel="noopener noreferrer" class="review-map-link">Відгук на Google Maps →</a>
+            </div>
+
+            <!-- Відгук 8 -->
+            <div class="review-card">
+               <div class="review-header">
+                  <div class="review-author">
+                     <div class="review-avatar">ЮВ</div>
+                     <div>
+                        <h4 class="review-name">Юрій Василишин</h4>
+                        <span class="review-date">3 місяці тому</span>
+                     </div>
+                  </div>
+                  <div class="google-badge" title="Відгук з Google Maps">
+                     <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="#4285F4"
+                           d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                        <path fill="#34A853"
+                           d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.15C3.18 21.35 7.23 24 12 24z" />
+                        <path fill="#FBBC05"
+                           d="M5.28 14.25c-.25-.72-.38-1.5-.38-2.25s.13-1.53.38-2.25V6.6H1.2C.44 8.14 0 9.88 0 12s.44 3.86 1.2 5.4l4.08-3.15z" />
+                        <path fill="#EA4335"
+                           d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.18 2.65 1.2 6.6l4.08 3.15c.95-2.84 3.6-4.95 6.72-4.95z" />
+                     </svg>
+                  </div>
+               </div>
+               <div class="review-stars">★★★★★</div>
+               <p class="review-text">Чудова студія! Робували відновлювальне полірування на Skoda Octavia. Майстри
+                  пояснили всі нюанси по стану лаку, підібрали оптимальний комплекс. Результат вражає.</p>
+               <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б"
+                  target="_blank" rel="noopener noreferrer" class="review-map-link">Відгук на Google Maps →</a>
+            </div>
+
+            <!-- Відгук 9 -->
+            <div class="review-card">
+               <div class="review-header">
+                  <div class="review-author">
+                     <div class="review-avatar">СП</div>
+                     <div>
+                        <h4 class="review-name">Світлана Петрів</h4>
+                        <span class="review-date">4 місяці тому</span>
+                     </div>
+                  </div>
+                  <div class="google-badge" title="Відгук з Google Maps">
+                     <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="#4285F4"
+                           d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                        <path fill="#34A853"
+                           d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.15C3.18 21.35 7.23 24 12 24z" />
+                        <path fill="#FBBC05"
+                           d="M5.28 14.25c-.25-.72-.38-1.5-.38-2.25s.13-1.53.38-2.25V6.6H1.2C.44 8.14 0 9.88 0 12s.44 3.86 1.2 5.4l4.08-3.15z" />
+                        <path fill="#EA4335"
+                           d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.18 2.65 1.2 6.6l4.08 3.15c.95-2.84 3.6-4.95 6.72-4.95z" />
+                     </svg>
+                  </div>
+               </div>
+               <div class="review-stars">★★★★★</div>
+               <p class="review-text">Дуже сподобалось ставлення до клієнтів. Зробили преміум мийку Hyundai Tucson з
+                  гідрофобним покриттям. Вода просто скочується з кузова, вигляд супер!</p>
+               <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б"
+                  target="_blank" rel="noopener noreferrer" class="review-map-link">Відгук на Google Maps →</a>
+            </div>
+
+            <!-- Відгук 10 -->
+            <div class="review-card">
+               <div class="review-header">
+                  <div class="review-author">
+                     <div class="review-avatar">ДП</div>
+                     <div>
+                        <h4 class="review-name">Дмитро Павлюк</h4>
+                        <span class="review-date">4 місяці тому</span>
+                     </div>
+                  </div>
+                  <div class="google-badge" title="Відгук з Google Maps">
+                     <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="#4285F4"
+                           d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                        <path fill="#34A853"
+                           d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.15C3.18 21.35 7.23 24 12 24z" />
+                        <path fill="#FBBC05"
+                           d="M5.28 14.25c-.25-.72-.38-1.5-.38-2.25s.13-1.53.38-2.25V6.6H1.2C.44 8.14 0 9.88 0 12s.44 3.86 1.2 5.4l4.08-3.15z" />
+                        <path fill="#EA4335"
+                           d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.18 2.65 1.2 6.6l4.08 3.15c.95-2.84 3.6-4.95 6.72-4.95z" />
+                     </svg>
+                  </div>
+               </div>
+               <div class="review-stars">★★★★★</div>
+               <p class="review-text">Наносив кераміку на Tesla Model Y. Робота виконана швидко та професійно. Дуже
+                  задоволений блиском та захистом. Рекомендую цю детейлінг-студію в Івано-Франківську!</p>
+               <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б"
+                  target="_blank" rel="noopener noreferrer" class="review-map-link">Відгук на Google Maps →</a>
+            </div>
          </div>
+
+         <button class="reviews-nav-btn reviews-nav-btn--next" id="slideRight" aria-label="Наступний відгук">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+               <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+         </button>
       </div>
-   </section>
+   </div>
+</section>
 
-   <!-- 5. Галерея / Результати (Gallery Section) -->
-   <section class="gallery" id="gallery">
-      <div class="container">
-         <div class="section-header">
-            <span class="section-badge">Портфоліо</span>
-            <h2 class="section-title">Результати нашої <span class="text-accent">роботи</span></h2>
-            <p class="section-subtitle">Подивіться на приклади захисту та перевтілення автомобілів у нашій студії</p>
-         </div>
-   
-         <div class="gallery__grid">
-            <div class="gallery-item">
-               <div class="gallery-item__placeholder">Фото авто 1 (PPF плівка)</div>
-            </div>
-            <div class="gallery-item">
-               <div class="gallery-item__placeholder">Фото авто 2 (Полірування)</div>
-            </div>
-            <div class="gallery-item">
-               <div class="gallery-item__placeholder">Фото авто 3 (Кераміка)</div>
-            </div>
-         </div>
-      </div>
-   </section>
+<!-- Невеликий скрипт для гортання стрілками -->
+<script>
+   const track = document.getElementById('reviewsTrack');
+   document.getElementById('slideLeft').addEventListener('click', () => {
+      track.scrollBy({ left: -380, behavior: 'smooth' });
+   });
+   document.getElementById('slideRight').addEventListener('click', () => {
+      track.scrollBy({ left: 380, behavior: 'smooth' });
+   });
+</script>
 
-   <script src="script.js"></script>
 
-   <!-- 6. Контакти та Футер (Footer) -->
-   <footer class="footer" id="contacts">
-      <div class="container">
-         <div class="footer__grid">
-            <!-- Колонка 1: Про студію -->
-            <div class="footer__col">
-               <a href="#" class="logo footer__logo">
-                  DETAILING <span>FAMILY IF</span>
+
+<!-- 7. Контакти та Футер (Footer) -->
+<footer class="footer" id="contacts">
+   <div class="container">
+      <div class="footer__grid">
+         <!-- Колонка 1: Про студію + Соцмережі та месенджери -->
+         <div class="footer__col">
+            <a href="#" class="logo footer__logo">
+               DETAILING <span>FAMILY IF</span>
+            </a>
+            <p class="footer__desc">
+               Преміальний догляд, захисні поліуретанові плівки та професійне відновлення вашого автомобіля в
+               Івано-Франківську.
+            </p>
+
+            <!-- Блок іконок соцмереж та месенджерів -->
+            <div class="footer__socials">
+               <!-- Instagram -->
+               <a href="https://www.instagram.com/detailing_family_if" target="_blank" rel="noopener noreferrer"
+                  class="social-link" aria-label="Instagram" title="Instagram">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round">
+                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
                </a>
-               <p class="footer__desc">
-                  Преміальний догляд, захисні поліуретанові плівки та професійне відновлення вашого автомобіля в
-                  Івано-Франківську.
-               </p>
-            </div>   
-   
-            <!-- Колонка 2: Контакти -->
-            <div class="footer__col">
-               <h4 class="footer__title">Контакти</h4>
-               <ul class="footer__list">
-                  <li>📍 м. Івано-Франківськ</li>
-                  <li>📞 <a href="tel:+380756741184">+38 (075) 674-11-84</a></li>
-                  <li>💬 <a href="https://wa.me/380756741184" target="_blank">Написати у WhatsApp</a></li>
-                  <li>⏰ Пн-Сб: 9:00 – 19:00</li>
-               </ul>
-            </div>
-   
-            <!-- Колонка 3: Навігація -->
-            <div class="footer__col">
-               <h4 class="footer__title">Швидкі посилання</h4>
-               <ul class="footer__list">
-                  <li><a href="#services">Послуги</a></li>
-                  <li><a href="#calculator">Калькулятор</a></li>
-                  <li><a href="#gallery">Результати</a></li>
-               </ul>
+
+               <!-- TikTok -->
+               <a href="https://www.tiktok.com/@detailing_family_if" target="_blank" rel="noopener noreferrer"
+                  class="social-link" aria-label="TikTok" title="TikTok">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                     <path
+                        d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+                  </svg>
+               </a>
+
+               <!-- YouTube -->
+               <a href="https://www.youtube.com/@detailing_family_if" target="_blank" rel="noopener noreferrer"
+                  class="social-link" aria-label="YouTube" title="YouTube">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                     <path
+                        d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                  </svg>
+               </a>
+
+               <!-- Telegram -->
+               <a href="https://t.me/detailing_family_if" target="_blank" rel="noopener noreferrer" class="social-link"
+                  aria-label="Telegram" title="Telegram">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                     <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-2.01 1.28-5.68 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.08-.49-.84-.27-1.51-.42-1.45-.89.03-.25.38-.51 1.05-.78 4.11-1.79 6.85-2.97 8.22-3.55 3.91-1.67 4.72-1.96 5.25-1.97.12 0 .39.03.56.17.15.12.19.28.21.4-.01.07.01.23-.02.48z" />
+                  </svg>
+               </a>
+
+               <!-- WhatsApp -->
+               <a href="https://wa.me/380756741184" target="_blank" rel="noopener noreferrer" class="social-link"
+                  aria-label="WhatsApp" title="WhatsApp">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                     <path
+                        d="M12.031 2c-5.516 0-9.969 4.453-9.969 9.969 0 1.758.458 3.475 1.328 4.988L2 22l5.203-1.365a9.932 9.932 0 0 0 4.828 1.25h.004c5.515 0 9.969-4.454 9.969-9.969 0-2.663-1.037-5.166-2.921-7.05A9.903 9.903 0 0 0 12.031 2zm5.821 14.156c-.246.693-1.428 1.325-1.984 1.409-.508.076-1.15.108-1.856-.116-.428-.136-.978-.318-1.682-.622-2.961-1.278-4.894-4.26-5.042-4.457-.148-.197-1.203-1.6-1.203-3.052 0-1.452.761-2.166 1.031-2.462.271-.296.591-.37.788-.37.197 0 .394.002.566.01.182.009.425-.069.665.507.246.591.837 2.043.911 2.191.074.148.123.32.025.517-.099.197-.148.32-.296.493-.148.172-.311.385-.443.517-.148.148-.302.308-.13.604.172.296.766 1.263 1.644 2.046 1.13 1.008 2.083 1.32 2.379 1.468.296.148.468.123.64-.074.172-.197.739-.862.936-1.158.197-.296.394-.246.665-.148.271.099 1.724.813 2.02.961.296.148.493.222.566.345.074.123.074.714-.172 1.407z" />
+                  </svg>
+               </a>
+
+               <!-- Viber -->
+               <a href="viber://chat?number=%2B380756741184" class="social-link" aria-label="Viber" title="Viber">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                     <path
+                        d="M11.398.002C9.473.028 5.331.344 3.014 2.467 1.294 4.177.696 6.679.633 9.739c-.066 3.063-.148 8.803 5.392 10.362h.005l-.004 2.376s-.037.963.597 1.158c.768.239 1.221-.493 1.954-1.281.404-.435.959-1.072 1.379-1.563 3.798.318 6.716-.412 7.048-.52.767-.248 5.107-.806 5.813-6.578.731-5.948-.354-9.706-2.296-11.409-.591-.544-2.963-2.275-8.248-2.282 0 0-.331-.02-.875 0zm.068 1.925c.462-.004.742.015.742.015 4.492.005 6.647 1.371 7.147 1.83 1.653 1.448 2.508 4.918 1.9 9.893-.598 4.869-4.139 5.177-4.786 5.385-.281.091-2.851.729-6.085.515 0 0-2.411 2.905-3.163 3.661-.119.12-.257.166-.348.144-.129-.031-.165-.185-.163-.408l.021-3.135C1.964 18.497 2.278 13.5 2.333 10.92c.055-2.581.539-4.695 1.979-6.135 1.968-1.797 5.514-2.838 7.154-2.858zm.43 2.531a.42.42 0 0 0-.026.839c2.598.179 4.661 2.274 4.828 4.884a.42.42 0 0 0 .838-.053c-.196-3.047-2.607-5.495-5.64-5.67zm.656 1.988a.42.42 0 0 0-.049.838c1.547.129 2.752 1.351 2.868 2.902a.42.42 0 0 0 .838-.062c-.145-1.958-1.662-3.503-3.657-3.678zm-4.961.363c-.337-.01-.699.136-.979.423-.491.503-1.015 1.244-1.031 2.025-.013.621.224 1.353.681 2.256 1.044 2.063 2.548 3.929 4.544 5.479 1.072.832 2.299 1.564 3.635 2.078.795.306 1.464.455 2.023.437.781-.024 1.519-.553 2.019-1.048.431-.426.473-1.036.088-1.451-.57-.613-1.456-1.309-2.223-1.79-.472-.296-1.036-.23-1.416.178l-.499.538c-.269.29-.692.345-1.035.158-1.364-.744-2.502-1.874-3.255-3.234-.189-.342-.137-.765.151-1.036l.535-.503c.406-.382.469-.947.171-1.417-.484-.764-1.184-1.646-1.801-2.212a1.07 1.07 0 0 0-.608-.282zm5.675 1.54a.42.42 0 0 0-.067.837c.593.077 1.047.537 1.119 1.132a.42.42 0 0 0 .834-.101c-.112-.927-.822-1.646-1.747-1.766a.42.42 0 0 0-.139-.102z" />
+                  </svg>
+               </a>
             </div>
          </div>
-   
-         <div class="footer__bottom">
-            <p>&copy; 2026 DETAILING FAMILY IF. Усі права захищено.</p>
+
+         <!-- Колонка 2: Контакти -->
+         <div class="footer__col">
+            <h4 class="footer__title">Контакти</h4>
+            <ul class="footer__list">
+               <li>
+                  📍 <a href="https://www.google.com/maps/search/?api=1&query=м.+Івано-Франківськ,+вул.+Ребета+8б"
+                     target="_blank" rel="noopener noreferrer">м. Івано-Франківськ, вул. Ребета 8б</a>
+               </li>
+               <li>
+                  📞 <a href="tel:+380756741184">+38 (075) 674-11-84</a>
+               </li>
+               <li>
+                  ✉️ <a href="mailto:detailing.family.if@gmail.com">detailing.family.if@gmail.com</a>
+               </li>
+               <li>⏰ Пн-Сб: 9:00 – 19:00</li>
+            </ul>
+         </div>
+
+         <!-- Колонка 3: Швидкі посилання -->
+         <div class="footer__col">
+            <h4 class="footer__title">Швидкі посилання</h4>
+            <ul class="footer__list">
+               <li><a href="#services">Послуги</a></li>
+               <li><a href="#gallery">Роботи до/після</a></li>
+               <li><a href="#pricing">Вартість</a></li>
+               <li><a href="#advantages">Наші переваги</a></li>
+               <li><a href="#reviews">Відгуки</a></li>
+            </ul>
          </div>
       </div>
-   </footer>
 
+      <div class="footer__bottom">
+         <p>&copy; 2026 DETAILING FAMILY IF. Усі права захищено.</p>
+      </div>
+   </div>
+</footer>
 </body>
 
 </html>
