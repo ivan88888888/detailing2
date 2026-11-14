@@ -1414,7 +1414,7 @@ html {
 
 /* 1. Instagram */
 .footer__socials .social-link:nth-child(1):hover {
-   background-color: ##d62976;
+   background-color: #d62976;
    border-color: #d62976;
    color: #d62976;
    box-shadow: 0 6px 18px rgba(225, 48, 108, 0.4);
