@@ -1712,3 +1712,16 @@ html {
       font-size: 0.8rem;
    }
 }
+
+html,
+body {
+   overflow-x: hidden;
+   width: 100%;
+   max-width: 100%;
+}
+
+@media (max-width: 900px) {
+   html {
+      scroll-behavior: auto;
+   }
+}
