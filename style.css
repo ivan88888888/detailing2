@@ -1182,7 +1182,7 @@ html {
 
 .footer__socials .social-link:nth-child(2):hover {
    background-color: #111111;
-   border-color: #111111;
+   border-color: #ffffff;
    color: #ffffff;
    box-shadow: 0 6px 18px rgba(254, 44, 85, 0.4);
 }
