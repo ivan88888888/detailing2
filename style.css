@@ -234,9 +234,7 @@ html {
 
 /* 3. Бейджі всіх секцій: менш помітні, без рамки та фонового виділення */
 .hero__badge {
-   display: inline-flex;
-   align-items: center;
-   gap: 8px;
+   display: inline-block;
    padding: 4px 0;
    background: transparent;
    border: none;
@@ -246,14 +244,20 @@ html {
    font-weight: 500;
    letter-spacing: 0.04em;
    margin-bottom: 20px;
+   max-width: 100%;
+   text-align: center;
 }
 
 .hero__badge::before {
    content: '';
+   display: inline-block;
+   vertical-align: middle;
    width: 6px;
    height: 6px;
    border-radius: 50%;
    background-color: rgba(var(--accent-rgb), 0.7);
+   margin-right: 8px;
+   margin-top: -2px;
 }
 
 .hero__title {
@@ -1249,7 +1253,7 @@ html {
 /* TikTok — залишено без змін */
 .footer__socials .social-link:nth-child(2):hover {
    background-color: #111111;
-   border-color: #111111;
+   border-color: #ffffff;
    color: #ffffff;
    box-shadow: 0 6px 18px rgba(254, 44, 85, 0.4);
 }
