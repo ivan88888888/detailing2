@@ -29,13 +29,15 @@ html {
    --accent-rgb: 255, 77, 0;
 }
 
-/* 1. Виправлений закріплений header — повністю непрозорий та притиснутий до самого верху */
+/* 1 & 4. Закріплений header — притиснутий до самого верху, повністю непрозорий */
 .header {
    background-color: #0b0c0e !important;
-   padding: 18px 0;
+   padding: 16px 0;
+   padding-top: max(16px, env(safe-area-inset-top));
    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-   position: sticky;
+   position: fixed;
    top: 0;
+   left: 0;
    z-index: 9999;
    width: 100%;
 }
@@ -123,7 +125,9 @@ html {
    }
 }
 
+/* 1. Шрифти та стилі для десктопної кнопки у хедера */
 .btn--header {
+   font-family: 'Montserrat', sans-serif;
    color: var(--accent);
    border: 1px solid var(--accent);
    padding: 10px 22px;
@@ -140,15 +144,15 @@ html {
    box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.45);
 }
 
-/* 2. Головний екран (Hero Section) */
+/* 2. Головний екран (Hero Section) з відступом під fixed header */
 .hero {
    position: relative;
-   min-height: calc(100svh - 76px);
+   min-height: 100svh;
    display: flex;
    align-items: center;
    justify-content: center;
    text-align: center;
-   padding: 100px 20px 90px;
+   padding: 140px 20px 90px;
    background-color: #0b0c0e;
    background-image: linear-gradient(rgba(11, 12, 14, 0.85), rgba(11, 12, 14, 0.92)), url('https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1920&q=80');
    background-size: cover;
@@ -233,10 +237,12 @@ html {
    flex-wrap: wrap;
 }
 
-/* Виправлені кнопки в Hero — тепер повністю ідентичні кнопкам консультації */
-.hero__actions .btn {
+/* 2 & 5. Кнопки в Hero та CTA — вирівнювання і підсвічування тільки при наведенні */
+.hero__actions .btn,
+.cta-section .btn {
    display: inline-flex;
    align-items: center;
+   justify-content: center;
    gap: 10px;
    padding: 15px 30px;
    border-radius: 12px;
@@ -248,32 +254,36 @@ html {
    transition: all 0.25s ease;
 }
 
-.hero__actions .btn--primary {
-   background-color: var(--accent);
+.hero__actions .btn--primary,
+.cta-section .btn--primary {
+   background-color: var(--accent, #FF4D00);
    color: #ffffff;
-   border: 1px solid var(--accent);
-   box-shadow: 0 8px 25px rgba(var(--accent-rgb), 0.35);
+   border: 1px solid var(--accent, #FF4D00);
+   box-shadow: none;
 }
 
-.hero__actions .btn--primary:hover {
+.hero__actions .btn--primary:hover,
+.cta-section .btn--primary:hover {
    background-color: #e04300;
    transform: translateY(-2px);
-   box-shadow: 0 12px 32px rgba(var(--accent-rgb), 0.55);
+   box-shadow: 0 8px 20px rgba(255, 77, 0, 0.35);
 }
 
-.hero__actions .btn--outline {
+.hero__actions .btn--outline,
+.cta-section .btn--outline {
    background-color: rgba(0, 136, 204, 0.14);
    color: #ffffff;
    border: 1px solid rgba(0, 136, 204, 0.5);
    box-shadow: 0 0 15px rgba(0, 136, 204, 0.3);
 }
 
-.hero__actions .btn--outline:hover {
+.hero__actions .btn--outline:hover,
+.cta-section .btn--outline:hover {
    background-color: #0088cc;
    border-color: #0088cc;
    color: #ffffff;
    transform: translateY(-2px);
-   box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
+   box-shadow: 0 0 25px rgba(0, 136, 204, 0.6);
 }
 
 /* 3. Секція Послуг */
@@ -1012,7 +1022,7 @@ html {
    right: -24px;
 }
 
-/* 8. Секція Звернення / Консультація (CTA) */
+/* 3. Секція Звернення / Консультація (CTA) — без анімації тексту */
 .cta-section {
    padding: 90px 20px;
    background-color: #0b0c0e;
@@ -1041,6 +1051,11 @@ html {
    line-height: 1.3;
 }
 
+.cta-title .text-accent {
+   animation: none;
+   /* Вимкнено анімацію для слів «безкоштовну консультацію» */
+}
+
 .cta-desc {
    font-family: 'Montserrat', sans-serif;
    font-size: 0.98rem;
@@ -1055,46 +1070,6 @@ html {
    justify-content: center;
    gap: 16px;
    flex-wrap: wrap;
-}
-
-.cta-section .btn {
-   display: inline-flex;
-   align-items: center;
-   gap: 10px;
-   padding: 15px 30px;
-   border-radius: 12px;
-   font-family: 'Montserrat', sans-serif;
-   font-weight: 600;
-   font-size: 0.95rem;
-   text-decoration: none;
-   transition: all 0.25s ease;
-}
-
-.cta-section .btn--primary {
-   background-color: var(--accent, #FF4D00);
-   color: #ffffff;
-   border: 1px solid var(--accent, #FF4D00);
-}
-
-.cta-section .btn--primary:hover {
-   background-color: #e04300;
-   transform: translateY(-2px);
-   box-shadow: 0 8px 20px rgba(255, 77, 0, 0.35);
-}
-
-.cta-section .btn--outline {
-   background-color: rgba(0, 136, 204, 0.14);
-   color: #ffffff;
-   border: 1px solid rgba(0, 136, 204, 0.5);
-   box-shadow: 0 0 15px rgba(0, 136, 204, 0.3);
-}
-
-.cta-section .btn--outline:hover {
-   background-color: #0088cc;
-   border-color: #0088cc;
-   color: #ffffff;
-   transform: translateY(-2px);
-   box-shadow: 0 0 25px rgba(0, 136, 204, 0.6);
 }
 
 /* 9. Секція Футер */
@@ -1344,7 +1319,7 @@ html {
    }
 
    .hero {
-      padding: 80px 16px 60px;
+      padding: 120px 16px 60px;
       min-height: auto;
    }
 
@@ -1365,10 +1340,8 @@ html {
 
    .hero__actions .btn {
       width: 100%;
-      max-width: 100%;
-      height: 48px;
-      padding: 12px 14px;
-      font-size: 0.88rem;
+      justify-content: center;
+      text-align: center;
    }
 
    .services,
@@ -1446,7 +1419,6 @@ html {
       font-size: 1.1rem;
       font-weight: 700;
       color: #ffffff;
-      margin-bottom: секція;
       margin-bottom: 10px;
    }
 
@@ -1489,6 +1461,7 @@ html {
    .cta-section .btn {
       width: 100%;
       justify-content: center;
+      text-align: center;
    }
 
    .footer {
@@ -1514,21 +1487,4 @@ html {
    .logo img {
       height: 36px;
    }
-}
-
-@keyframes textGlowPulse {
-
-   0%,
-   100% {
-      text-shadow: 0 0 4px rgba(var(--accent-rgb), 0.2);
-   }
-
-   50% {
-      text-shadow: 0 0 14px rgba(var(--accent-rgb), 0.8), 0 0 22px rgba(var(--accent-rgb), 0.4);
-   }
-}
-
-.cta-title .text-accent {
-   display: inline-block;
-   animation: textGlowPulse 3s ease-in-out infinite;
 }
