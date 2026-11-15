@@ -1,4 +1,4 @@
-/* Глобальний скид та захист від бічних смуг */
+/* Глобальний скид та захист від бічних смуг без поломки position: sticky */
 *,
 *::before,
 *::after {
@@ -11,8 +11,13 @@ body {
    padding: 0;
    width: 100%;
    max-width: 100%;
-   overflow-x: hidden;
+   overflow-x: clip;
+   /* Вирішує бічні смуги І не ламає sticky-хедер */
    background-color: #0b0c0e;
+}
+
+html {
+   scroll-behavior: smooth;
 }
 
 @media (max-width: 900px) {
@@ -26,9 +31,9 @@ body {
    --accent-rgb: 255, 77, 0;
 }
 
-/* Базові налаштування хедера */
+/* 1. Закріплений header при скролінгу (ПК + мобільна версія) */
 .header {
-   background-color: #0b0c0e;
+   background-color: rgba(11, 12, 14, 0.96);
    padding: 18px 0;
    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
    position: sticky;
@@ -194,12 +199,13 @@ body {
 /* 2. Головний екран (Hero Section) */
 .hero {
    position: relative;
-   min-height: calc(100dvh - 80px);
+   min-height: calc(100svh - 76px);
+   /* svh замість dvh, щоб екран не смикався від панелі браузера */
    display: flex;
    align-items: center;
    justify-content: center;
    text-align: center;
-   padding: 120px 20px 100px;
+   padding: 100px 20px 90px;
    background-color: #0b0c0e;
    background-image: linear-gradient(rgba(11, 12, 14, 0.85), rgba(11, 12, 14, 0.92)), url('https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1920&q=80');
    background-size: cover;
@@ -226,37 +232,35 @@ body {
    align-items: center;
 }
 
+/* 3. Бейджі всіх секцій: менш помітні, без рамки та фонового виділення */
 .hero__badge {
    display: inline-flex;
    align-items: center;
    gap: 8px;
-   padding: 8px 18px;
-   background-color: rgba(22, 24, 29, 0.8);
-   backdrop-filter: blur(8px);
-   border: 1px solid rgba(var(--accent-rgb), 0.35);
-   border-radius: 50px;
-   color: #F2F2F2;
-   font-family: 'Plus Jakarta Sans', sans-serif;
-   font-size: 0.85rem;
-   font-weight: 600;
-   letter-spacing: 0.03em;
-   margin-bottom: 28px;
+   padding: 4px 0;
+   background: transparent;
+   border: none;
+   color: #8E8E8E;
+   font-family: 'Montserrat', sans-serif;
+   font-size: 0.8rem;
+   font-weight: 500;
+   letter-spacing: 0.04em;
+   margin-bottom: 20px;
 }
 
 .hero__badge::before {
    content: '';
-   width: 8px;
-   height: 8px;
+   width: 6px;
+   height: 6px;
    border-radius: 50%;
-   background-color: var(--accent);
-   box-shadow: 0 0 10px var(--accent);
+   background-color: rgba(var(--accent-rgb), 0.7);
 }
 
 .hero__title {
-   font-family: 'Syne', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 800;
-   font-size: clamp(2.2rem, 5.2vw, 4rem);
-   line-height: 1.12;
+   font-size: clamp(2.1rem, 5vw, 3.8rem);
+   line-height: 1.15;
    color: #F2F2F2;
    letter-spacing: -0.02em;
    margin: 0 0 24px;
@@ -267,12 +271,12 @@ body {
 }
 
 .hero__subtitle {
-   font-family: 'Plus Jakarta Sans', sans-serif;
-   font-size: clamp(1rem, 1.8vw, 1.15rem);
+   font-family: 'Montserrat', sans-serif;
+   font-size: clamp(0.98rem, 1.8vw, 1.12rem);
    line-height: 1.65;
    color: #8E8E8E;
    max-width: 660px;
-   margin: 0 0 42px;
+   margin: 0 0 40px;
 }
 
 .hero__actions {
@@ -289,7 +293,7 @@ body {
    justify-content: center;
    padding: 15px 32px;
    border-radius: 8px;
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.95rem;
    font-weight: 700;
    text-decoration: none;
@@ -314,7 +318,6 @@ body {
    background-color: rgba(0, 136, 204, 0.08);
    color: #ffffff;
    border: 1px solid rgba(0, 136, 204, 0.4);
-   backdrop-filter: blur(6px);
 }
 
 .btn--outline:hover {
@@ -323,25 +326,6 @@ body {
    color: #ffffff;
    transform: translateY(-2px);
    box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
-}
-
-@media (max-width: 600px) {
-   .hero {
-      padding: 80px 16px 60px;
-   }
-
-   .hero__actions {
-      width: 100%;
-      flex-direction: column;
-   }
-
-   .hero__actions .btn {
-      width: 100%;
-   }
-}
-
-html {
-   scroll-behavior: smooth;
 }
 
 /* 3. Секція Послуг (Services Section) */
@@ -362,25 +346,26 @@ html {
    margin: 0 auto 60px;
 }
 
-.section-badge {
+/* 3. Стриманий вигляд бейджів секцій (без рамки і фону) */
+.section-badge,
+.cta-badge {
    display: inline-block;
-   padding: 6px 16px;
-   background-color: rgba(var(--accent-rgb), 0.12);
-   border: 1px solid rgba(var(--accent-rgb), 0.35);
-   border-radius: 50px;
-   color: var(--accent);
-   font-family: 'Plus Jakarta Sans', sans-serif;
-   font-size: 0.8rem;
-   font-weight: 700;
+   padding: 0;
+   background: transparent;
+   border: none;
+   color: #71717a;
+   font-family: 'Montserrat', sans-serif;
+   font-size: 0.78rem;
+   font-weight: 600;
    text-transform: uppercase;
-   letter-spacing: 0.06em;
-   margin-bottom: 16px;
+   letter-spacing: 0.1em;
+   margin-bottom: 12px;
 }
 
 .section-title {
-   font-family: 'Syne', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 800;
-   font-size: clamp(2rem, 4vw, 3rem);
+   font-size: clamp(1.9rem, 4vw, 2.8rem);
    color: #F2F2F2;
    line-height: 1.15;
    letter-spacing: -0.02em;
@@ -388,8 +373,8 @@ html {
 }
 
 .section-subtitle {
-   font-family: 'Plus Jakarta Sans', sans-serif;
-   font-size: 1.05rem;
+   font-family: 'Montserrat', sans-serif;
+   font-size: 1.02rem;
    line-height: 1.6;
    color: #8E8E8E;
    margin: 0;
@@ -446,7 +431,7 @@ html {
 }
 
 .service-card__num {
-   font-family: 'Syne', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 800;
    font-size: 1.75rem;
    color: rgba(255, 255, 255, 0.15);
@@ -459,7 +444,7 @@ html {
 }
 
 .service-card__tag {
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.78rem;
    font-weight: 600;
    color: #a1a1aa;
@@ -469,7 +454,7 @@ html {
 }
 
 .service-card__title {
-   font-family: 'Syne', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 700;
    font-size: 1.45rem;
    color: #F2F2F2;
@@ -477,7 +462,7 @@ html {
 }
 
 .service-card__desc {
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.95rem;
    line-height: 1.6;
    color: #8E8E8E;
@@ -494,7 +479,7 @@ html {
 }
 
 .service-card__list li {
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.92rem;
    color: #e4e4e7;
    display: flex;
@@ -522,14 +507,14 @@ html {
 }
 
 .service-card__price {
-   font-family: 'Syne', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 700;
    font-size: 1.15rem;
    color: #ffffff;
 }
 
 .service-card__link {
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.92rem;
    font-weight: 700;
    color: var(--accent);
@@ -540,21 +525,6 @@ html {
 .service-card__link:hover {
    color: #ff7a33;
    transform: translateX(4px);
-}
-
-@media (max-width: 860px) {
-   .services {
-      padding: 72px 16px;
-   }
-
-   .services__grid {
-      grid-template-columns: 1fr;
-      gap: 18px;
-   }
-
-   .service-card {
-      padding: 28px 22px;
-   }
 }
 
 /* 4. Секція результатів (Gallery) */
@@ -582,7 +552,7 @@ html {
    background-color: #16181d;
    border: 1px solid rgba(255, 255, 255, 0.08);
    color: #8E8E8E;
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.9rem;
    font-weight: 600;
    padding: 10px 22px;
@@ -649,11 +619,10 @@ html {
    position: absolute;
    top: 16px;
    left: 16px;
-   background-color: rgba(11, 12, 14, 0.82);
-   backdrop-filter: blur(8px);
+   background-color: rgba(11, 12, 14, 0.85);
    border: 1px solid rgba(255, 255, 255, 0.15);
    color: #F2F2F2;
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.78rem;
    font-weight: 600;
    padding: 6px 14px;
@@ -668,7 +637,7 @@ html {
 }
 
 .gallery-card__title {
-   font-family: 'Syne', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 700;
    font-size: 1.25rem;
    color: #F2F2F2;
@@ -676,7 +645,7 @@ html {
 }
 
 .gallery-card__desc {
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.93rem;
    line-height: 1.6;
    color: #8E8E8E;
@@ -685,7 +654,7 @@ html {
 }
 
 .gallery-card__link {
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.92rem;
    font-weight: 700;
    color: var(--accent);
@@ -699,33 +668,6 @@ html {
 .gallery-card__link:hover {
    color: #ff7a33;
    transform: translateX(4px);
-}
-
-@media (max-width: 860px) {
-   .gallery {
-      padding: 72px 16px;
-   }
-
-   .gallery__grid {
-      grid-template-columns: 1fr;
-      gap: 20px;
-   }
-
-   .gallery__filters {
-      justify-content: flex-start;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      flex-wrap: nowrap;
-      -webkit-overflow-scrolling: touch;
-   }
-
-   .filter-btn {
-      flex-shrink: 0;
-   }
-
-   .gallery-card__image-wrapper {
-      height: 220px;
-   }
 }
 
 /* 5. Секція прайс-листа (Pricing) */
@@ -757,7 +699,7 @@ html {
 }
 
 .pricing-table th {
-   font-family: 'Syne', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 700;
    font-size: 0.95rem;
    color: #F2F2F2;
@@ -768,7 +710,7 @@ html {
 }
 
 .pricing-table td {
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    padding: 22px 24px;
    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
    vertical-align: middle;
@@ -790,7 +732,7 @@ html {
 }
 
 .pricing-category {
-   font-family: 'Syne', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 700;
    color: #F2F2F2;
    display: flex;
@@ -820,7 +762,7 @@ html {
 }
 
 .pricing-price {
-   font-family: 'Syne', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 700;
    color: #ffffff;
    font-size: 1.05rem;
@@ -859,25 +801,10 @@ html {
 }
 
 .pricing-note {
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.88rem;
    color: #8E8E8E;
    margin: 0;
-}
-
-@media (max-width: 900px) {
-   .pricing {
-      padding: 72px 16px;
-   }
-
-   .pricing-table__wrapper {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-   }
-
-   .pricing-table {
-      min-width: 700px;
-   }
 }
 
 /* 6. Секція Переваги (Advantages) */
@@ -956,7 +883,7 @@ html {
 }
 
 .advantage-card__title {
-   font-family: 'Syne', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 700;
    font-size: 1.15rem;
    color: #F2F2F2;
@@ -964,7 +891,7 @@ html {
 }
 
 .advantage-card__desc {
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.9rem;
    line-height: 1.6;
    color: #8E8E8E;
@@ -975,21 +902,6 @@ html {
    .advantages__grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
-   }
-}
-
-@media (max-width: 600px) {
-   .advantages {
-      padding: 72px 16px;
-   }
-
-   .advantages__grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
-   }
-
-   .advantage-card {
-      padding: 26px 20px;
    }
 }
 
@@ -1016,7 +928,9 @@ html {
    display: flex;
    gap: 24px;
    overflow-x: auto;
-   scroll-behavior: smooth;
+   overscroll-behavior-x: contain;
+   /* Ізолює горизонтальний свайп від вертикального скролу */
+   touch-action: pan-x pan-y;
    scrollbar-width: none;
    -ms-overflow-style: none;
    padding: 10px 4px 20px;
@@ -1161,21 +1075,6 @@ html {
    right: -24px;
 }
 
-@media (max-width: 900px) {
-   .reviews {
-      padding: 70px 16px;
-   }
-
-   .review-card {
-      flex: 0 0 300px;
-      padding: 22px;
-   }
-
-   .reviews-nav-btn {
-      display: none;
-   }
-}
-
 /* 8. Секція Звернення / Консультація (CTA) */
 .cta-section {
    padding: 90px 20px;
@@ -1194,20 +1093,6 @@ html {
    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
    position: relative;
    overflow: hidden;
-}
-
-.cta-badge {
-   display: inline-block;
-   font-family: 'Montserrat', sans-serif;
-   font-size: 0.85rem;
-   font-weight: 600;
-   text-transform: uppercase;
-   color: var(--accent, #FF4D00);
-   background-color: rgba(255, 77, 0, 0.1);
-   padding: 6px 16px;
-   border-radius: 20px;
-   margin-bottom: 20px;
-   letter-spacing: 0.05em;
 }
 
 .cta-title {
@@ -1260,41 +1145,20 @@ html {
    box-shadow: 0 8px 20px rgba(255, 77, 0, 0.35);
 }
 
+/* Стиль кнопки Telegram з фірмовим підсвічуванням */
 .cta-section .btn--outline {
-   background-color: #1a1d24;
+   background-color: rgba(0, 136, 204, 0.14);
    color: #ffffff;
-   border: 1px solid rgba(255, 255, 255, 0.12);
+   border: 1px solid rgba(0, 136, 204, 0.5);
+   box-shadow: 0 0 15px rgba(0, 136, 204, 0.3);
 }
 
 .cta-section .btn--outline:hover {
-   background-color: #222630;
-   border-color: var(--accent, #FF4D00);
-   color: var(--accent, #FF4D00);
+   background-color: #0088cc;
+   border-color: #0088cc;
+   color: #ffffff;
    transform: translateY(-2px);
-}
-
-@media (max-width: 768px) {
-   .cta-section {
-      padding: 60px 16px;
-   }
-
-   .cta-card {
-      padding: 40px 20px;
-   }
-
-   .cta-title {
-      font-size: 1.5rem;
-   }
-
-   .cta-actions {
-      flex-direction: column;
-      width: 100%;
-   }
-
-   .cta-section .btn {
-      width: 100%;
-      justify-content: center;
-   }
+   box-shadow: 0 0 25px rgba(0, 136, 204, 0.6);
 }
 
 /* 9. Секція Футер (Footer) */
@@ -1324,7 +1188,7 @@ html {
 }
 
 .footer__logo {
-   font-family: 'Syne', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 800;
    font-size: 1.4rem;
    color: #ffffff;
@@ -1339,7 +1203,7 @@ html {
 }
 
 .footer__desc {
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.93rem;
    line-height: 1.6;
    color: #8E8E8E;
@@ -1373,13 +1237,16 @@ html {
    transform: translateY(-3px);
 }
 
+/* 4. Футер соцмережі: чорний фон, біле лого, підсвітка оригінального кольору (TikTok не змінено) */
+/* Instagram */
 .footer__socials .social-link:nth-child(1):hover {
-   background-color: #d62976;
+   background-color: #000000;
    border-color: #d62976;
-   color: #111111;
-   box-shadow: 0 6px 18px rgba(225, 48, 108, 0.4);
+   color: #ffffff;
+   box-shadow: 0 0 18px rgba(214, 41, 118, 0.75);
 }
 
+/* TikTok — залишено без змін */
 .footer__socials .social-link:nth-child(2):hover {
    background-color: #111111;
    border-color: #111111;
@@ -1387,36 +1254,40 @@ html {
    box-shadow: 0 6px 18px rgba(254, 44, 85, 0.4);
 }
 
+/* YouTube */
 .footer__socials .social-link:nth-child(3):hover {
-   background-color: #FF0000;
+   background-color: #000000;
    border-color: #FF0000;
    color: #ffffff;
-   box-shadow: 0 6px 18px rgba(255, 0, 0, 0.4);
+   box-shadow: 0 0 18px rgba(255, 0, 0, 0.75);
 }
 
+/* Telegram */
 .footer__socials .social-link:nth-child(4):hover {
-   background-color: #0088cc;
+   background-color: #000000;
    border-color: #0088cc;
    color: #ffffff;
-   box-shadow: 0 6px 18px rgba(0, 136, 204, 0.4);
+   box-shadow: 0 0 18px rgba(0, 136, 204, 0.75);
 }
 
+/* WhatsApp */
 .footer__socials .social-link:nth-child(5):hover {
-   background-color: #25D366;
+   background-color: #000000;
    border-color: #25D366;
    color: #ffffff;
-   box-shadow: 0 6px 18px rgba(37, 211, 102, 0.4);
+   box-shadow: 0 0 18px rgba(37, 211, 102, 0.75);
 }
 
+/* Viber */
 .footer__socials .social-link:nth-child(6):hover {
-   background-color: #7360F2;
+   background-color: #000000;
    border-color: #7360F2;
    color: #ffffff;
-   box-shadow: 0 6px 18px rgba(115, 96, 242, 0.4);
+   box-shadow: 0 0 18px rgba(115, 96, 242, 0.75);
 }
 
 .footer__title {
-   font-family: 'Syne', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 700;
    font-size: 1.1rem;
    color: #F2F2F2;
@@ -1434,7 +1305,7 @@ html {
 }
 
 .footer__list li {
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.92rem;
    color: #a1a1aa;
    display: flex;
@@ -1460,30 +1331,14 @@ html {
 }
 
 .footer__bottom p {
-   font-family: 'Plus Jakarta Sans', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-size: 0.85rem;
    color: #6b7280;
    margin: 0;
 }
 
-@media (max-width: 900px) {
-   .footer {
-      padding: 60px 16px 24px;
-   }
-
-   .footer__grid {
-      grid-template-columns: 1fr;
-      gap: 36px;
-      margin-bottom: 40px;
-   }
-
-   .footer__desc {
-      max-width: 100%;
-   }
-}
-
 /* ==========================================
-   Мобільна адаптація (Responsive)
+   Мобільна адаптація та оптимізація скролінгу
    ========================================== */
 
 .burger {
@@ -1520,15 +1375,19 @@ html {
    transform: translateY(-10px) rotate(-45deg);
 }
 
-@media (max-width: 1024px) {
-   .header__city-link {
-      display: none;
-   }
-}
-
 @media (max-width: 900px) {
    .burger {
       display: flex;
+   }
+
+   /* Ховаємо кнопку дзвінка в хедері на мобільних */
+   .header__contacts .btn--header {
+      display: none !important;
+   }
+
+   /* Ховаємо фільтри галереї на мобільних */
+   .gallery__filters {
+      display: none !important;
    }
 
    .nav {
@@ -1537,8 +1396,7 @@ html {
       right: -100%;
       width: 100%;
       height: 100vh;
-      background-color: rgba(11, 12, 14, 0.97);
-      backdrop-filter: blur(15px);
+      background-color: rgba(11, 12, 14, 0.98);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -1574,6 +1432,12 @@ html {
       display: none;
    }
 
+   .hero {
+      padding: 80px 16px 60px;
+      min-height: auto;
+      /* Прибирає стрибки при скролі через динамічний екран браузера */
+   }
+
    .hero__title {
       font-size: 2rem;
       line-height: 1.2;
@@ -1583,40 +1447,187 @@ html {
       font-size: 0.95rem;
    }
 
-   .services__grid,
-   .advantages__grid {
-      grid-template-columns: 1fr;
-      gap: 20px;
+   /* Hero кнопки на мобільних: однакова висота, трохи вужчі, плавна анімація */
+   .hero__actions {
+      flex-direction: row;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
    }
 
+   .hero__actions .btn {
+      flex: 1;
+      max-width: 170px;
+      padding: 12px 14px;
+      font-size: 0.88rem;
+      min-height: 46px;
+   }
+
+   @keyframes heroBtnPulse {
+
+      0%,
+      100% {
+         opacity: 1;
+      }
+
+      50% {
+         opacity: 0.72;
+      }
+   }
+
+   .hero__actions .btn--header {
+      animation: heroBtnPulse 2.5s ease-in-out infinite;
+   }
+
+   /* Назви послуг на картках: плавна GPU-анімація без перерахунку геометрії */
+   @keyframes serviceTitleFade {
+
+      0%,
+      100% {
+         opacity: 1;
+      }
+
+      50% {
+         opacity: 0.72;
+      }
+   }
+
+   .service-card__title {
+      animation: serviceTitleFade 3.2s ease-in-out infinite;
+   }
+
+   .services,
+   .gallery,
+   .pricing,
+   .advantages,
+   .reviews {
+      padding: 64px 16px;
+   }
+
+   .services__grid,
+   .advantages__grid,
    .gallery__grid {
       grid-template-columns: 1fr;
+      gap: 18px;
    }
 
-   .gallery__filters {
-      display: flex;
-      overflow-x: auto;
-      justify-content: flex-start;
-      padding-bottom: 10px;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
+   .service-card {
+      padding: 28px 22px;
    }
 
-   .filter-btn {
-      flex-shrink: 0;
+   .gallery-card__image-wrapper {
+      height: 220px;
    }
 
+   /* Таблиця вартості у вигляді зручних вертикальних блоків */
    .pricing-table__wrapper {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
    }
 
-   .pricing-table {
-      min-width: 600px;
+   .pricing-table,
+   .pricing-table thead,
+   .pricing-table tbody,
+   .pricing-table tr,
+   .pricing-table th,
+   .pricing-table td {
+      display: block;
+      width: 100%;
    }
 
-   section {
-      padding: 60px 0;
+   .pricing-table thead {
+      display: none;
+   }
+
+   .pricing-table tbody tr {
+      background-color: #16181d;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      margin-bottom: 16px;
+      padding: 20px;
+   }
+
+   .pricing-table td {
+      padding: 6px 0;
+      border: none;
+      text-align: left;
+      white-space: normal !important;
+   }
+
+   .pricing-table td:nth-child(1) {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+   }
+
+   .pricing-table td:nth-child(2) {
+      color: #8E8E8E;
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+   }
+
+   .pricing-table td:nth-child(3) {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+   }
+
+   .pricing-table td:nth-child(4) {
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+   }
+
+   .pricing-btn {
+      width: 100%;
+      justify-content: center;
+   }
+
+   .review-card {
+      flex: 0 0 290px;
+      padding: 22px;
+   }
+
+   .reviews-nav-btn {
+      display: none;
+   }
+
+   .cta-section {
+      padding: 60px 16px;
+   }
+
+   .cta-card {
+      padding: 40px 20px;
+   }
+
+   .cta-title {
+      font-size: 1.5rem;
+   }
+
+   .cta-actions {
+      flex-direction: column;
+      width: 100%;
+   }
+
+   .cta-section .btn {
+      width: 100%;
+      justify-content: center;
+   }
+
+   .footer {
+      padding: 60px 16px 24px;
+   }
+
+   .footer__grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+      margin-bottom: 40px;
+   }
+
+   .footer__desc {
+      max-width: 100%;
    }
 
    .section-title {
@@ -1627,42 +1638,31 @@ html {
 @media (max-width: 480px) {
    .hero__actions {
       flex-direction: column;
-      width: 100%;
    }
 
    .hero__actions .btn {
-      width: 100%;
-      justify-content: center;
+      max-width: 100%;
    }
 
    .logo img {
       height: 36px;
    }
+}
 
-   .btn--header {
-      padding: 8px 12px;
-      font-size: 0.8rem;
+/* Плавна анімація слів "безкоштовну консультацію" у секції CTA */
+@keyframes textGlowPulse {
+
+   0%,
+   100% {
+      text-shadow: 0 0 4px rgba(var(--accent-rgb), 0.2);
+   }
+
+   50% {
+      text-shadow: 0 0 14px rgba(var(--accent-rgb), 0.8), 0 0 22px rgba(var(--accent-rgb), 0.4);
    }
 }
 
-/* Оптимізація та прискорення скролу для мобільних пристроїв */
-@media (max-width: 900px) {
-
-   /* Вимикаємо важке розмиття фону (бо воно гальмує мобільний процессор при скролі) */
-   .nav,
-   .hero__badge,
-   .gallery-card__badge {
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-   }
-
-   /* Робимо фон мобільного меню повністю непрозорим або звичайним напівпрозорим */
-   .nav {
-      background-color: rgba(11, 12, 14, 0.98) !important;
-   }
-
-   /* Увімкнення апаратної інерційної прокрутки для iOS / Android */
-   body {
-      -webkit-overflow-scrolling: touch;
-   }
+.cta-title .text-accent {
+   display: inline-block;
+   animation: textGlowPulse 3s ease-in-out infinite;
 }
