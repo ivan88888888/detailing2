@@ -256,25 +256,40 @@ html {
 
 .hero__actions .btn--primary,
 .cta-section .btn--primary {
-   background-color: var(--accent, #FF4D00);
+   background-color: rgba(255, 77, 0, 0.06);
    color: #ffffff;
-   border: 1px solid var(--accent, #FF4D00);
-   box-shadow: none;
+   border: 1px solid rgba(255, 77, 0, 0.5);
+   box-shadow: 0 0 15px rgba(255, 77, 0, 0.25);
 }
 
-.hero__actions .btn--primary:hover,
-.cta-section .btn--primary:hover {
+@media (hover: hover) {
+
+   .hero__actions .btn--primary:hover,
+   .cta-section .btn--primary:hover {
+      background-color: var(--accent);
+      /* При наведенні заповнюється суцільним помаранчевим */
+      border-color: var(--accent);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(255, 77, 0, 0.6);
+      /* Яскраве світіння при наведенні, як у Telegram */
+   }
+}
+
+.hero__actions .btn--primary:active,
+.cta-section .btn--primary:active {
    background-color: #e04300;
-   transform: translateY(-2px);
-   box-shadow: 0 8px 20px rgba(255, 77, 0, 0.35);
+   transform: translateY(0);
+   box-shadow: 0 0 15px rgba(255, 77, 0, 0.4);
 }
 
+/* Ледь помітний синій фон для кнопки «Консультація в Telegram» */
 .hero__actions .btn--outline,
 .cta-section .btn--outline {
-   background-color: rgba(0, 136, 204, 0.14);
+   background-color: rgba(0, 136, 204, 0.06);
    color: #ffffff;
    border: 1px solid rgba(0, 136, 204, 0.5);
-   box-shadow: 0 0 15px rgba(0, 136, 204, 0.3);
+   box-shadow: 0 0 15px rgba(0, 136, 204, 0.25);
 }
 
 .hero__actions .btn--outline:hover,
