@@ -10,6 +10,7 @@ body {
    padding: 0;
    width: 100%;
    max-width: 100%;
+   overflow-x: hidden;
    background-color: #0b0c0e;
    overscroll-behavior-y: none;
 }
@@ -23,20 +24,13 @@ html {
    --accent-rgb: 255, 77, 0;
 }
 
-/* Обгортка контенту, яка ховає горизонтальний скрол без ламання position: fixed на iOS */
-.site-wrapper {
-   width: 100%;
-   overflow-x: hidden;
-   position: relative;
-}
-
-/* Закріплений header — притиснутий доверху, повністю непрозорий */
+/* Закріплений header через position: sticky для стабільної роботи на iOS Safari */
 .header {
    background-color: #0b0c0e !important;
    padding: 16px 0;
    padding-top: max(16px, env(safe-area-inset-top));
    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-   position: fixed;
+   position: sticky;
    top: 0;
    left: 0;
    z-index: 9999;
@@ -126,7 +120,7 @@ html {
    }
 }
 
-/* Шрифти та стилі для десктопної кнопки у хедера */
+/* Кнопка у хедера */
 .btn--header {
    font-family: 'Montserrat', sans-serif;
    color: var(--accent);
@@ -145,15 +139,15 @@ html {
    box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.45);
 }
 
-/* Головний екран (Hero Section) з відступом під fixed header */
+/* Головний екран (Hero Section) */
 .hero {
    position: relative;
-   min-height: 100svh;
+   min-height: calc(100svh - 73px);
    display: flex;
    align-items: center;
    justify-content: center;
    text-align: center;
-   padding: 140px 20px 90px;
+   padding: 100px 20px 90px;
    background-color: #0b0c0e;
    background-image: linear-gradient(rgba(11, 12, 14, 0.85), rgba(11, 12, 14, 0.92)), url('https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1920&q=80');
    background-size: cover;
