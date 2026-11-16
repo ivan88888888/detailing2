@@ -10,18 +10,12 @@ body {
    padding: 0;
    width: 100%;
    max-width: 100%;
-   overflow-x: clip;
    background-color: #0b0c0e;
+   overscroll-behavior-y: none;
 }
 
 html {
    scroll-behavior: smooth;
-}
-
-@media (max-width: 900px) {
-   html {
-      scroll-behavior: smooth;
-   }
 }
 
 :root {
@@ -29,7 +23,14 @@ html {
    --accent-rgb: 255, 77, 0;
 }
 
-/* 1 & 4. Закріплений header — притиснутий до самого верху, повністю непрозорий */
+/* Обгортка контенту, яка ховає горизонтальний скрол без ламання position: fixed на iOS */
+.site-wrapper {
+   width: 100%;
+   overflow-x: hidden;
+   position: relative;
+}
+
+/* Закріплений header — притиснутий доверху, повністю непрозорий */
 .header {
    background-color: #0b0c0e !important;
    padding: 16px 0;
@@ -125,7 +126,7 @@ html {
    }
 }
 
-/* 1. Шрифти та стилі для десктопної кнопки у хедера */
+/* Шрифти та стилі для десктопної кнопки у хедера */
 .btn--header {
    font-family: 'Montserrat', sans-serif;
    color: var(--accent);
@@ -144,7 +145,7 @@ html {
    box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.45);
 }
 
-/* 2. Головний екран (Hero Section) з відступом під fixed header */
+/* Головний екран (Hero Section) з відступом під fixed header */
 .hero {
    position: relative;
    min-height: 100svh;
@@ -237,7 +238,7 @@ html {
    flex-wrap: wrap;
 }
 
-/* 2 & 5. Кнопки в Hero та CTA — вирівнювання і підсвічування тільки при наведенні */
+/* Кнопки в Hero та CTA */
 .hero__actions .btn,
 .cta-section .btn {
    display: inline-flex;
@@ -267,12 +268,10 @@ html {
    .hero__actions .btn--primary:hover,
    .cta-section .btn--primary:hover {
       background-color: var(--accent);
-      /* При наведенні заповнюється суцільним помаранчевим */
       border-color: var(--accent);
       color: #ffffff;
       transform: translateY(-2px);
       box-shadow: 0 0 25px rgba(255, 77, 0, 0.6);
-      /* Яскраве світіння при наведенні, як у Telegram */
    }
 }
 
@@ -283,7 +282,6 @@ html {
    box-shadow: 0 0 15px rgba(255, 77, 0, 0.4);
 }
 
-/* Ледь помітний синій фон для кнопки «Консультація в Telegram» */
 .hero__actions .btn--outline,
 .cta-section .btn--outline {
    background-color: rgba(0, 136, 204, 0.06);
@@ -301,7 +299,7 @@ html {
    box-shadow: 0 0 25px rgba(0, 136, 204, 0.6);
 }
 
-/* 3. Секція Послуг */
+/* Секція Послуг */
 .services {
    padding: 100px 20px;
    background-color: #0b0c0e;
@@ -499,7 +497,7 @@ html {
    transform: translateX(4px);
 }
 
-/* 4. Секція результатів (Gallery) */
+/* Секція результатів (Gallery) */
 .gallery {
    padding: 100px 20px;
    background-color: #0b0c0e;
@@ -642,7 +640,7 @@ html {
    transform: translateX(4px);
 }
 
-/* 5. Секція прайс-листа */
+/* Секція прайс-листа */
 .pricing {
    padding: 100px 20px;
    background-color: #0b0c0e;
@@ -779,7 +777,7 @@ html {
    margin: 0;
 }
 
-/* 6. Секція Переваги */
+/* Секція Переваги */
 .advantages {
    padding: 100px 20px;
    background-color: #0b0c0e;
@@ -877,7 +875,7 @@ html {
    }
 }
 
-/* 7. Секція Відгуки */
+/* Секція Відгуки */
 .reviews {
    padding: 100px 20px;
    background-color: #0b0c0e;
@@ -1037,7 +1035,7 @@ html {
    right: -24px;
 }
 
-/* 3. Секція Звернення / Консультація (CTA) — без анімації тексту */
+/* Секція Звернення / Консультація (CTA) */
 .cta-section {
    padding: 90px 20px;
    background-color: #0b0c0e;
@@ -1068,7 +1066,6 @@ html {
 
 .cta-title .text-accent {
    animation: none;
-   /* Вимкнено анімацію для слів «безкоштовну консультацію» */
 }
 
 .cta-desc {
@@ -1087,7 +1084,7 @@ html {
    flex-wrap: wrap;
 }
 
-/* 9. Секція Футер */
+/* Секція Футер */
 .footer {
    background-color: #07080a;
    border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -1457,7 +1454,7 @@ html {
    }
 
    .cta-section {
-      padding: 60px 16px;
+      padding: 96px 16px;
    }
 
    .cta-card {
