@@ -20,7 +20,7 @@ html {
 
 @media (max-width: 900px) {
    html {
-      scroll-behavior: auto;
+      scroll-behavior: smooth;
    }
 }
 
@@ -1364,7 +1364,7 @@ html {
    .pricing,
    .advantages,
    .reviews {
-      padding: 64px 16px;
+      padding: 96px 16px;
    }
 
    .services__grid,
