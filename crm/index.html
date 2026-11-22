@@ -25,7 +25,7 @@ const ST = { new: 'Нова', in_progress: 'У роботі', booked: 'Запи�
 const INP = 'w-full rounded-xl border border-ink/20 bg-canvas px-4 py-3 text-base placeholder:text-mist/40 focus:border-accent focus:outline-none';
 const BTN = 'rounded-xl bg-accent px-5 py-3 font-bold text-canvas';
 const BTN2 = 'rounded-xl border border-ink/25 px-5 py-3 font-semibold';
-let tab = 'leads', filter = 'new', me = null, staff = [], q = '';
+let tab = 'today', filter = 'new', me = null, staff = [], q = '';
 
 const links = (c, m) => [c.phone || (m === 'phone' && c.contact) ? `<a class="${BTN2} text-sm" href="tel:${esc(c.phone || c.contact)}">Подзвонити</a>` : '',
   (c.telegram || (m === 'telegram' && c.contact)) ? `<a class="${BTN2} text-sm" target="_blank" rel="noopener" href="https://t.me/${esc((c.telegram || c.contact).replace(/^@/, ''))}">Telegram</a>` : '',
@@ -54,13 +54,13 @@ async function start() {
 
 /* ===== Каркас ===== */
 function render() {
-  app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-5"><div id="view"></div></main>
+  app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div class="mb-2 flex justify-end gap-4 text-xs text-mist/60"><button id="pr">Прайс</button><button id="out">Вийти</button></div><div id="view"></div></main>
   <nav class="fixed inset-x-0 bottom-0 z-20 flex border-t border-card bg-canvas" style="padding-bottom:env(safe-area-inset-bottom)">
-  ${[['leads', 'Ліди'], ['clients', 'Клієнти'], ['orders', 'Замовлення'], ['price', 'Прайс']].map(([k, l]) => `<button data-tab="${k}" class="flex-1 py-4 text-sm font-semibold ${tab === k ? 'text-accent' : 'text-mist/70'}">${l}</button>`).join('')}
-  <button id="out" class="px-5 text-sm text-mist/50">Вийти</button></nav>`;
+  ${[['today', 'Сьогодні'], ['leads', 'Ліди'], ['clients', 'Клієнти'], ['cal', 'Календар'], ['orders', 'Замовлення']].map(([k, l]) => `<button data-tab="${k}" class="flex-1 py-4 text-xs font-semibold ${tab === k ? 'text-accent' : 'text-mist/70'}">${l}</button>`).join('')}</nav>`;
   document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
+  $('pr').onclick = () => { tab = 'price'; render(); };
   $('out').onclick = async () => { await sb.auth.signOut(); login(); };
-  ({ leads: viewLeads, clients: viewClients, orders: viewOrders, price: viewPrice })[tab]();
+  ({ today: viewToday, leads: viewLeads, clients: viewClients, cal: viewCal, orders: viewOrders, price: viewPrice })[tab]();
 }
 function modal(html) {
   closeModal(); const d = document.createElement('div'); d.id = 'mod';
@@ -96,7 +96,7 @@ function openLead(l) {
     const { error } = await sb.from('leads').update(up).eq('id', l.id);
     if (error) return $('msg').textContent = 'Помилка: ' + error.message;
     if (st !== l.status) await sb.from('timeline').insert({ lead_id: l.id, client_id: l.client_id, kind: 'status', text: `Статус: ${ST[st]}`, created_by: me.id });
-    closeModal(); viewLeads();
+    closeModal(); render();
   };
   if ($('mk')) $('mk').onclick = async () => {
     $('mk').disabled = true; const ph = l.contact_method === 'phone' ? l.contact : null;
@@ -245,6 +245,76 @@ async function openOrder(id) {
       await sb.from('timeline').insert({ client_id: od.client_id, kind: 'order', text: `Замовлення видано: ${items.map(i => i.name).join(', ')} · ${Math.round(tt.total)} грн`, created_by: me.id });
     } else await sb.from('orders').update({ status: next }).eq('id', id);
     openOrder(id);
+  };
+}
+
+/* ===== Сьогодні ===== */
+const dayRange = d => { const a = new Date(d); a.setHours(0, 0, 0, 0); const b = new Date(a); b.setDate(b.getDate() + 1); return [a.toISOString(), b.toISOString()]; };
+const hm = d => new Date(d).toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+const iso = d => { const x = new Date(d); return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0'); };
+const KIND = { inspection: 'Огляд', work: 'Робота' }, AS = { planned: 'Запланований', done: 'Був', cancelled: 'Скасований', no_show: 'Не прийшов' };
+const wait = l => { const m = Math.round((Date.now() - new Date(l.created_at)) / 60000); return m < 60 ? m + ' хв' : m < 1440 ? Math.floor(m / 60) + ' год' : Math.floor(m / 1440) + ' дн'; };
+async function viewToday() {
+  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Сьогодні</h1><div id="tb" class="mt-4 space-y-6"><p class="text-mist/60">Завантаження…</p></div>`;
+  const [a, b] = dayRange(new Date()), today = iso(new Date()), soon = iso(new Date(Date.now() + 7 * 864e5));
+  const [nl, fu, ap, rm] = await Promise.all([
+    sb.from('leads').select('*').eq('status', 'new').order('created_at'),
+    sb.from('leads').select('*').in('status', ['in_progress', 'booked']).lte('next_contact_at', today).order('next_contact_at'),
+    sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').eq('status', 'planned').gte('starts_at', a).lt('starts_at', b).order('starts_at'),
+    sb.from('order_items').select('id,name,remind_at,orders(client_id,clients(id,name,phone,telegram,viber,consent_marketing))').not('remind_at', 'is', null).lte('remind_at', soon).order('remind_at')]);
+  if (nl.error || ap.error || rm.error) return $('tb').textContent = 'Помилка завантаження.';
+  const sec = (t, n, body) => `<section><h2 class="mb-2 font-bold">${t} <span class="text-mist/60">${n}</span></h2><div class="space-y-2">${body || '<p class="text-sm text-mist/60">Немає</p>'}</div></section>`;
+  const lead = (l, note) => `<button data-l="${l.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${esc(l.name)}</b> <span class="text-sm text-accent">${note}</span><div class="text-sm text-mist/80">${esc(l.contact)} · ${esc(l.service_interest || '')}</div></button>`;
+  const all = [...nl.data, ...fu.data];
+  $('tb').innerHTML =
+    sec('Нові заявки', nl.data.length, nl.data.map(l => lead(l, 'чекає ' + wait(l))).join('')) +
+    sec('Передзвонити', fu.data.length, fu.data.map(l => lead(l, 'контакт ' + l.next_contact_at)).join('')) +
+    sec('Записи на сьогодні', ap.data.length, ap.data.map(x => `<button data-a="${x.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${hm(x.starts_at)}</b> · ${esc(x.clients && x.clients.name)} <span class="text-sm text-mist/70">${KIND[x.kind]}${x.cars ? ' · ' + esc(x.cars.model) : ''}</span></button>`).join('')) +
+    sec('Кому нагадати (7 днів)', rm.data.length, rm.data.map(r => { const c = r.orders.clients; return `<div class="rounded-2xl bg-card p-4"><b>${esc(c.name)}</b> <span class="text-sm text-mist/70">· ${esc(r.name)} · до ${esc(r.remind_at)}</span>${c.consent_marketing ? '' : '<div class="text-xs text-accent">Немає згоди на пропозиції: краще подзвонити</div>'}<div class="mt-2 flex flex-wrap gap-2">${links(c, '')}<button data-done="${r.id}" data-c="${c.id}" data-n="${esc(r.name)}" class="${BTN2} text-sm">Зроблено</button></div></div>`; }).join(''));
+  document.querySelectorAll('[data-l]').forEach(b => b.onclick = () => openLead(all.find(x => x.id === b.dataset.l)));
+  document.querySelectorAll('[data-a]').forEach(b => b.onclick = () => openAppt(ap.data.find(x => x.id === b.dataset.a)));
+  document.querySelectorAll('[data-done]').forEach(b => b.onclick = async () => {
+    await sb.from('order_items').update({ remind_at: null }).eq('id', b.dataset.done);
+    await sb.from('timeline').insert({ client_id: b.dataset.c, kind: 'note', text: 'Нагадування про повторний візит: ' + b.dataset.n, created_by: me.id }); viewToday();
+  });
+}
+
+/* ===== Календар ===== */
+let cdate = new Date();
+async function viewCal() {
+  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Календар</h1><button id="na" class="${BTN} px-4 py-2 text-sm">+ Запис</button></div>
+  <div class="my-4 flex gap-2"><button id="pv" class="${BTN2} px-4" aria-label="Попередній день">&lsaquo;</button><input id="dt" type="date" value="${iso(cdate)}" class="${INP}"><button id="nx" class="${BTN2} px-4" aria-label="Наступний день">&rsaquo;</button></div><div id="list" class="space-y-2"></div>`;
+  const go = d => { cdate = d; viewCal(); };
+  $('pv').onclick = () => go(new Date(cdate.getTime() - 864e5)); $('nx').onclick = () => go(new Date(cdate.getTime() + 864e5));
+  $('dt').onchange = e => e.target.value && go(new Date(e.target.value + 'T12:00')); $('na').onclick = () => newAppt();
+  const [a, b] = dayRange(cdate); const { data, error } = await sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').gte('starts_at', a).lt('starts_at', b).order('starts_at');
+  if (error) return $('list').textContent = 'Помилка: ' + error.message;
+  $('list').innerHTML = data.length ? data.map(x => `<button data-a="${x.id}" class="block w-full rounded-2xl bg-card p-4 text-left ${x.status === 'planned' ? '' : 'opacity-60'}"><b>${hm(x.starts_at)}${x.duration_min ? ' · ' + x.duration_min + ' хв' : ''}</b> · ${esc(x.clients && x.clients.name)}<div class="text-sm text-mist/70">${KIND[x.kind]}${x.cars ? ' · ' + esc(x.cars.model) : ''} · ${AS[x.status]}</div></button>`).join('') : '<p class="text-mist/60">На цей день записів немає.</p>';
+  document.querySelectorAll('[data-a]').forEach(btn => btn.onclick = () => openAppt(data.find(x => x.id === btn.dataset.a)));
+}
+function openAppt(x) {
+  modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(x.clients && x.clients.name)}</h2><p class="text-sm text-mist/70">${KIND[x.kind]} · ${fmt(x.starts_at)}${x.cars ? ' · ' + esc(x.cars.model) : ''} · ${AS[x.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+  <div class="mt-3 flex flex-wrap gap-2">${links(x.clients || {}, '')}</div>${x.notes ? `<p class="mt-3 text-sm">${esc(x.notes)}</p>` : ''}
+  <div class="mt-4 grid gap-2">${['done', 'cancelled', 'no_show'].map(k => `<button data-s="${k}" class="${BTN2}">${AS[k]}</button>`).join('')}<button id="mo" class="${BTN}">Створити замовлення</button></div>`);
+  $('x').onclick = closeModal; $('mo').onclick = () => { closeModal(); newOrder(x.client_id); };
+  document.querySelectorAll('[data-s]').forEach(b => b.onclick = async () => {
+    await sb.from('appointments').update({ status: b.dataset.s }).eq('id', x.id);
+    await sb.from('timeline').insert({ client_id: x.client_id, kind: 'visit', text: `${KIND[x.kind]} ${fmt(x.starts_at)}: ${AS[b.dataset.s]}`, created_by: me.id }); closeModal(); render();
+  });
+}
+function newAppt() {
+  const d0 = new Date(cdate); d0.setHours(10, 0, 0, 0); const loc = new Date(d0 - d0.getTimezoneOffset() * 6e4).toISOString().slice(0, 16);
+  modal(`<h2 class="mb-3 text-xl font-bold">Новий запис</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Пошук клієнта: ім'я або телефон" class="${INP}"><select id="cl" size="4" class="${INP}"></select><select id="ca" class="${INP}"><option value="">Авто</option></select>
+  <select id="kd" class="${INP}"><option value="inspection">Огляд</option><option value="work">Робота</option></select><input id="st" type="datetime-local" value="${loc}" class="${INP}"><input id="du" type="number" min="5" step="5" placeholder="Тривалість, хв" class="${INP}">
+  <select id="as" class="${INP}"><option value="">Хто веде</option>${staff.map(s => `<option value="${s.user_id}">${esc(s.name)}</option>`).join('')}</select><textarea id="nt" rows="2" placeholder="Нотатки" class="${INP}"></textarea><button id="go" class="${BTN}">Створити</button><p id="msg" class="text-sm"></p></div>`);
+  const pick = async () => { const { data } = await sb.from('cars').select('*').eq('client_id', $('cl').value); $('ca').innerHTML = '<option value="">Авто</option>' + (data || []).map(a => `<option value="${a.id}">${esc([a.model, a.plate].filter(Boolean).join(' · '))}</option>`).join(''); };
+  const fill = async () => { const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20); if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`); const { data } = await r; $('cl').innerHTML = (data || []).map(c => `<option value="${c.id}">${esc(c.name)} ${esc(c.phone || '')}</option>`).join(''); };
+  let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; $('cl').onchange = pick; fill();
+  $('go').onclick = async () => {
+    if (!$('cl').value || !$('st').value) return $('msg').textContent = 'Оберіть клієнта й час.';
+    const { error } = await sb.from('appointments').insert({ client_id: $('cl').value, car_id: $('ca').value || null, kind: $('kd').value, starts_at: new Date($('st').value).toISOString(), duration_min: +$('du').value || null, assignee: $('as').value || null, notes: $('nt').value || null });
+    if (error) return $('msg').textContent = 'Помилка: ' + error.message;
+    await sb.from('timeline').insert({ client_id: $('cl').value, kind: 'visit', text: `Запис: ${KIND[$('kd').value]} ${fmt(new Date($('st').value))}`, created_by: me.id }); closeModal(); render();
   };
 }
 
