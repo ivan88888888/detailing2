@@ -213,18 +213,20 @@ function newOrder(cid) {
 }
 async function openOrder(id) {
   if (!services.length) await loadServices();
-  const [o, it] = await Promise.all([sb.from('orders').select('*, clients(id,name,phone), cars(model,plate)').eq('id', id).single(), sb.from('order_items').select('*').eq('order_id', id).order('name')]);
+  const [o, it, ph] = await Promise.all([sb.from('orders').select('*, clients(id,name,phone), cars(model,plate)').eq('id', id).single(), sb.from('order_items').select('*').eq('order_id', id).order('name'), sb.from('order_photos').select('*').eq('order_id', id).order('created_at')]);
   if (o.error) return; const od = o.data, items = it.data, hasUsd = items.some(i => i.currency === 'USD');
   const t = calc(items, od.usd_rate, od.discount_uah), next = OSN[OSN.indexOf(od.status) + 1];
   modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(od.clients.name)}</h2><p class="text-sm text-mist/70">${esc(od.cars ? [od.cars.model, od.cars.plate].filter(Boolean).join(' · ') : 'авто не вказано')} · ${OS[od.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <h3 class="mt-4 font-bold">Послуги</h3><div class="mt-2 space-y-1 text-sm">${items.map(i => `<div class="flex items-center justify-between gap-2 rounded-xl bg-canvas px-3 py-2"><span>${esc(i.name)} × ${i.qty}</span><span class="shrink-0">${i.price} ${i.currency === 'USD' ? '$' : 'грн'}<button data-rm="${i.id}" class="ml-2 text-mist/50" aria-label="Видалити">&times;</button></span></div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div>
   <form id="af" class="mt-3 grid grid-cols-[1fr_5rem] gap-2"><select id="sv" class="${INP} col-span-2"><option value="">Додати послугу…</option>${services.filter(s => s.active).map(s => `<option value="${s.id}">${esc(s.category)}: ${esc(s.name)}</option>`).join('')}</select><input id="pr" type="number" step="any" min="0" placeholder="Ціна" class="${INP}"><input id="qt" type="number" step="any" min="0.1" value="1" class="${INP}"><button class="${BTN2} col-span-2">Додати</button></form>
+  <h3 class="mt-5 font-bold">Фото</h3><div id="ph" class="mt-2 space-y-3"></div>
   <div class="mt-4 grid gap-3"><div class="grid grid-cols-2 gap-2"><label class="text-sm text-mist/70">Знижка, грн<input id="ds" type="number" min="0" class="${INP} mt-1" value="${od.discount_uah || 0}"></label>${hasUsd ? `<label class="text-sm text-mist/70">Курс $, грн<input id="rt" type="number" step="any" min="0" class="${INP} mt-1" value="${od.usd_rate || ''}"></label>` : ''}</div>
   <p class="text-lg font-bold">Разом: ${Math.round(t.total)} грн${t.need ? ' <span class="text-sm font-normal text-mist/70">(вкажіть курс $)</span>' : ''}</p>
   <div class="grid grid-cols-2 gap-2"><select id="pm" class="${INP}"><option value="">Оплата…</option>${[['cash', 'Готівка'], ['card', 'Картка'], ['transfer', 'Переказ']].map(([k, v]) => `<option value="${k}" ${od.payment_method === k ? 'selected' : ''}>${v}</option>`).join('')}</select><input id="pd" type="number" min="0" placeholder="Сплачено, грн" class="${INP}" value="${od.paid_uah ?? ''}"></div>
   <textarea id="in" rows="2" placeholder="Стан авто при отриманні" class="${INP}">${esc(od.intake_notes)}</textarea><textarea id="dn" rows="2" placeholder="Нотатки при видачі" class="${INP}">${esc(od.delivery_notes)}</textarea>
   <button id="sv2" class="${BTN}">Зберегти</button>${next ? `<button id="nx" class="${BTN2}">Статус: ${OS[next]}</button>` : ''}<p id="msg" class="text-sm text-mist/80"></p></div>`);
   $('x').onclick = closeModal;
+  renderPhotos(id, ph.data || [], $('ph'));
   const save = async () => {
     const up = { discount_uah: +$('ds').value || 0, usd_rate: $('rt') ? (+$('rt').value || null) : od.usd_rate, payment_method: $('pm').value || null, paid_uah: $('pd').value === '' ? null : +$('pd').value, intake_notes: $('in').value || null, delivery_notes: $('dn').value || null };
     const r = await sb.from('orders').update(up).eq('id', id); if (r.error) { $('msg').textContent = 'Помилка: ' + r.error.message; return null; } return up;
@@ -246,6 +248,37 @@ async function openOrder(id) {
     } else await sb.from('orders').update({ status: next }).eq('id', id);
     openOrder(id);
   };
+}
+
+/* ===== Фото замовлень ===== */
+const KP = { before: 'До', during: 'Під час', after: 'Після' };
+const shrink = f => new Promise((res, rej) => {
+  const img = new Image(), u = URL.createObjectURL(f);
+  img.onload = () => { const k = Math.min(1, 1600 / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u); c.toBlob(b => b ? res(b) : rej(new Error('не вдалося стиснути')), 'image/jpeg', 0.8); };
+  img.onerror = () => rej(new Error('не вдалося прочитати файл')); img.src = u;
+});
+async function renderPhotos(id, rows, box) {
+  const urls = rows.length ? ((await sb.storage.from('order-photos').createSignedUrls(rows.map(r => r.path), 3600)).data || []) : [];
+  const url = p => (urls.find(u => u.path === p) || {}).signedUrl || '';
+  box.innerHTML = Object.entries(KP).map(([k, l]) => `<div><div class="mb-1 flex items-center justify-between text-sm"><span class="font-semibold">${l}</span><label class="${BTN2} cursor-pointer px-3 py-1 text-sm">+ Фото<input type="file" accept="image/*" multiple data-up="${k}" class="sr-only"></label></div>
+    <div class="grid grid-cols-3 gap-2">${rows.filter(r => r.kind === k).map(r => `<div class="relative"><a href="${esc(url(r.path))}" target="_blank" rel="noopener"><img src="${esc(url(r.path))}" alt="${l}" loading="lazy" class="aspect-square w-full rounded-xl object-cover"></a><button type="button" data-dp="${r.id}" data-path="${esc(r.path)}" class="absolute right-1 top-1 h-6 w-6 rounded-full bg-black/70 text-sm leading-none" aria-label="Видалити фото">&times;</button></div>`).join('')}</div></div>`).join('') + '<p id="phm" class="text-xs text-mist/70"></p>';
+  const reload = async () => renderPhotos(id, (await sb.from('order_photos').select('*').eq('order_id', id).order('created_at')).data || [], box);
+  box.querySelectorAll('[data-up]').forEach(inp => inp.onchange = async () => {
+    const files = [...inp.files], say = t => { const m = $('phm'); if (m) m.textContent = t; }; let fail = 0;
+    for (let i = 0; i < files.length; i++) {
+      say(`Завантаження ${i + 1} з ${files.length}…`);
+      try {
+        const path = `${id}/${crypto.randomUUID()}.jpg`, up = await sb.storage.from('order-photos').upload(path, await shrink(files[i]), { contentType: 'image/jpeg' });
+        if (up.error) throw up.error; const r = await sb.from('order_photos').insert({ order_id: id, kind: inp.dataset.up, path }); if (r.error) throw r.error;
+      } catch (e) { fail++; console.warn(e); }
+    }
+    await reload(); if (fail) say(`Не вдалося завантажити: ${fail}. Перевірте, що виконано photos.sql.`);
+  });
+  box.querySelectorAll('[data-dp]').forEach(b => b.onclick = async () => {
+    if (!confirm('Видалити це фото?')) return;
+    await sb.storage.from('order-photos').remove([b.dataset.path]); await sb.from('order_photos').delete().eq('id', b.dataset.dp); reload();
+  });
 }
 
 /* ===== Сьогодні ===== */
