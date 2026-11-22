@@ -1,885 +1,361 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N4B82TSM');</script>
-
-  <title>Detailing Family IF | Детейлінг в Івано-Франківську</title>
-  <meta name="description" content="Detailing Family IF — студія детейлінгу в Івано-Франківську: полірування, керамічне покриття, хімчистка салону, захисна плівка. Запис на консультацію онлайн.">
-  <link rel="canonical" href="https://detailing.family.ivano-frankivsk.ua/">
-  <meta name="theme-color" content="#17181B">
-
-  <!-- Google Search Console -->
-  <meta name="google-site-verification" content="eAZegPw4_yyXtCdvMl7xJYHpTvyh-an2oviW3XFGpLQ" />
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="uk_UA">
-  <meta property="og:site_name" content="Detailing Family IF">
-  <meta property="og:title" content="Детейлінг в Івано-Франківську | Detailing Family IF">
-  <meta property="og:description" content="Полірування, кераміка, хімчистка салону, захисна плівка. Запис на консультацію онлайн.">
-  <meta property="og:url" content="https://detailing.family.ivano-frankivsk.ua/">
-  <!-- <meta property="og:image" content="https://detailing.family.ivano-frankivsk.ua/images/og.jpg"> -->
-
-  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-
-  <!-- Шрифт Montserrat -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Tailwind: кольори беруться зі змінних у style.css -->
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            accent: 'rgb(var(--accent) / <alpha-value>)',
-            brand:  'rgb(var(--brand) / <alpha-value>)',
-            ink:    'rgb(var(--ink) / <alpha-value>)',
-            canvas: 'rgb(var(--base) / <alpha-value>)',
-            card:   'rgb(var(--card) / <alpha-value>)',
-            mist:   'rgb(var(--mist) / <alpha-value>)'
-          },
-          fontFamily: { sans: ['Montserrat', 'system-ui', 'sans-serif'] }
-        }
-      }
-    }
-  </script>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Detailing Family IF",
-    "description": "Студія детейлінгу в Івано-Франківську: мийка, хімчистка салону, полірування, захисні покриття, антигравійна плівка, тонування.",
-    "url": "https://detailing.family.ivano-frankivsk.ua/",
-    "telephone": "+380756741184",
-    "email": "detailing.family.if@gmail.com",
-    "address": { "@type": "PostalAddress", "streetAddress": "вул. Ребета, 8б", "addressLocality": "Івано-Франківськ", "addressCountry": "UA" },
-    "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "09:00", "closes": "19:00" }],
-    "sameAs": [
-      "https://www.instagram.com/detailing_family_if",
-      "https://www.tiktok.com/@detailing_family_if",
-      "https://www.youtube.com/@detailing_family_if",
-      "https://t.me/detailing_family_if"
-    ]
-  }
-  </script>
-
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#17181B">
+<title>CRM · Detailing Family IF</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>tailwind.config={theme:{extend:{colors:{accent:'#FF5500',canvas:'#17181B',card:'#2E3035',ink:'#F4F1EA',mist:'#E3E4E6'},fontFamily:{sans:['Montserrat','system-ui','sans-serif']}}}}</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 </head>
-<body class="bg-canvas text-ink font-sans antialiased">
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N4B82TSM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<body class="bg-canvas font-sans text-ink antialiased"><div id="app"></div>
+<script>
+/* ===== Налаштування: Supabase -> Project Settings -> API ===== */
+const SUPABASE_URL = '';       // https://xxxx.supabase.co
+const SUPABASE_ANON_KEY = '';  // ключ "anon public" (його можна публікувати, дані захищає вхід і правила бази)
 
-  <!-- ===================== ХЕДЕР ===================== -->
-  <header id="site-header" class="site-header fixed inset-x-0 top-0 z-50">
-    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-20 md:px-6">
+const SITE_URL = 'https://detailing.family.ivano-frankivsk.ua';  // адреса сайту для посилань клієнтам
+const sb = supabase.createClient(SUPABASE_URL || 'http://localhost', SUPABASE_ANON_KEY || 'x');
+const app = document.getElementById('app');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmt = d => d ? new Date(d).toLocaleString('uk-UA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
+const ST = { new: 'Нова', in_progress: 'У роботі', booked: 'Записаний', client: 'Став клієнтом', lost: 'Не підійшло' };
+const INP = 'w-full rounded-xl border border-ink/20 bg-canvas px-4 py-3 text-base placeholder:text-mist/40 focus:border-accent focus:outline-none';
+const BTN = 'rounded-xl bg-accent px-5 py-3 font-bold text-canvas';
+const BTN2 = 'rounded-xl border border-ink/25 px-5 py-3 font-semibold';
+let tab = 'today', filter = 'new', me = null, staff = [], q = '';
 
-      <a href="#top" class="flex items-center" aria-label="Detailing Family IF — на головну">
-        <span class="text-[15px] font-extrabold leading-none tracking-tight md:text-base">
-          Detailing Family <span class="text-accent">IF</span>
-        </span>
-      </a>
+const links = (c, m) => [c.phone || (m === 'phone' && c.contact) ? `<a class="${BTN2} text-sm" href="tel:${esc(c.phone || c.contact)}">Подзвонити</a>` : '',
+  (c.telegram || (m === 'telegram' && c.contact)) ? `<a class="${BTN2} text-sm" target="_blank" rel="noopener" href="https://t.me/${esc((c.telegram || c.contact).replace(/^@/, ''))}">Telegram</a>` : '',
+  (c.viber || (m === 'viber' && c.contact)) ? `<a class="${BTN2} text-sm" href="viber://chat?number=${encodeURIComponent(c.viber || c.contact)}">Viber</a>` : '',
+  (c.phone || (m === 'phone' && c.contact)) ? `<a class="${BTN2} text-sm" target="_blank" rel="noopener" href="https://wa.me/${esc((c.phone || c.contact).replace(/\D/g, ''))}">WhatsApp</a>` : ''].join('');
 
-      <!-- Меню для десктопу -->
-      <nav class="hidden items-center gap-7 text-sm md:flex" aria-label="Основне меню">
-        <a class="nav-link" href="#services">Послуги</a>
-        <a class="nav-link" href="#advantages">Переваги</a>
-        <a class="nav-link" href="#portfolio">Портфоліо</a>
-        <a class="nav-link" href="#pricing">Вартість</a>
-        <a class="nav-link" href="#location">Локація</a>
-        <a class="nav-link" href="#contacts">Контакти</a>
-      </nav>
+/* ===== Вхід ===== */
+function login(msg = '') {
+  app.innerHTML = `<form id="lf" class="mx-auto mt-24 max-w-sm space-y-3 px-4"><h1 class="mb-4 text-2xl font-extrabold">CRM Detailing Family <span class="text-accent">IF</span></h1>
+  <input name="email" type="email" autocomplete="username" required placeholder="Email" class="${INP}">
+  <input name="password" type="password" autocomplete="current-password" required placeholder="Пароль" class="${INP}">
+  <button class="${BTN} w-full">Увійти</button><p class="text-sm text-mist/70">${esc(msg)}</p></form>`;
+  $('lf').onsubmit = async e => {
+    e.preventDefault(); const f = e.target;
+    const { error } = await sb.auth.signInWithPassword({ email: f.email.value, password: f.password.value });
+    error ? login('Невірний email або пароль.') : start();
+  };
+}
+const $ = id => document.getElementById(id);
+async function start() {
+  const { data: { user } } = await sb.auth.getUser(); if (!user) return login();
+  const { data } = await sb.from('staff').select('*');
+  if (!data || !data.length) { await sb.auth.signOut(); return login('Для цього акаунта немає доступу.'); }
+  me = user; staff = data; render();
+}
 
-      <div class="flex items-center gap-3">
-        <a href="#booking" class="btn-accent hidden px-5 py-2.5 text-sm md:inline-flex">Записатися</a>
+/* ===== Каркас ===== */
+function render() {
+  app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div class="mb-2 flex justify-end gap-4 text-xs text-mist/60"><button id="pr">Прайс</button><button id="out">Вийти</button></div><div id="view"></div></main>
+  <nav class="fixed inset-x-0 bottom-0 z-20 flex border-t border-card bg-canvas" style="padding-bottom:env(safe-area-inset-bottom)">
+  ${[['today', 'Сьогодні'], ['leads', 'Ліди'], ['clients', 'Клієнти'], ['cal', 'Календар'], ['orders', 'Замовлення']].map(([k, l]) => `<button data-tab="${k}" class="flex-1 py-4 text-xs font-semibold ${tab === k ? 'text-accent' : 'text-mist/70'}">${l}</button>`).join('')}</nav>`;
+  document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
+  $('pr').onclick = () => { tab = 'price'; render(); };
+  $('out').onclick = async () => { await sb.auth.signOut(); login(); };
+  ({ today: viewToday, leads: viewLeads, clients: viewClients, cal: viewCal, orders: viewOrders, price: viewPrice })[tab]();
+}
+function modal(html) {
+  closeModal(); const d = document.createElement('div'); d.id = 'mod';
+  d.className = 'fixed inset-0 z-30 overflow-y-auto bg-black/70 p-3';
+  d.innerHTML = `<div class="mx-auto my-4 max-w-xl rounded-2xl bg-card p-5">${html}</div>`;
+  d.addEventListener('click', e => { if (e.target === d) closeModal(); }); document.body.appendChild(d); return d;
+}
+const closeModal = () => { const m = $('mod'); if (m) m.remove(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-        <button id="burger" class="burger -mr-2 flex h-11 w-11 flex-col items-center justify-center md:hidden"
-                type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Відкрити меню">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
+/* ===== Ліди ===== */
+async function viewLeads() {
+  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Ліди</h1><div class="my-4 flex flex-wrap gap-2">${['new', 'in_progress', 'booked', 'client', 'lost', 'all'].map(k => `<button data-f="${k}" class="rounded-full border px-4 py-2 text-sm ${filter === k ? 'border-accent bg-accent font-bold text-canvas' : 'border-card text-mist/80'}">${ST[k] || 'Усі'}</button>`).join('')}</div><div id="list" class="space-y-2"></div>`;
+  document.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { filter = b.dataset.f; viewLeads(); });
+  let r = sb.from('leads').select('*').order('created_at', { ascending: false }).limit(200); if (filter !== 'all') r = r.eq('status', filter);
+  const { data, error } = await r; if (error) return $('list').textContent = 'Помилка завантаження: ' + error.message;
+  $('list').innerHTML = data.length ? data.map(l => `<button data-lead="${l.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(l.name)}</b><span class="text-xs text-mist/60">${fmt(l.created_at)}</span></div>
+    <div class="mt-1 text-sm text-mist/80">${esc(l.contact)} · ${esc(l.service_interest || '')}</div><div class="mt-2 text-xs ${l.status === 'new' ? 'font-bold text-accent' : 'text-mist/60'}">${ST[l.status]}${l.next_contact_at ? ' · наступний контакт ' + esc(l.next_contact_at) : ''}</div></button>`).join('') : '<p class="text-mist/60">Заявок немає.</p>';
+  document.querySelectorAll('[data-lead]').forEach(b => b.onclick = () => openLead(data.find(x => x.id === b.dataset.lead)));
+}
+function openLead(l) {
+  const m = modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${esc(l.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+  <p class="mt-1 text-sm text-mist/80">${esc(l.contact_method)}: ${esc(l.contact)} · ${fmt(l.created_at)}</p><div class="mt-3 flex flex-wrap gap-2">${links({ contact: l.contact }, l.contact_method)}</div>
+  <dl class="mt-4 space-y-1 text-sm">${[['Послуга', l.service_interest], ['Авто', [l.car, l.car_class].filter(Boolean).join(', ')], ['Зручний час', l.preferred_time], ['Побажання', l.comment], ['Джерело', [l.utm_source, l.utm_medium, l.utm_campaign].filter(Boolean).join(' / ') || 'пряме'], ['Згода на пропозиції', l.consent_marketing ? 'так' : 'ні']].map(([k, v]) => v ? `<div><dt class="inline text-mist/60">${k}: </dt><dd class="inline">${esc(v)}</dd></div>` : '').join('')}</dl>
+  <div class="mt-5 grid gap-3"><select id="st" class="${INP}">${Object.entries(ST).map(([k, v]) => `<option value="${k}" ${l.status === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
+  <input id="lr" class="${INP}" placeholder="Причина відмови (якщо не підійшло)" value="${esc(l.lost_reason)}"><label class="text-sm text-mist/70">Наступний контакт<input id="nc" type="date" class="${INP} mt-1" value="${esc(l.next_contact_at)}"></label>
+  <select id="as" class="${INP}"><option value="">Відповідальний: не призначено</option>${staff.map(s => `<option value="${s.user_id}" ${l.assignee === s.user_id ? 'selected' : ''}>${esc(s.name)}</option>`).join('')}</select>
+  <button id="sv" class="${BTN}">Зберегти</button>${l.client_id ? '' : `<button id="mk" class="${BTN2}">Створити клієнта із заявки</button>`}<p id="msg" class="text-sm text-mist/70"></p></div>`);
+  $('x').onclick = closeModal;
+  $('sv').onclick = async () => {
+    const st = $('st').value, up = { status: st, lost_reason: $('lr').value || null, next_contact_at: $('nc').value || null, assignee: $('as').value || null };
+    if (l.status === 'new' && st !== 'new' && !l.first_response_at) up.first_response_at = new Date().toISOString();
+    const { error } = await sb.from('leads').update(up).eq('id', l.id);
+    if (error) return $('msg').textContent = 'Помилка: ' + error.message;
+    if (st !== l.status) await sb.from('timeline').insert({ lead_id: l.id, client_id: l.client_id, kind: 'status', text: `Статус: ${ST[st]}`, created_by: me.id });
+    closeModal(); render();
+  };
+  if ($('mk')) $('mk').onclick = async () => {
+    $('mk').disabled = true; const ph = l.contact_method === 'phone' ? l.contact : null;
+    let c = null; if (ph) c = (await sb.from('clients').select('*').eq('phone', ph).maybeSingle()).data;
+    if (!c) {
+      const r = await sb.from('clients').insert({ name: l.name, phone: ph, telegram: l.contact_method === 'telegram' ? l.contact : null, viber: l.contact_method === 'viber' ? l.contact : null,
+        source: l.utm_source || 'direct', utm_source: l.utm_source, utm_medium: l.utm_medium, utm_campaign: l.utm_campaign, consent_processing: !!l.consent_processing, consent_processing_at: l.created_at,
+        consent_marketing: !!l.consent_marketing, consent_marketing_at: l.consent_marketing ? l.created_at : null, consent_version: l.consent_version }).select().single();
+      if (r.error) { $('mk').disabled = false; return $('msg').textContent = 'Помилка: ' + r.error.message; } c = r.data;
+      if (l.car) await sb.from('cars').insert({ client_id: c.id, model: l.car, car_class: l.car_class || null });
+    }
+    await sb.from('leads').update({ status: 'client', client_id: c.id }).eq('id', l.id);
+    await sb.from('timeline').insert({ client_id: c.id, lead_id: l.id, kind: 'status', text: 'Клієнта створено із заявки', created_by: me.id });
+    closeModal(); openClient(c.id);
+  };
+}
 
-    <!-- Мобільне меню -->
-    <div id="mobile-menu" class="mobile-menu fixed inset-x-0 top-16 h-[calc(100dvh-4rem)] overflow-y-auto bg-canvas px-4 pb-8 pt-6 md:hidden" aria-hidden="true">
-      <ul class="flex flex-col text-2xl font-semibold">
-        <li><a class="block border-b border-card py-4" href="#services">Послуги</a></li>
-        <li><a class="block border-b border-card py-4" href="#advantages">Переваги</a></li>
-        <li><a class="block border-b border-card py-4" href="#portfolio">Портфоліо</a></li>
-        <li><a class="block border-b border-card py-4" href="#pricing">Вартість</a></li>
-        <li><a class="block border-b border-card py-4" href="#location">Локація</a></li>
-        <li><a class="block border-b border-card py-4" href="#contacts">Контакти</a></li>
-        <li class="pt-8"><a class="btn-accent flex w-full justify-center py-4 text-base" href="#booking">Записатися на консультацію</a></li>
-      </ul>
-    </div>
-  </header>
+/* ===== Клієнти ===== */
+async function viewClients() {
+  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Клієнти</h1><button id="nc" class="${BTN} px-4 py-2 text-sm">+ Клієнт</button></div>
+  <input id="q" type="search" placeholder="Ім'я, телефон або номер авто" value="${esc(q)}" class="${INP} my-4"><div id="list" class="space-y-2"></div>`;
+  $('nc').onclick = newClient; let t; $('q').oninput = e => { q = e.target.value.trim(); clearTimeout(t); t = setTimeout(load, 250); }; load();
+  async function load() {
+    let ids = []; if (q) { const c = await sb.from('cars').select('client_id').ilike('plate', `%${q}%`).limit(20); ids = (c.data || []).map(x => x.client_id); }
+    let r = sb.from('clients').select('*').order('created_at', { ascending: false }).limit(100);
+    if (q) { const s = q.replace(/[,()%]/g, ' '); r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%,telegram.ilike.%${s}%${ids.length ? `,id.in.(${ids.join(',')})` : ''}`); }
+    const { data, error } = await r; if (error) return $('list').textContent = 'Помилка: ' + error.message;
+    $('list').innerHTML = data.length ? data.map(c => `<button data-c="${c.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${esc(c.name)}</b><div class="text-sm text-mist/80">${esc(c.phone || c.telegram || c.viber || '')}</div></button>`).join('') : '<p class="text-mist/60">Нікого не знайдено.</p>';
+    document.querySelectorAll('[data-c]').forEach(b => b.onclick = () => openClient(b.dataset.c));
+  }
+}
+function newClient() {
+  modal(`<h2 class="mb-3 text-xl font-bold">Новий клієнт</h2><form id="nf" class="grid gap-3"><input name="name" required placeholder="Ім'я" class="${INP}"><input name="phone" type="tel" placeholder="Телефон +380…" class="${INP}">
+  <label class="flex gap-3 text-sm text-mist/80"><input name="cp" type="checkbox" class="mt-0.5 h-5 w-5 accent-accent">Клієнт дав згоду на обробку даних</label><button class="${BTN}">Зберегти</button><p id="msg" class="text-sm"></p></form>`);
+  $('nf').onsubmit = async e => {
+    e.preventDefault(); const f = e.target, d = f.phone.value.replace(/\D/g, ''); const ph = d.length === 10 && d[0] === '0' ? '+38' + d : d.length === 12 && d.startsWith('380') ? '+' + d : null;
+    if (f.phone.value && !ph) return $('msg').textContent = 'Телефон: формат +380XXXXXXXXX або 0XXXXXXXXX.';
+    const { data, error } = await sb.from('clients').insert({ name: f.name.value.trim(), phone: ph, source: 'вручну', consent_processing: f.cp.checked, consent_processing_at: f.cp.checked ? new Date().toISOString() : null }).select().single();
+    if (error) return $('msg').textContent = error.code === '23505' ? 'Клієнт із таким телефоном уже є.' : 'Помилка: ' + error.message; closeModal(); openClient(data.id);
+  };
+}
+async function openClient(id) {
+  const [c, cars, tl] = await Promise.all([sb.from('clients').select('*').eq('id', id).single(), sb.from('cars').select('*').eq('client_id', id), sb.from('timeline').select('*').eq('client_id', id).order('created_at', { ascending: false }).limit(50)]);
+  if (c.error) return; const k = c.data;
+  const m = modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${esc(k.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+  <p class="mt-1 text-sm text-mist/80">${esc([k.phone, k.telegram, k.viber, k.email].filter(Boolean).join(' · '))}</p><div class="mt-3 flex flex-wrap gap-2">${links(k, '')}</div>
+  <p class="mt-3 text-xs text-mist/60">Згода на обробку: ${k.consent_processing ? 'так' : 'ні'} · на пропозиції: ${k.consent_marketing ? 'так' : 'ні'}${k.source ? ' · джерело: ' + esc(k.source) : ''}</p>
+  <button id="no2" class="${BTN2} mt-4 w-full">Нове замовлення</button><h3 class="mt-5 font-bold">Авто</h3><div class="mt-2 space-y-1 text-sm">${cars.data.length ? cars.data.map(a => `<div>${esc([a.brand, a.model, a.car_class, a.color, a.plate].filter(Boolean).join(' · '))}</div>`).join('') : '<span class="text-mist/60">Немає</span>'}</div>
+  <form id="cf" class="mt-3 grid grid-cols-2 gap-2"><input name="model" required placeholder="Марка і модель" class="${INP} col-span-2"><select name="cls" class="${INP}"><option value="">Клас</option><option>Седан</option><option>Кросовер</option><option>Позашляховик</option></select><input name="plate" placeholder="Номер" class="${INP}"><button class="${BTN2} col-span-2">Додати авто</button></form>
+  <h3 class="mt-5 font-bold">Історія</h3><form id="nf2" class="mt-2 flex gap-2"><input name="t" required placeholder="Нотатка" class="${INP}"><button class="${BTN} px-4">+</button></form>
+  <div class="mt-3 space-y-2 text-sm">${tl.data.map(e => `<div class="border-l-2 border-accent pl-3"><span class="text-xs text-mist/60">${fmt(e.created_at)}</span><br>${esc(e.text)}</div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div>`);
+  $('x').onclick = closeModal;
+  $('no2').onclick = () => { closeModal(); newOrder(id); };
+  $('cf').onsubmit = async e => { e.preventDefault(); const f = e.target; await sb.from('cars').insert({ client_id: id, model: f.model.value.trim(), car_class: f.cls.value || null, plate: f.plate.value.trim() || null }); openClient(id); };
+  $('nf2').onsubmit = async e => { e.preventDefault(); await sb.from('timeline').insert({ client_id: id, kind: 'note', text: e.target.t.value.trim(), created_by: me.id }); openClient(id); };
+}
 
-  <!-- ===================== HERO ===================== -->
-  <main id="top">
-    <section class="hero flex min-h-[100svh] items-center" aria-labelledby="hero-title">
-      <!-- Коли буде фото робіт: <img src="images/hero.jpg" alt="" class="absolute inset-0 -z-[1] h-full w-full object-cover opacity-40"> -->
+/* ===== Прайс ===== */
+let services = [];
+async function loadServices() { const { data } = await sb.from('services').select('*').order('sort'); services = data || []; return services; }
+async function viewPrice() {
+  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Прайс</h1><button id="ns" class="${BTN} px-4 py-2 text-sm">+ Послуга</button></div><div id="list" class="mt-4 space-y-5"></div>`;
+  $('ns').onclick = () => editService(null); await loadServices();
+  const by = {}; services.forEach(s => (by[s.category] = by[s.category] || []).push(s));
+  $('list').innerHTML = Object.entries(by).map(([c, a]) => `<section><h2 class="mb-2 font-bold text-mist/70">${esc(c)}</h2><div class="space-y-1">${a.map(s => `<button data-s="${s.id}" class="flex w-full justify-between gap-3 rounded-xl bg-card px-4 py-3 text-left text-sm ${s.active ? '' : 'opacity-40'}"><span>${esc(s.name)}</span><span class="shrink-0 text-right text-mist/70">${esc(s.price_text || '')}${s.return_interval_days ? '<br>повернення ' + s.return_interval_days + ' дн.' : ''}</span></button>`).join('')}</div></section>`).join('');
+  document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => editService(services.find(x => x.id == b.dataset.s)));
+}
+function editService(s) {
+  s = s || { active: true, currency: 'UAH' };
+  modal(`<h2 class="mb-3 text-xl font-bold">${s.id ? 'Послуга' : 'Нова послуга'}</h2><form id="sf" class="grid gap-3">
+  <input name="category" list="cats" required placeholder="Категорія" value="${esc(s.category)}" class="${INP}"><datalist id="cats">${[...new Set(services.map(x => x.category))].map(c => `<option value="${esc(c)}">`).join('')}</datalist>
+  <input name="name" required placeholder="Назва" value="${esc(s.name)}" class="${INP}">
+  <div class="grid grid-cols-2 gap-2"><input name="price" type="number" step="any" min="0" placeholder="Ціна від" value="${esc(s.price_from)}" class="${INP}"><select name="cur" class="${INP}"><option value="UAH" ${s.currency === 'UAH' ? 'selected' : ''}>грн</option><option value="USD" ${s.currency === 'USD' ? 'selected' : ''}>$</option></select></div>
+  <input name="ptext" placeholder="Як показувати ціну (напр. від 700 грн)" value="${esc(s.price_text)}" class="${INP}"><input name="dur" placeholder="Орієнтовний час" value="${esc(s.duration_text)}" class="${INP}">
+  <label class="text-sm text-mist/70">Інтервал повернення, днів<input name="ret" type="number" min="1" class="${INP} mt-1" value="${esc(s.return_interval_days)}"></label>
+  <label class="flex gap-3 text-sm"><input name="act" type="checkbox" class="h-5 w-5 accent-accent" ${s.active ? 'checked' : ''}>Показувати в замовленнях</label><button class="${BTN}">Зберегти</button><p id="msg" class="text-sm"></p></form>`);
+  $('sf').onsubmit = async e => {
+    e.preventDefault(); const f = e.target;
+    const row = { category: f.category.value.trim(), name: f.name.value.trim(), price_from: f.price.value || null, currency: f.cur.value, price_text: f.ptext.value || null, duration_text: f.dur.value || null, return_interval_days: f.ret.value || null, active: f.act.checked };
+    const { error } = s.id ? await sb.from('services').update(row).eq('id', s.id) : await sb.from('services').insert({ ...row, sort: 1000 });
+    error ? $('msg').textContent = 'Помилка: ' + error.message : (closeModal(), viewPrice());
+  };
+}
 
-      <div class="mx-auto w-full max-w-6xl px-4 pb-12 pt-28 md:px-6 md:pb-20 md:pt-32">
-        <h1 id="hero-title" class="max-w-3xl text-[2.6rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl">
-          <span class="block">Сімейні цінності</span>
-          <span class="block text-ink/55">Професійний догляд</span>
-        </h1>
+/* ===== Замовлення ===== */
+const OS = { accepted: 'Прийнято', in_progress: 'У роботі', ready: 'Готово', delivered: 'Видано' }, OSN = Object.keys(OS);
+let ofilter = 'accepted';
+const calc = (items, rate, disc) => { let u = 0, need = false; (items || []).forEach(i => { const v = i.price * i.qty; if (i.currency === 'USD') { rate ? u += v * rate : need = true; } else u += v; }); return { total: Math.max(0, u - (disc || 0)), need }; };
+async function viewOrders() {
+  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Замовлення</h1><button id="no" class="${BTN} px-4 py-2 text-sm">+ Замовлення</button></div>
+  <div class="my-4 flex flex-wrap gap-2">${[...OSN, 'all'].map(k => `<button data-of="${k}" class="rounded-full border px-4 py-2 text-sm ${ofilter === k ? 'border-accent bg-accent font-bold text-canvas' : 'border-card text-mist/80'}">${OS[k] || 'Усі'}</button>`).join('')}</div><div id="list" class="space-y-2"></div>`;
+  $('no').onclick = () => newOrder(); document.querySelectorAll('[data-of]').forEach(b => b.onclick = () => { ofilter = b.dataset.of; viewOrders(); });
+  let r = sb.from('orders').select('*, clients(name), cars(model,plate), order_items(price,currency,qty)').order('created_at', { ascending: false }).limit(100); if (ofilter !== 'all') r = r.eq('status', ofilter);
+  const { data, error } = await r; if (error) return $('list').textContent = 'Помилка: ' + error.message;
+  $('list').innerHTML = data.length ? data.map(o => { const t = calc(o.order_items, o.usd_rate, o.discount_uah); return `<button data-o="${o.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(o.clients && o.clients.name)}</b><span class="text-xs text-mist/60">${fmt(o.created_at)}</span></div>
+    <div class="text-sm text-mist/80">${esc(o.cars ? [o.cars.model, o.cars.plate].filter(Boolean).join(' · ') : 'авто не вказано')}</div><div class="mt-2 text-sm"><span class="text-accent">${OS[o.status]}</span> · ${Math.round(t.total)} грн${t.need ? ' (потрібен курс $)' : ''}</div></button>`; }).join('') : '<p class="text-mist/60">Замовлень немає.</p>';
+  document.querySelectorAll('[data-o]').forEach(b => b.onclick = () => openOrder(b.dataset.o));
+}
+function newOrder(cid) {
+  modal(`<h2 class="mb-3 text-xl font-bold">Нове замовлення</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Пошук клієнта: ім'я або телефон" class="${INP} ${cid ? 'hidden' : ''}"><select id="cl" size="${cid ? 1 : 4}" class="${INP}"></select>
+  <select id="ca" class="${INP}"><option value="">Авто</option></select><textarea id="in" rows="2" placeholder="Стан авто при отриманні" class="${INP}"></textarea><button id="go" class="${BTN}">Створити</button><p id="msg" class="text-sm"></p></div>`);
+  const pick = async () => { const { data } = await sb.from('cars').select('*').eq('client_id', $('cl').value); $('ca').innerHTML = '<option value="">Авто</option>' + (data || []).map(a => `<option value="${a.id}">${esc([a.model, a.plate].filter(Boolean).join(' · '))}</option>`).join(''); };
+  const fill = async () => {
+    const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20);
+    if (cid) r = r.eq('id', cid); else if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`);
+    const { data } = await r; $('cl').innerHTML = (data || []).map(c => `<option value="${c.id}">${esc(c.name)} ${esc(c.phone || '')}</option>`).join(''); if (cid) pick();
+  };
+  let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; $('cl').onchange = pick; fill();
+  $('go').onclick = async () => {
+    if (!$('cl').value) return $('msg').textContent = 'Оберіть клієнта.';
+    const { data, error } = await sb.from('orders').insert({ client_id: $('cl').value, car_id: $('ca').value || null, intake_notes: $('in').value || null }).select().single();
+    if (error) return $('msg').textContent = 'Помилка: ' + error.message; closeModal(); openOrder(data.id);
+  };
+}
+async function openOrder(id) {
+  if (!services.length) await loadServices();
+  const [o, it, ph] = await Promise.all([sb.from('orders').select('*, clients(id,name,phone), cars(model,plate)').eq('id', id).single(), sb.from('order_items').select('*').eq('order_id', id).order('name'), sb.from('order_photos').select('*').eq('order_id', id).order('created_at')]);
+  if (o.error) return; const od = o.data, items = it.data, hasUsd = items.some(i => i.currency === 'USD');
+  const t = calc(items, od.usd_rate, od.discount_uah), next = OSN[OSN.indexOf(od.status) + 1];
+  modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(od.clients.name)}</h2><p class="text-sm text-mist/70">${esc(od.cars ? [od.cars.model, od.cars.plate].filter(Boolean).join(' · ') : 'авто не вказано')} · ${OS[od.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+  <h3 class="mt-4 font-bold">Послуги</h3><div class="mt-2 space-y-1 text-sm">${items.map(i => `<div class="flex items-center justify-between gap-2 rounded-xl bg-canvas px-3 py-2"><span>${esc(i.name)} × ${i.qty}</span><span class="shrink-0">${i.price} ${i.currency === 'USD' ? '$' : 'грн'}<button data-rm="${i.id}" class="ml-2 text-mist/50" aria-label="Видалити">&times;</button></span></div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div>
+  <form id="af" class="mt-3 grid grid-cols-[1fr_5rem] gap-2"><select id="sv" class="${INP} col-span-2"><option value="">Додати послугу…</option>${services.filter(s => s.active).map(s => `<option value="${s.id}">${esc(s.category)}: ${esc(s.name)}</option>`).join('')}</select><input id="pr" type="number" step="any" min="0" placeholder="Ціна" class="${INP}"><input id="qt" type="number" step="any" min="0.1" value="1" class="${INP}"><button class="${BTN2} col-span-2">Додати</button></form>
+  <h3 class="mt-5 font-bold">Фото</h3><div id="ph" class="mt-2 space-y-3"></div>
+  <div class="mt-4 rounded-xl bg-canvas p-3"><label class="flex gap-3 text-sm"><input id="sh" type="checkbox" class="mt-0.5 h-5 w-5 accent-accent" ${od.share_status ? 'checked' : ''}>Показувати клієнту статус і фото за посиланням</label><button id="lk" type="button" class="${BTN2} mt-3 w-full text-sm ${od.share_status ? '' : 'hidden'}">Поділитися посиланням</button></div>
+  <div class="mt-4 grid gap-3"><div class="grid grid-cols-2 gap-2"><label class="text-sm text-mist/70">Знижка, грн<input id="ds" type="number" min="0" class="${INP} mt-1" value="${od.discount_uah || 0}"></label>${hasUsd ? `<label class="text-sm text-mist/70">Курс $, грн<input id="rt" type="number" step="any" min="0" class="${INP} mt-1" value="${od.usd_rate || ''}"></label>` : ''}</div>
+  <p class="text-lg font-bold">Разом: ${Math.round(t.total)} грн${t.need ? ' <span class="text-sm font-normal text-mist/70">(вкажіть курс $)</span>' : ''}</p>
+  <div class="grid grid-cols-2 gap-2"><select id="pm" class="${INP}"><option value="">Оплата…</option>${[['cash', 'Готівка'], ['card', 'Картка'], ['transfer', 'Переказ']].map(([k, v]) => `<option value="${k}" ${od.payment_method === k ? 'selected' : ''}>${v}</option>`).join('')}</select><input id="pd" type="number" min="0" placeholder="Сплачено, грн" class="${INP}" value="${od.paid_uah ?? ''}"></div>
+  <textarea id="in" rows="2" placeholder="Стан авто при отриманні" class="${INP}">${esc(od.intake_notes)}</textarea><textarea id="dn" rows="2" placeholder="Нотатки при видачі" class="${INP}">${esc(od.delivery_notes)}</textarea>
+  <button id="sv2" class="${BTN}">Зберегти</button>${next ? `<button id="nx" class="${BTN2}">Статус: ${OS[next]}</button>` : ''}<p id="msg" class="text-sm text-mist/80"></p></div>`);
+  $('x').onclick = closeModal;
+  renderPhotos(id, ph.data || [], $('ph'));
+  $('sh').onchange = async e => { await sb.from('orders').update({ share_status: e.target.checked }).eq('id', id); $('lk').classList.toggle('hidden', !e.target.checked); };
+  $('lk').onclick = async () => { const url = `${SITE_URL}/status.html#${od.public_token}`; try { if (navigator.share) return await navigator.share({ title: 'Статус вашого авто', text: 'Статус вашого авто у Detailing Family IF:', url }); await navigator.clipboard.writeText(url); $('msg').textContent = 'Посилання скопійовано.'; } catch (e) { $('msg').textContent = url; } };
+  const save = async () => {
+    const up = { discount_uah: +$('ds').value || 0, usd_rate: $('rt') ? (+$('rt').value || null) : od.usd_rate, payment_method: $('pm').value || null, paid_uah: $('pd').value === '' ? null : +$('pd').value, intake_notes: $('in').value || null, delivery_notes: $('dn').value || null };
+    const r = await sb.from('orders').update(up).eq('id', id); if (r.error) { $('msg').textContent = 'Помилка: ' + r.error.message; return null; } return up;
+  };
+  $('sv2').onclick = async () => { if (await save()) openOrder(id); };
+  $('sv').onchange = e => { const s = services.find(x => x.id == e.target.value); $('pr').value = s && s.price_from != null ? s.price_from : ''; };
+  $('af').onsubmit = async e => {
+    e.preventDefault(); const s = services.find(x => x.id == $('sv').value); if (!s || $('pr').value === '') return;
+    await sb.from('order_items').insert({ order_id: id, service_id: s.id, name: s.name, price: +$('pr').value, currency: s.currency, qty: +$('qt').value || 1 }); await save(); openOrder(id);
+  };
+  document.querySelectorAll('[data-rm]').forEach(b => b.onclick = async () => { await sb.from('order_items').delete().eq('id', b.dataset.rm); await save(); openOrder(id); });
+  if ($('nx')) $('nx').onclick = async () => {
+    const up = await save(); if (!up) return; const tt = calc(items, up.usd_rate, up.discount_uah);
+    if (next === 'delivered') {
+      if (tt.need) return $('msg').textContent = 'Вкажіть курс $ перед видачею.';
+      const now = new Date(); await sb.from('orders').update({ status: next, delivered_at: now.toISOString(), paid_at: up.paid_uah ? now.toISOString() : null }).eq('id', id);
+      for (const i of items) { const s = services.find(x => x.id === i.service_id); if (s && s.return_interval_days) await sb.from('order_items').update({ remind_at: new Date(now.getTime() + s.return_interval_days * 864e5).toISOString().slice(0, 10) }).eq('id', i.id); }
+      await sb.from('timeline').insert({ client_id: od.client_id, kind: 'order', text: `Замовлення видано: ${items.map(i => i.name).join(', ')} · ${Math.round(tt.total)} грн`, created_by: me.id });
+    } else await sb.from('orders').update({ status: next }).eq('id', id);
+    openOrder(id);
+  };
+}
 
-        <p class="mt-6 max-w-xl text-base leading-relaxed text-mist/85 md:text-lg">
-          Детейлінг в Івано-Франківську: полірування, керамічне покриття, хімчистка салону та захисна плівка. Ставимося до вашого авто як до власного.
-        </p>
+/* ===== Фото замовлень ===== */
+const KP = { before: 'До', during: 'Під час', after: 'Після' };
+const shrink = f => new Promise((res, rej) => {
+  const img = new Image(), u = URL.createObjectURL(f);
+  img.onload = () => { const k = Math.min(1, 1600 / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u); c.toBlob(b => b ? res(b) : rej(new Error('не вдалося стиснути')), 'image/jpeg', 0.8); };
+  img.onerror = () => rej(new Error('не вдалося прочитати файл')); img.src = u;
+});
+async function renderPhotos(id, rows, box) {
+  const urls = rows.length ? ((await sb.storage.from('order-photos').createSignedUrls(rows.map(r => r.path), 3600)).data || []) : [];
+  const url = p => (urls.find(u => u.path === p) || {}).signedUrl || '';
+  box.innerHTML = Object.entries(KP).map(([k, l]) => `<div><div class="mb-1 flex items-center justify-between text-sm"><span class="font-semibold">${l}</span><label class="${BTN2} cursor-pointer px-3 py-1 text-sm">+ Фото<input type="file" accept="image/*" multiple data-up="${k}" class="sr-only"></label></div>
+    <div class="grid grid-cols-3 gap-2">${rows.filter(r => r.kind === k).map(r => `<div class="relative"><a href="${esc(url(r.path))}" target="_blank" rel="noopener"><img src="${esc(url(r.path))}" alt="${l}" loading="lazy" class="aspect-square w-full rounded-xl object-cover"></a><button type="button" data-dp="${r.id}" data-path="${esc(r.path)}" class="absolute right-1 top-1 h-6 w-6 rounded-full bg-black/70 text-sm leading-none" aria-label="Видалити фото">&times;</button></div>`).join('')}</div></div>`).join('') + '<p id="phm" class="text-xs text-mist/70"></p>';
+  const reload = async () => renderPhotos(id, (await sb.from('order_photos').select('*').eq('order_id', id).order('created_at')).data || [], box);
+  box.querySelectorAll('[data-up]').forEach(inp => inp.onchange = async () => {
+    const files = [...inp.files], say = t => { const m = $('phm'); if (m) m.textContent = t; }; let fail = 0;
+    for (let i = 0; i < files.length; i++) {
+      say(`Завантаження ${i + 1} з ${files.length}…`);
+      try {
+        const path = `${id}/${crypto.randomUUID()}.jpg`, up = await sb.storage.from('order-photos').upload(path, await shrink(files[i]), { contentType: 'image/jpeg' });
+        if (up.error) throw up.error; const r = await sb.from('order_photos').insert({ order_id: id, kind: inp.dataset.up, path }); if (r.error) throw r.error;
+      } catch (e) { fail++; console.warn(e); }
+    }
+    await reload(); if (fail) say(`Не вдалося завантажити: ${fail}. Перевірте, що виконано photos.sql.`);
+  });
+  box.querySelectorAll('[data-dp]').forEach(b => b.onclick = async () => {
+    if (!confirm('Видалити це фото?')) return;
+    await sb.storage.from('order-photos').remove([b.dataset.path]); await sb.from('order_photos').delete().eq('id', b.dataset.dp); reload();
+  });
+}
 
-        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-          <a href="#booking" class="btn-accent inline-flex justify-center px-7 py-4 text-base">Записатися на консультацію</a>
-          <a href="#portfolio" class="btn-ghost inline-flex justify-center px-7 py-4 text-base">Переглянути роботи</a>
-        </div>
+/* ===== Сьогодні ===== */
+const dayRange = d => { const a = new Date(d); a.setHours(0, 0, 0, 0); const b = new Date(a); b.setDate(b.getDate() + 1); return [a.toISOString(), b.toISOString()]; };
+const hm = d => new Date(d).toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+const iso = d => { const x = new Date(d); return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0'); };
+const KIND = { inspection: 'Огляд', work: 'Робота' }, AS = { planned: 'Запланований', done: 'Був', cancelled: 'Скасований', no_show: 'Не прийшов' };
+const wait = l => { const m = Math.round((Date.now() - new Date(l.created_at)) / 60000); return m < 60 ? m + ' хв' : m < 1440 ? Math.floor(m / 60) + ' год' : Math.floor(m / 1440) + ' дн'; };
+async function viewToday() {
+  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Сьогодні</h1><div id="tb" class="mt-4 space-y-6"><p class="text-mist/60">Завантаження…</p></div>`;
+  const [a, b] = dayRange(new Date()), today = iso(new Date()), soon = iso(new Date(Date.now() + 7 * 864e5));
+  const [nl, fu, ap, rm] = await Promise.all([
+    sb.from('leads').select('*').eq('status', 'new').order('created_at'),
+    sb.from('leads').select('*').in('status', ['in_progress', 'booked']).lte('next_contact_at', today).order('next_contact_at'),
+    sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').eq('status', 'planned').gte('starts_at', a).lt('starts_at', b).order('starts_at'),
+    sb.from('order_items').select('id,name,remind_at,orders(client_id,clients(id,name,phone,telegram,viber,consent_marketing))').not('remind_at', 'is', null).lte('remind_at', soon).order('remind_at')]);
+  if (nl.error || ap.error || rm.error) return $('tb').textContent = 'Помилка завантаження.';
+  const sec = (t, n, body) => `<section><h2 class="mb-2 font-bold">${t} <span class="text-mist/60">${n}</span></h2><div class="space-y-2">${body || '<p class="text-sm text-mist/60">Немає</p>'}</div></section>`;
+  const lead = (l, note) => `<button data-l="${l.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${esc(l.name)}</b> <span class="text-sm text-accent">${note}</span><div class="text-sm text-mist/80">${esc(l.contact)} · ${esc(l.service_interest || '')}</div></button>`;
+  const all = [...nl.data, ...fu.data];
+  $('tb').innerHTML =
+    sec('Нові заявки', nl.data.length, nl.data.map(l => lead(l, 'чекає ' + wait(l))).join('')) +
+    sec('Передзвонити', fu.data.length, fu.data.map(l => lead(l, 'контакт ' + l.next_contact_at)).join('')) +
+    sec('Записи на сьогодні', ap.data.length, ap.data.map(x => `<button data-a="${x.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${hm(x.starts_at)}</b> · ${esc(x.clients && x.clients.name)} <span class="text-sm text-mist/70">${KIND[x.kind]}${x.cars ? ' · ' + esc(x.cars.model) : ''}</span></button>`).join('')) +
+    sec('Кому нагадати (7 днів)', rm.data.length, rm.data.map(r => { const c = r.orders.clients; return `<div class="rounded-2xl bg-card p-4"><b>${esc(c.name)}</b> <span class="text-sm text-mist/70">· ${esc(r.name)} · до ${esc(r.remind_at)}</span>${c.consent_marketing ? '' : '<div class="text-xs text-accent">Немає згоди на пропозиції: краще подзвонити</div>'}<div class="mt-2 flex flex-wrap gap-2">${links(c, '')}<button data-done="${r.id}" data-c="${c.id}" data-n="${esc(r.name)}" class="${BTN2} text-sm">Зроблено</button></div></div>`; }).join(''));
+  document.querySelectorAll('[data-l]').forEach(b => b.onclick = () => openLead(all.find(x => x.id === b.dataset.l)));
+  document.querySelectorAll('[data-a]').forEach(b => b.onclick = () => openAppt(ap.data.find(x => x.id === b.dataset.a)));
+  document.querySelectorAll('[data-done]').forEach(b => b.onclick = async () => {
+    await sb.from('order_items').update({ remind_at: null }).eq('id', b.dataset.done);
+    await sb.from('timeline').insert({ client_id: b.dataset.c, kind: 'note', text: 'Нагадування про повторний візит: ' + b.dataset.n, created_by: me.id }); viewToday();
+  });
+}
 
-        <ul class="mt-10 flex flex-wrap gap-2" aria-label="Основні послуги">
-          <li><a class="chip" href="#services">Полірування</a></li>
-          <li><a class="chip" href="#services">Керамічне покриття</a></li>
-          <li><a class="chip" href="#services">Хімчистка салону</a></li>
-          <li><a class="chip" href="#services">Захисна плівка</a></li>
-        </ul>
-      </div>
-    </section>
+/* ===== Календар ===== */
+let cdate = new Date();
+async function viewCal() {
+  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Календар</h1><button id="na" class="${BTN} px-4 py-2 text-sm">+ Запис</button></div>
+  <div class="my-4 flex gap-2"><button id="pv" class="${BTN2} px-4" aria-label="Попередній день">&lsaquo;</button><input id="dt" type="date" value="${iso(cdate)}" class="${INP}"><button id="nx" class="${BTN2} px-4" aria-label="Наступний день">&rsaquo;</button></div><div id="list" class="space-y-2"></div>`;
+  const go = d => { cdate = d; viewCal(); };
+  $('pv').onclick = () => go(new Date(cdate.getTime() - 864e5)); $('nx').onclick = () => go(new Date(cdate.getTime() + 864e5));
+  $('dt').onchange = e => e.target.value && go(new Date(e.target.value + 'T12:00')); $('na').onclick = () => newAppt();
+  const [a, b] = dayRange(cdate); const { data, error } = await sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').gte('starts_at', a).lt('starts_at', b).order('starts_at');
+  if (error) return $('list').textContent = 'Помилка: ' + error.message;
+  $('list').innerHTML = data.length ? data.map(x => `<button data-a="${x.id}" class="block w-full rounded-2xl bg-card p-4 text-left ${x.status === 'planned' ? '' : 'opacity-60'}"><b>${hm(x.starts_at)}${x.duration_min ? ' · ' + x.duration_min + ' хв' : ''}</b> · ${esc(x.clients && x.clients.name)}<div class="text-sm text-mist/70">${KIND[x.kind]}${x.cars ? ' · ' + esc(x.cars.model) : ''} · ${AS[x.status]}</div></button>`).join('') : '<p class="text-mist/60">На цей день записів немає.</p>';
+  document.querySelectorAll('[data-a]').forEach(btn => btn.onclick = () => openAppt(data.find(x => x.id === btn.dataset.a)));
+}
+function openAppt(x) {
+  modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(x.clients && x.clients.name)}</h2><p class="text-sm text-mist/70">${KIND[x.kind]} · ${fmt(x.starts_at)}${x.cars ? ' · ' + esc(x.cars.model) : ''} · ${AS[x.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+  <div class="mt-3 flex flex-wrap gap-2">${links(x.clients || {}, '')}</div>${x.notes ? `<p class="mt-3 text-sm">${esc(x.notes)}</p>` : ''}
+  <div class="mt-4 grid gap-2">${['done', 'cancelled', 'no_show'].map(k => `<button data-s="${k}" class="${BTN2}">${AS[k]}</button>`).join('')}<button id="mo" class="${BTN}">Створити замовлення</button></div>`);
+  $('x').onclick = closeModal; $('mo').onclick = () => { closeModal(); newOrder(x.client_id); };
+  document.querySelectorAll('[data-s]').forEach(b => b.onclick = async () => {
+    await sb.from('appointments').update({ status: b.dataset.s }).eq('id', x.id);
+    await sb.from('timeline').insert({ client_id: x.client_id, kind: 'visit', text: `${KIND[x.kind]} ${fmt(x.starts_at)}: ${AS[b.dataset.s]}`, created_by: me.id }); closeModal(); render();
+  });
+}
+function newAppt() {
+  const d0 = new Date(cdate); d0.setHours(10, 0, 0, 0); const loc = new Date(d0 - d0.getTimezoneOffset() * 6e4).toISOString().slice(0, 16);
+  modal(`<h2 class="mb-3 text-xl font-bold">Новий запис</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Пошук клієнта: ім'я або телефон" class="${INP}"><select id="cl" size="4" class="${INP}"></select><select id="ca" class="${INP}"><option value="">Авто</option></select>
+  <select id="kd" class="${INP}"><option value="inspection">Огляд</option><option value="work">Робота</option></select><input id="st" type="datetime-local" value="${loc}" class="${INP}"><input id="du" type="number" min="5" step="5" placeholder="Тривалість, хв" class="${INP}">
+  <select id="as" class="${INP}"><option value="">Хто веде</option>${staff.map(s => `<option value="${s.user_id}">${esc(s.name)}</option>`).join('')}</select><textarea id="nt" rows="2" placeholder="Нотатки" class="${INP}"></textarea><button id="go" class="${BTN}">Створити</button><p id="msg" class="text-sm"></p></div>`);
+  const pick = async () => { const { data } = await sb.from('cars').select('*').eq('client_id', $('cl').value); $('ca').innerHTML = '<option value="">Авто</option>' + (data || []).map(a => `<option value="${a.id}">${esc([a.model, a.plate].filter(Boolean).join(' · '))}</option>`).join(''); };
+  const fill = async () => { const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20); if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`); const { data } = await r; $('cl').innerHTML = (data || []).map(c => `<option value="${c.id}">${esc(c.name)} ${esc(c.phone || '')}</option>`).join(''); };
+  let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; $('cl').onchange = pick; fill();
+  $('go').onclick = async () => {
+    if (!$('cl').value || !$('st').value) return $('msg').textContent = 'Оберіть клієнта й час.';
+    const { error } = await sb.from('appointments').insert({ client_id: $('cl').value, car_id: $('ca').value || null, kind: $('kd').value, starts_at: new Date($('st').value).toISOString(), duration_min: +$('du').value || null, assignee: $('as').value || null, notes: $('nt').value || null });
+    if (error) return $('msg').textContent = 'Помилка: ' + error.message;
+    await sb.from('timeline').insert({ client_id: $('cl').value, kind: 'visit', text: `Запис: ${KIND[$('kd').value]} ${fmt(new Date($('st').value))}`, created_by: me.id }); closeModal(); render();
+  };
+}
 
-    <!-- ===================== ПОСЛУГИ ===================== -->
-    <section id="services" class="px-4 py-20 md:px-6 md:py-28" aria-labelledby="services-title">
-      <div class="mx-auto max-w-6xl">
-        <h2 id="services-title" class="text-3xl font-extrabold tracking-tight md:text-5xl">Послуги</h2>
-        <p class="mt-4 max-w-xl text-mist/80 md:text-lg">Оберіть категорію, щоб побачити всі послуги. Розкажемо про кожну й підберемо те, що потрібно саме вашому авто.</p>
-        <div class="mt-10 grid items-start gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
-        <article class="svc">
-          <div class="svc-inner">
-            <div class="svc-front">
-              <!-- <img class="svc-photo" src="images/services/dry-cleaning.webp" alt="Хімчистка — Detailing Family IF" loading="lazy" width="800" height="600"> -->
-              <h3 class="svc-title">Хімчистка</h3>
-              <p class="svc-meta">6 послуг</p>
-              <button type="button" class="svc-open" aria-expanded="false" aria-controls="svc-list-1"><span class="lbl-open">Переглянути послуги</span><span class="lbl-close">Згорнути</span><span class="svc-plus" aria-hidden="true"></span><span class="sr-only">: Хімчистка</span></button>
-            </div>
-            <div class="svc-back" id="svc-list-1">
-              <div class="svc-back-in"><div class="svc-pad">
-                <div class="svc-back-head"><p class="svc-title">Хімчистка</p><button type="button" class="svc-close" aria-label="Закрити: Хімчистка"></button></div>
-                <ul>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-1"><span>Хімчистка салону (Стандарт)</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-1"><div><div class="svc-a-in"><p>Очищення сидінь, килимків, панелей і дверних карт від забруднень і плям без розбору салону. Підходить для регулярного догляду.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 4600 грн</dd></div><div><dt>Орієнтовний час</dt><dd>до 6 год</dd></div></dl><p class="svc-note">Ціна залежить від: розмір і стан салону, матеріал оббивки, наявність плям. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-2"><span>Детейлінг-хімчистка салону (з частковим розбором)</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-2"><div><div class="svc-a-in"><p>Глибше очищення з частковим демонтажем елементів, щоб дістатися до місць, де накопичується бруд. Для салонів, які давно не чистили.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 5500 грн</dd></div><div><dt>Орієнтовний час</dt><dd>до 2 днів</dd></div></dl><p class="svc-note">Ціна залежить від: рівень забруднення, обсяг розбирання, матеріал оббивки. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-3"><span>Озонація салону</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-3"><div><div class="svc-a-in"><p>Допомагає прибрати стійкі запахи з салону, наприклад тютюновий, вологості чи їжі.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 700 грн</dd></div><div><dt>Орієнтовний час</dt><dd>близько 40 хв</dd></div></dl><p class="svc-note">Ціна залежить від: об'єм салону та сила запаху. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-4"><span>Консервація внутрішнього пластику та шкіри / Кондиціонер шкіри</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-4"><div><div class="svc-a-in"><p>Живить шкіру й пластик, повертає акуратний вигляд і допомагає захистити від висихання та тріщин.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 300 грн</dd></div><div><dt>Орієнтовний час</dt><dd>30–60 хв</dd></div></dl><p class="svc-note">Ціна залежить від: площа обробки та тип матеріалу (пластик, шкіра). Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-5"><span>Захисне покриття для шкіри</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-5"><div><div class="svc-a-in"><p>Створює на шкірі захисний шар, який полегшує догляд і допомагає протистояти забрудненню та потертостям.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 3500 грн</dd></div><div><dt>Орієнтовний час</dt><dd>близько 1 год</dd></div></dl><p class="svc-note">Ціна залежить від: розмір салону та стан шкіри. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-6"><span>Ремонт та фарбування шкіри</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-6"><div><div class="svc-a-in"><p>Відновлення потертостей, подряпин і втрати кольору на шкіряних елементах салону з підбором відтінку.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>за результатами огляду</dd></div><div><dt>Орієнтовний час</dt><dd>залежить від обсягу</dd></div></dl><p class="svc-note">Ціна залежить від: розмір пошкодження, тип шкіри, колір і складність відтінку. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-                </ul>
-              </div></div>
-            </div>
-          </div>
-        </article>
-        <article class="svc">
-          <div class="svc-inner">
-            <div class="svc-front">
-              <!-- <img class="svc-photo" src="images/services/wash.webp" alt="Мийка — Detailing Family IF" loading="lazy" width="800" height="600"> -->
-              <h3 class="svc-title">Мийка</h3>
-              <p class="svc-meta">14 послуг</p>
-              <button type="button" class="svc-open" aria-expanded="false" aria-controls="svc-list-2"><span class="lbl-open">Переглянути послуги</span><span class="lbl-close">Згорнути</span><span class="svc-plus" aria-hidden="true"></span><span class="sr-only">: Мийка</span></button>
-            </div>
-            <div class="svc-back" id="svc-list-2">
-              <div class="svc-back-in"><div class="svc-pad">
-                <div class="svc-back-head"><p class="svc-title">Мийка</p><button type="button" class="svc-close" aria-label="Закрити: Мийка"></button></div>
-                <ul>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-7"><span>3-х фазна мийка кузова</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-7"><div><div class="svc-a-in"><p>Мийка кузова в три етапи із сушінням турбодуйкою та чорнінням гуми. Дбайливий регулярний догляд за лаком.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 700 грн</dd></div><div><dt>Орієнтовний час</dt><dd>близько 1 год</dd></div></dl><p class="svc-note">Ціна залежить від: клас авто (седан, кросовер, позашляховик) і рівень забруднення. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-8"><span>Кварцева мийка</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-8"><div><div class="svc-a-in"><p>Мийка з гідрофобним захисним покриттям: вода краще збігає з кузова, а бруд прилипає повільніше.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 1500 грн</dd></div><div><dt>Орієнтовний час</dt><dd>1,5–2 год</dd></div></dl><p class="svc-note">Ціна залежить від: клас авто та стан кузова. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-group">Комплекси мийки та догляду</li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-9"><span>Мінімальний</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-9"><div><div class="svc-a-in"><p>Три етапи мийки кузова, сушіння турбодуйкою та чорніння гуми. Підходить, коли потрібно швидко освіжити авто між повними мийками, наприклад щоденне міське авто.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 550 грн</dd></div><div><dt>Орієнтовний час</dt><dd>близько 1 год</dd></div></dl><p class="svc-note">Ціна залежить від: клас авто та рівень забруднення. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-10"><span>Стандарт</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-10"><div><div class="svc-a-in"><p>Мийка кузова, сушіння турбодуйкою, рідкий віск, вологе прибирання салону, протирання скла, пилосос салону й багажника та чорніння гуми. Для регулярного догляду за сімейним авто, де важлива чистота і зовні, і всередині.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 850 грн</dd></div><div><dt>Орієнтовний час</dt><dd>близько 2 год</dd></div></dl><p class="svc-note">Ціна залежить від: клас авто та стан салону. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-11"><span>Стандарт+</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-11"><div><div class="svc-a-in"><p>Усе зі «Стандарту» та кондиціонер шкіри. Для авто зі шкіряним салоном, якому потрібен регулярний догляд за шкірою.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 1150 грн</dd></div><div><dt>Орієнтовний час</dt><dd>близько 2 год</dd></div></dl><p class="svc-note">Ціна залежить від: клас авто та стан салону. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-12"><span>Lite</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-12"><div><div class="svc-a-in"><p>Детейлінг-мийка з обробкою важкодоступних місць, твердий віск і антидощ на лобове скло. Для тих, хто хоче очистити кузов глибше за звичайну мийку й додати захист воском.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 3200 грн</dd></div><div><dt>Орієнтовний час</dt><dd>орієнтовно 2–3 год</dd></div></dl><p class="svc-note">Ціна залежить від: клас авто та стан кузова. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-13"><span>Pro</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-13"><div><div class="svc-a-in"><p>Детейлінг-мийка, зняття бітуму та металевих вкраплень, чистка кузова, твердий віск і антидощ на лобове скло. Для авто після сезону чи довгих поїздок, де є наліт, бітум і вкраплення, або як підготовка перед захисним покриттям.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 4400 грн</dd></div><div><dt>Орієнтовний час</dt><dd>орієнтовно 4–5 год</dd></div></dl><p class="svc-note">Ціна залежить від: клас авто, кількість бітуму та вкраплень. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-14"><span>Premium Full</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-14"><div><div class="svc-a-in"><p>3-х фазна мийка, зняття бітуму та металевих вкраплень, твердий віск і антидощ на лобове скло. Для авто, яке давно не очищали ґрунтовно, і для тих, хто хоче повне очищення та захист за один візит.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 3900 грн</dd></div><div><dt>Орієнтовний час</dt><dd>орієнтовно 3–4 год</dd></div></dl><p class="svc-note">Ціна залежить від: клас авто, кількість бітуму та вкраплень. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-15"><span>Start/Basic</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-15"><div><div class="svc-a-in"><p>3-х фазна мийка, твердий віск і антидощ на лобове скло. Для тих, хто вперше обирає нашу студію або хоче простий захист воском без додаткових процедур.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 3200 грн</dd></div><div><dt>Орієнтовний час</dt><dd>орієнтовно 2 год</dd></div></dl><p class="svc-note">Ціна залежить від: клас авто та стан кузова. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-group">Окремі процедури</li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-16"><span>Технічна мийка / Детейлінг-мийка коліс, підвіски, супортів і днища</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-16"><div><div class="svc-a-in"><p>Глибоке очищення коліс (зі зняттям), підвіски, супортів, колісних арок і днища від бруду та реагентів.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 5000 грн</dd></div><div><dt>Орієнтовний час</dt><dd>до 4 год</dd></div></dl><p class="svc-note">Ціна залежить від: кількість вузлів (колеса, підвіска, днище) і ступінь забруднення. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-17"><span>Мийка / детейлінг підкапотного простору</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-17"><div><div class="svc-a-in"><p>Акуратне очищення моторного відсіку з подальшою консервацією, щоб він виглядав доглянуто.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 1800 грн</dd></div><div><dt>Орієнтовний час</dt><dd>до 1,5 год</dd></div></dl><p class="svc-note">Ціна залежить від: тип авто та стан моторного відсіку. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-18"><span>Глибока очистка кузова</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-18"><div><div class="svc-a-in"><p>Видаляємо бітум, металеві вкраплення та в'їдливий наліт з кузова й дисків, наприклад перед поліруванням чи захисним покриттям.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 800 грн</dd></div><div><dt>Орієнтовний час</dt><dd>1–2 год</dd></div></dl><p class="svc-note">Ціна залежить від: кількість бітуму та вкраплень, колір і розмір авто. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-19"><span>Чищення вікон від водяного каменю</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-19"><div><div class="svc-a-in"><p>Прибираємо білий наліт і розводи зі скла, повертаючи йому прозорість.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 800 грн за скло</dd></div><div><dt>Орієнтовний час</dt><dd>1–2 год</dd></div></dl><p class="svc-note">Ціна залежить від: кількість скла та ступінь нальоту. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-20"><span>Консервація зовнішнього пластику</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-20"><div><div class="svc-a-in"><p>Повертає насичений колір зовнішньому пластику й допомагає захистити його від вигоряння.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 300 грн</dd></div><div><dt>Орієнтовний час</dt><dd>30–60 хв</dd></div></dl><p class="svc-note">Ціна залежить від: площа пластику та його стан. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-                </ul>
-              </div></div>
-            </div>
-          </div>
-        </article>
-        <article class="svc">
-          <div class="svc-inner">
-            <div class="svc-front">
-              <!-- <img class="svc-photo" src="images/services/polishing.webp" alt="Полірування — Detailing Family IF" loading="lazy" width="800" height="600"> -->
-              <h3 class="svc-title">Полірування</h3>
-              <p class="svc-meta">10 послуг</p>
-              <button type="button" class="svc-open" aria-expanded="false" aria-controls="svc-list-3"><span class="lbl-open">Переглянути послуги</span><span class="lbl-close">Згорнути</span><span class="svc-plus" aria-hidden="true"></span><span class="sr-only">: Полірування</span></button>
-            </div>
-            <div class="svc-back" id="svc-list-3">
-              <div class="svc-back-in"><div class="svc-pad">
-                <div class="svc-back-head"><p class="svc-title">Полірування</p><button type="button" class="svc-close" aria-label="Закрити: Полірування"></button></div>
-                <ul>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-21"><span>Косметичне / корегуюче полірування кузова</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-21"><div><div class="svc-a-in"><p>Прибирає дрібні подряпини та павутинку, повертає лаку глибокий блиск.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 130 $</dd></div><div><dt>Орієнтовний час</dt><dd>до 1 дня</dd></div></dl><p class="svc-note">Ціна залежить від: стан лаку, розмір і колір авто. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-22"><span>Повне відновлююче полірування кузова</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-22"><div><div class="svc-a-in"><p>Комплексне полірування всього кузова, щоб відновити колір і глибину лаку на авто з помітним зношенням.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 180 $</dd></div><div><dt>Орієнтовний час</dt><dd>до 2 днів</dd></div></dl><p class="svc-note">Ціна залежить від: стан лаку, кількість і глибина дефектів, розмір авто. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-23"><span>Локальне полірування елементів</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-23"><div><div class="svc-a-in"><p>Полірування окремих елементів із подряпинами чи потьмянінням без роботи з усім кузовом.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 500 грн</dd></div><div><dt>Орієнтовний час</dt><dd>від 30 хв</dd></div></dl><p class="svc-note">Ціна залежить від: кількість елементів і глибина подряпин. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-24"><span>Полірування / шліфування фар</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-24"><div><div class="svc-a-in"><p>Повертає прозорість потьмянілим фарам: вигляд і видимість стають кращими.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 2500 грн</dd></div><div><dt>Орієнтовний час</dt><dd>1–2 год</dd></div></dl><p class="svc-note">Ціна залежить від: ступінь потьмяніння та стан фар. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-25"><span>Полірування декору салону</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-25"><div><div class="svc-a-in"><p>Відновлення вигляду глянцевих і декоративних елементів салону.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 500 грн за елемент</dd></div><div><dt>Орієнтовний час</dt><dd>близько 1 год</dd></div></dl><p class="svc-note">Ціна залежить від: розмір елемента та стан поверхні. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-26"><span>Комплекс «Передпродажний»</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-26"><div><div class="svc-a-in"><p>Корегуюче полірування, віск і хімчистка в одному комплексі, щоб авто мало найкращий вигляд перед продажем.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 10 000 грн</dd></div><div><dt>Орієнтовний час</dt><dd>до 1,5 дня</dd></div></dl><p class="svc-note">Ціна залежить від: клас авто, стан лаку та салону. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-group">Захисні покриття (зазвичай разом із поліруванням або як фінішний етап)</li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-27"><span>Твердий віск (Карнауба) або преміальний рідкий віск</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-27"><div><div class="svc-a-in"><p>Захисний шар і теплий глибокий блиск лаку.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>твердий віск від 1350 грн, рідкий від 300 грн</dd></div><div><dt>Орієнтовний час</dt><dd>близько 40 хв</dd></div></dl><p class="svc-note">Ціна залежить від: розмір авто та тип воску. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-28"><span>Покриття кузова рідким склом</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-28"><div><div class="svc-a-in"><p>Тонке тверде покриття, що захищає лак і підсилює блиск.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 115 $</dd></div><div><dt>Орієнтовний час</dt><dd>близько 1,5 год</dd></div></dl><p class="svc-note">Ціна залежить від: розмір авто та стан лаку. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-29"><span>Нанокераміка для кузова, дисків та плівки (PPF)</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-29"><div><div class="svc-a-in"><p>Довговічне захисне покриття, яке допомагає зберегти блиск і спрощує подальше миття.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 150 $ за шар</dd></div><div><dt>Орієнтовний час</dt><dd>близько 1,5 год за шар</dd></div></dl><p class="svc-note">Ціна залежить від: розмір авто, кількість шарів і підготовка поверхні. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-30"><span>Покриття «Антидощ»</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-30"><div><div class="svc-a-in"><p>Покриття для лобового скла, панорами чи всіх вікон: краплі стікають, а видимість у дощ краща.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>лобове від 1100 грн, усі вікна від 3100 грн</dd></div><div><dt>Орієнтовний час</dt><dd>близько 40 хв</dd></div></dl><p class="svc-note">Ціна залежить від: кількість оброблюваних вікон. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-                </ul>
-              </div></div>
-            </div>
-          </div>
-        </article>
-        <article class="svc">
-          <div class="svc-inner">
-            <div class="svc-front">
-              <!-- <img class="svc-photo" src="images/services/wrapping.webp" alt="Обклеювання — Detailing Family IF" loading="lazy" width="800" height="600"> -->
-              <h3 class="svc-title">Обклеювання</h3>
-              <p class="svc-meta">12 послуг</p>
-              <button type="button" class="svc-open" aria-expanded="false" aria-controls="svc-list-4"><span class="lbl-open">Переглянути послуги</span><span class="lbl-close">Згорнути</span><span class="svc-plus" aria-hidden="true"></span><span class="sr-only">: Обклеювання</span></button>
-            </div>
-            <div class="svc-back" id="svc-list-4">
-              <div class="svc-back-in"><div class="svc-pad">
-                <div class="svc-back-head"><p class="svc-title">Обклеювання</p><button type="button" class="svc-close" aria-label="Закрити: Обклеювання"></button></div>
-                <ul>
-            <li class="svc-group">Антигравійна плівка (PPF)</li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-31"><span>Обклеювання зон ризику / пакет «Стандарт»</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-31"><div><div class="svc-a-in"><p>Захист місць, які частіше за все страждають від сколів і подряпин: бампер, фари, дзеркала, зони під ручками, канти дверей, частина капота й крил.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 450 $</dd></div><div><dt>Орієнтовний час</dt><dd>до 2 днів</dd></div></dl><p class="svc-note">Ціна залежить від: модель авто, кількість і складність зон, тип плівки. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-32"><span>Обклеювання передньої частини кузова («Стандарт+ / ++ / +++»)</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-32"><div><div class="svc-a-in"><p>Розширений захист передньої частини: капот і крила повністю, стійки, частина даху, вантажна зона.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>Стандарт+ від 550 $, ++ від 700 $, +++ від 800 $</dd></div><div><dt>Орієнтовний час</dt><dd>до 2 днів</dd></div></dl><p class="svc-note">Ціна залежить від: модель авто, обсяг зон і тип плівки. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-33"><span>Повна обклейка кузова</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-33"><div><div class="svc-a-in"><p>Максимальний захист усього кузова від сколів, подряпин і реагентів.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 2200 $</dd></div><div><dt>Орієнтовний час</dt><dd>до 7 днів</dd></div></dl><p class="svc-note">Ціна залежить від: модель авто, складність форм, тип плівки. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-34"><span>Бронювання лобового скла</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-34"><div><div class="svc-a-in"><p>Захисна плівка на лобовому склі зменшує ризик сколів і подряпин від піску й камінців.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 250 $</dd></div><div><dt>Орієнтовний час</dt><dd>2–3 год</dd></div></dl><p class="svc-note">Ціна залежить від: розмір і форма скла. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-35"><span>Відновлення / шліфування фар з обклейкою антигравійною плівкою</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-35"><div><div class="svc-a-in"><p>Шліфування фар і обклейка плівкою, щоб захистити їх від нових сколів.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 4250 грн</dd></div><div><dt>Орієнтовний час</dt><dd>близько 2 год</dd></div></dl><p class="svc-note">Ціна залежить від: стан фар і модель авто. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-36"><span>Захисна плівка / скло на салонні вставки та екрани мультимедіа</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-36"><div><div class="svc-a-in"><p>Захищає глянцеві вставки й екрани мультимедіа від подряпин і відбитків.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 100 $ (екрани), від 150 $ (вставки)</dd></div><div><dt>Орієнтовний час</dt><dd>1–2 год</dd></div></dl><p class="svc-note">Ціна залежить від: кількість і розмір елементів. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-group">Стайлінг вінілом та тонування</li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-37"><span>Повна зміна кольору кузова (вінілова плівка)</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-37"><div><div class="svc-a-in"><p>Змінює колір авто вініловою плівкою без перефарбування.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 2000 $</dd></div><div><dt>Орієнтовний час</dt><dd>до 7 днів</dd></div></dl><p class="svc-note">Ціна залежить від: модель авто, колір і тип плівки, складність форм. Точну вартість назвемо після безкоштовного огляду авто в студії.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на безкоштовний огляд</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-38"><span>Антихром</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-38"><div><div class="svc-a-in"><p>Затемнення хромованих елементів плівкою: решітка, молдинги, обрамлення вікон.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 150 $</dd></div><div><dt>Орієнтовний час</dt><dd>до 1 дня</dd></div></dl><p class="svc-note">Ціна залежить від: кількість хромованих елементів. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-39"><span>Тонування вікон</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-39"><div><div class="svc-a-in"><p>Тонування всіх вікон, задньої півсфери (євростандарт) або лише передніх вікон.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>задня півсфера від 3000 грн, усі вікна від 6250 грн</dd></div><div><dt>Орієнтовний час</dt><dd>2–4 год</dd></div></dl><p class="svc-note">Ціна залежить від: кількість вікон, модель авто та тип плівки. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-40"><span>Обклеювання лобового скла атермальною плівкою</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-40"><div><div class="svc-a-in"><p>Атермальна плівка допомагає зменшити нагрівання салону від сонця.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 150 $</dd></div><div><dt>Орієнтовний час</dt><dd>близько 2 год</dd></div></dl><p class="svc-note">Ціна залежить від: розмір скла та тип плівки. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-41"><span>Тонування фар</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-41"><div><div class="svc-a-in"><p>Додає фарам темний відтінок і підкреслює характер авто.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 2500 грн</dd></div><div><dt>Орієнтовний час</dt><dd>1–2 год</dd></div></dl><p class="svc-note">Ціна залежить від: тип фар і колір плівки. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-42"><span>Розтонування вікон</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-42"><div><div class="svc-a-in"><p>Акуратно знімаємо стару або пошкоджену плівку зі скла.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>від 500 грн</dd></div><div><dt>Орієнтовний час</dt><dd>1–3 год</dd></div></dl><p class="svc-note">Ціна залежить від: стан і кількість плівки на склі. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-                </ul>
-              </div></div>
-            </div>
-          </div>
-        </article>
-        <article class="svc">
-          <div class="svc-inner">
-            <div class="svc-front">
-              <!-- <img class="svc-photo" src="images/services/extras.webp" alt="Додаткові послуги — Detailing Family IF" loading="lazy" width="800" height="600"> -->
-              <h3 class="svc-title">Додаткові послуги</h3>
-              <p class="svc-meta">3 послуги</p>
-              <button type="button" class="svc-open" aria-expanded="false" aria-controls="svc-list-5"><span class="lbl-open">Переглянути послуги</span><span class="lbl-close">Згорнути</span><span class="svc-plus" aria-hidden="true"></span><span class="sr-only">: Додаткові послуги</span></button>
-            </div>
-            <div class="svc-back" id="svc-list-5">
-              <div class="svc-back-in"><div class="svc-pad">
-                <div class="svc-back-head"><p class="svc-title">Додаткові послуги</p><button type="button" class="svc-close" aria-label="Закрити: Додаткові послуги"></button></div>
-                <ul>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-43"><span>Консьєрж</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-43"><div><div class="svc-a-in"><p>Заберемо ваше авто в узгодженому місці, відвеземо в студію й повернемо чистим у зручний для вас час. Ви не витрачаєте час на дорогу й очікування.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>за домовленістю</dd></div><div><dt>Орієнтовний час</dt><dd>за домовленістю</dd></div></dl><p class="svc-note">Ціна залежить від: відстань і формат послуги. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-44"><span>Абонемент «Family Care»</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-44"><div><div class="svc-a-in"><p>Регулярний догляд за авто за пакетом. Варіанти: «Чисте авто» (серія мийок за фіксованою ціною), «Сезонний догляд» (комплекс навесні й восени), «Захист покриття» (обслуговуючі мийки та огляд стану PPF чи кераміки), «Family» (один абонемент на два авто родини). Склад і умови підбираємо під вас.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>за пакетом</dd></div><div><dt>Орієнтовний час</dt><dd>за графіком візитів</dd></div></dl><p class="svc-note">Ціна залежить від: обраний варіант, кількість візитів і авто. Точну вартість підкажемо під час запису або консультації.</p><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-            <li class="svc-item">
-              <button type="button" class="svc-q" aria-expanded="false" aria-controls="a-45"><span>Подарунковий сертифікат</span><span class="svc-pm" aria-hidden="true"></span></button>
-              <div class="svc-a" id="a-45"><div><div class="svc-a-in"><p>Сертифікат на послуги студії: подарунок, який точно знадобиться власнику авто.</p><dl class="svc-facts"><div><dt>Ціна</dt><dd>на суму за вашим вибором</dd></div></dl><a href="#booking" class="btn-accent inline-flex px-5 py-3 text-sm">Записатися на консультацію</a></div></div></div>
-            </li>
-                </ul>
-              </div></div>
-            </div>
-          </div>
-        </article>
-        </div>
-        <p class="mt-6 max-w-2xl text-sm leading-relaxed text-mist/60">Ціни вказано «від» для автомобілів базового класу (седан). Для кросоверів і позашляховиків вартість вища. Остаточна ціна залежить від класу, розміру та стану авто.</p>
-      </div>
-    </section>
-
-    <!-- ===================== ПЕРЕВАГИ ===================== -->
-    <section id="advantages" class="px-4 pb-20 md:px-6 md:pb-28" aria-labelledby="adv-title">
-      <div class="mx-auto max-w-6xl">
-        <h2 id="adv-title" class="text-3xl font-extrabold tracking-tight md:text-5xl">Наші переваги</h2>
-        <div class="mt-10 grid gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-4">
-          <article class="rounded-2xl bg-card p-6"><span class="block h-0.5 w-8 bg-accent" aria-hidden="true"></span><h3 class="mt-5 text-xl font-bold">Сервіс із турботою</h3><p class="mt-3 text-sm leading-relaxed text-mist/80">Приємна консультація, увага до дрібниць і повага до вашого часу. Ми 10 років у сфері гостинності і знаємо, як має бути.</p></article>
-          <article class="rounded-2xl bg-card p-6"><span class="block h-0.5 w-8 bg-accent" aria-hidden="true"></span><h3 class="mt-5 text-xl font-bold">Чесна консультація</h3><p class="mt-3 text-sm leading-relaxed text-mist/80">Радимо лише те, що справді потрібно вашому авто, без зайвих послуг, і підбираємо рішення під ваші задачі та бюджет.</p></article>
-          <article class="rounded-2xl bg-card p-6"><span class="block h-0.5 w-8 bg-accent" aria-hidden="true"></span><h3 class="mt-5 text-xl font-bold">Спільний огляд</h3><p class="mt-3 text-sm leading-relaxed text-mist/80">Оглядаємо авто разом із вами при отриманні, і при видачі: фіксуємо початковий стан та показуємо результат роботи. Якщо є питання, відповідаємо одразу.</p></article>
-          <article class="rounded-2xl bg-card p-6"><span class="block h-0.5 w-8 bg-accent" aria-hidden="true"></span><h3 class="mt-5 text-xl font-bold">Звіт під час роботи</h3><p class="mt-3 text-sm leading-relaxed text-mist/80">Під час роботи надсилаємо фото й відео, тож ви завжди бачите, на якому етапі ваше авто.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== ПОРТФОЛІО ===================== -->
-    <section id="portfolio" class="px-4 pb-20 md:px-6 md:pb-28" aria-labelledby="portfolio-title">
-      <div class="mx-auto max-w-6xl">
-        <h2 id="portfolio-title" class="text-3xl font-extrabold tracking-tight md:text-5xl">Портфоліо</h2>
-        <p class="mt-4 max-w-xl text-mist/80 md:text-lg">Тут з'являться наші роботи з фото до, під час і після.</p>
-
-        <div class="mt-10 grid items-center gap-8 rounded-2xl bg-card p-5 md:grid-cols-2 md:gap-10 md:p-10">
-          <div class="grid grid-cols-2 gap-3" aria-hidden="true">
-            <div class="flex aspect-[4/3] items-center justify-center rounded-xl border border-dashed border-ink/25 text-sm text-mist/60">До</div>
-            <div class="flex aspect-[4/3] items-center justify-center rounded-xl border border-dashed border-ink/25 text-sm text-mist/60">Після</div>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold md:text-2xl">Перші роботи з'являться найближчим часом</h3>
-            <p class="mt-3 text-sm leading-relaxed text-mist/80 md:text-base">А поки що ви можете записатися на консультацію й розповісти, що потрібно вашому авто.</p>
-            <a href="#booking" class="btn-accent mt-6 inline-flex justify-center px-6 py-3.5 text-sm md:text-base">Записатися на консультацію</a>
-          </div>
-        </div>
-
-        <!-- Коли з'являться фото: замініть блок вище на сітку карток, наприклад:
-        <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <figure class="overflow-hidden rounded-2xl bg-card">
-            <img src="images/portfolio/work-1.webp" alt="Полірування кузова, Detailing Family IF" loading="lazy" width="800" height="600" class="aspect-[4/3] w-full object-cover">
-            <figcaption class="p-4 text-sm"><span class="font-semibold">Назва роботи</span><span class="block text-mist/70">Авто та послуга</span></figcaption>
-          </figure>
-        </div>
-        -->
-      </div>
-    </section>
-
-    <!-- ===================== ВАРТІСТЬ ===================== -->
-    <section id="pricing" class="px-4 pb-20 md:px-6 md:pb-28" aria-labelledby="pricing-title">
-      <div class="mx-auto max-w-6xl">
-        <h2 id="pricing-title" class="text-3xl font-extrabold tracking-tight md:text-5xl">Вартість</h2>
-        <p class="mt-4 max-w-xl text-mist/80 md:text-lg">Ми вказуємо ціни «від», бо кожне авто різне. Ось від чого залежить остаточна сума.</p>
-
-        <div class="mt-10 grid gap-4 lg:grid-cols-2 lg:gap-5">
-          <div class="grid gap-4">
-          <article class="rounded-2xl bg-card p-6"><h3 class="text-lg font-bold">Клас авто</h3><p class="mt-2 text-sm leading-relaxed text-mist/80">Седан, кросовер чи позашляховик: що більший автомобіль, то більше часу й матеріалів потрібно.</p></article>
-          <article class="rounded-2xl bg-card p-6"><h3 class="text-lg font-bold">Стан авто</h3><p class="mt-2 text-sm leading-relaxed text-mist/80">Стан лаку та салону, рівень забруднення, глибина подряпин і наявність плям.</p></article>
-          <article class="rounded-2xl bg-card p-6"><h3 class="text-lg font-bold">Обсяг і матеріали</h3><p class="mt-2 text-sm leading-relaxed text-mist/80">Кількість зон, тип плівки чи покриття, складність форм кузова.</p></article>
-          </div>
-
-          <div class="rounded-2xl bg-card p-6 md:p-8">
-            <h3 class="text-xl font-bold">Популярні послуги</h3>
-            <dl class="mt-3">
-            <div class="flex items-baseline justify-between gap-4 border-b border-canvas/70 py-3.5 last:border-0"><dt class="text-sm md:text-base">3-х фазна мийка</dt><dd class="whitespace-nowrap text-sm font-bold md:text-base">від 700 грн</dd></div>
-            <div class="flex items-baseline justify-between gap-4 border-b border-canvas/70 py-3.5 last:border-0"><dt class="text-sm md:text-base">Хімчистка салону (стандарт)</dt><dd class="whitespace-nowrap text-sm font-bold md:text-base">від 4600 грн</dd></div>
-            <div class="flex items-baseline justify-between gap-4 border-b border-canvas/70 py-3.5 last:border-0"><dt class="text-sm md:text-base">Косметичне полірування</dt><dd class="whitespace-nowrap text-sm font-bold md:text-base">від 130 $</dd></div>
-            <div class="flex items-baseline justify-between gap-4 border-b border-canvas/70 py-3.5 last:border-0"><dt class="text-sm md:text-base">Нанокераміка (за шар)</dt><dd class="whitespace-nowrap text-sm font-bold md:text-base">від 150 $</dd></div>
-            <div class="flex items-baseline justify-between gap-4 border-b border-canvas/70 py-3.5 last:border-0"><dt class="text-sm md:text-base">Антигравійна плівка, зони ризику</dt><dd class="whitespace-nowrap text-sm font-bold md:text-base">від 450 $</dd></div>
-            <div class="flex items-baseline justify-between gap-4 border-b border-canvas/70 py-3.5 last:border-0"><dt class="text-sm md:text-base">Тонування задньої півсфери</dt><dd class="whitespace-nowrap text-sm font-bold md:text-base">від 3000 грн</dd></div>
-            </dl>
-            <p class="mt-4 text-xs leading-relaxed text-mist/60">Ціни для автомобілів базового класу (седан). Повний перелік послуг із цінами, часом і описом дивіться в розділі «Послуги».</p>
-            <p class="mt-6 text-sm leading-relaxed text-mist/80 md:text-base">Точну вартість назвемо після безкоштовного огляду авто в студії.</p>
-            <a href="#booking" class="btn-accent mt-4 flex w-full justify-center px-6 py-3.5 text-sm md:text-base">Записатися на безкоштовний огляд</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== ЗАПИС ===================== -->
-    <section id="booking" class="px-4 pb-20 md:px-6 md:pb-28" aria-labelledby="booking-title">
-      <div class="mx-auto max-w-6xl">
-        <div class="grid gap-8 lg:grid-cols-2 lg:gap-14">
-          <div>
-            <h2 id="booking-title" class="text-3xl font-extrabold tracking-tight md:text-5xl">Запис на консультацію</h2>
-            <p class="mt-4 max-w-md text-mist/80 md:text-lg">Залиште заявку, і ми зв'яжемося з вами, щоб узгодити безкоштовний огляд авто. Або напишіть нам у зручному месенджері.</p>
-            <div id="channels" class="mt-8 flex flex-wrap gap-3">
-              <a data-channel="telegram" class="btn-ghost hidden items-center justify-center px-5 py-3 text-sm" href="#booking" rel="noopener">Telegram</a>
-              <a data-channel="viber" class="btn-ghost hidden items-center justify-center px-5 py-3 text-sm" href="#booking" rel="noopener">Viber</a>
-              <a data-channel="whatsapp" class="btn-ghost hidden items-center justify-center px-5 py-3 text-sm" href="#booking" rel="noopener">WhatsApp</a>
-              <a data-channel="instagram" class="btn-ghost hidden items-center justify-center px-5 py-3 text-sm" href="#booking" rel="noopener">Instagram</a>
-              <a data-channel="phone" class="btn-ghost hidden items-center justify-center px-5 py-3 text-sm" href="#booking" rel="noopener">Подзвонити</a>
-            </div>
-          </div>
-
-          <div class="rounded-2xl bg-card p-5 md:p-8">
-            <form id="lead-form" novalidate>
-              <div class="grid gap-5">
-                <div>
-                  <label for="lead-name" class="mb-2 block text-sm font-semibold">Ім'я</label>
-                  <input id="lead-name" name="name" type="text" autocomplete="given-name" required placeholder="Як до вас звертатися" class="w-full rounded-xl border border-ink/20 bg-canvas px-4 py-3.5 text-base text-ink placeholder:text-mist/40 focus:border-accent focus:outline-none">
-                  <p id="err-name" class="field-error" role="alert" hidden></p>
-                </div>
-
-                <fieldset>
-                  <legend class="mb-2 text-sm font-semibold">Як з вами зв'язатися</legend>
-                  <div class="flex flex-wrap gap-2">
-              <label><input type="radio" name="method" value="phone" class="peer sr-only" checked><span class="chip cursor-pointer peer-checked:border-accent peer-checked:bg-accent peer-checked:font-semibold peer-checked:text-canvas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent">Телефон</span></label>
-              <label><input type="radio" name="method" value="telegram" class="peer sr-only"><span class="chip cursor-pointer peer-checked:border-accent peer-checked:bg-accent peer-checked:font-semibold peer-checked:text-canvas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent">Telegram</span></label>
-              <label><input type="radio" name="method" value="viber" class="peer sr-only"><span class="chip cursor-pointer peer-checked:border-accent peer-checked:bg-accent peer-checked:font-semibold peer-checked:text-canvas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent">Viber</span></label>
-                  </div>
-                  <input id="lead-contact" name="contact" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+380 __ ___ __ __" aria-label="Контакт" class="mt-3 w-full rounded-xl border border-ink/20 bg-canvas px-4 py-3.5 text-base text-ink placeholder:text-mist/40 focus:border-accent focus:outline-none">
-                  <p id="err-contact" class="field-error" role="alert" hidden></p>
-                </fieldset>
-
-                <fieldset>
-                  <legend class="mb-2 text-sm font-semibold">Що вас цікавить <span class="font-normal text-mist/60">(необов'язково)</span></legend>
-                  <div class="flex flex-wrap gap-2">
-              <label><input type="radio" name="service" value="Хімчистка" class="peer sr-only"><span class="chip cursor-pointer peer-checked:border-accent peer-checked:bg-accent peer-checked:font-semibold peer-checked:text-canvas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent">Хімчистка</span></label>
-              <label><input type="radio" name="service" value="Мийка" class="peer sr-only"><span class="chip cursor-pointer peer-checked:border-accent peer-checked:bg-accent peer-checked:font-semibold peer-checked:text-canvas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent">Мийка</span></label>
-              <label><input type="radio" name="service" value="Полірування" class="peer sr-only"><span class="chip cursor-pointer peer-checked:border-accent peer-checked:bg-accent peer-checked:font-semibold peer-checked:text-canvas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent">Полірування</span></label>
-              <label><input type="radio" name="service" value="Обклеювання" class="peer sr-only"><span class="chip cursor-pointer peer-checked:border-accent peer-checked:bg-accent peer-checked:font-semibold peer-checked:text-canvas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent">Обклеювання</span></label>
-              <label><input type="radio" name="service" value="Ще не знаю" class="peer sr-only"><span class="chip cursor-pointer peer-checked:border-accent peer-checked:bg-accent peer-checked:font-semibold peer-checked:text-canvas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent">Ще не знаю</span></label>
-                  </div>
-                </fieldset>
-
-                <div class="grid gap-3">
-                  <label class="flex items-start gap-3 text-sm leading-relaxed text-mist/80">
-                    <input id="consent-processing" type="checkbox" class="mt-0.5 h-5 w-5 shrink-0 accent-accent">
-                    <span>Погоджуюсь на обробку моїх даних для зв'язку щодо запису. <a href="privacy.html" class="underline underline-offset-2 hover:text-ink">Політика конфіденційності</a></span>
-                  </label>
-                  <p id="err-consent" class="field-error" role="alert" hidden></p>
-                  <label class="flex items-start gap-3 text-sm leading-relaxed text-mist/80">
-                    <input id="consent-marketing" type="checkbox" class="mt-0.5 h-5 w-5 shrink-0 accent-accent">
-                    <span>Хочу отримувати пропозиції та новини студії <span class="text-mist/60">(необов'язково)</span></span>
-                  </label>
-                </div>
-
-                <div class="absolute -left-[9999px]" aria-hidden="true"><input type="text" name="company_url" tabindex="-1" autocomplete="off"></div>
-
-                <div>
-                  <button id="lead-submit" type="submit" class="btn-accent flex w-full justify-center px-6 py-4 text-base">Залишити заявку</button>
-                  <p id="lead-error" class="mt-3 text-sm text-mist/80" role="alert" hidden></p>
-                </div>
-              </div>
-            </form>
-
-            <div id="lead-step2" hidden>
-              <h3 id="step2-title" tabindex="-1" class="text-xl font-bold">Дякуємо, заявку отримано</h3>
-              <p class="mt-2 text-sm leading-relaxed text-mist/80">Щоб ми підготувалися до вашого візиту, розкажіть трохи більше. Це необов'язково.</p>
-              <form id="details-form" class="mt-6 grid gap-5" novalidate>
-                <div>
-                  <label for="d-car" class="mb-2 block text-sm font-semibold">Марка і модель авто</label>
-                  <input id="d-car" name="car" type="text" autocomplete="off" placeholder="Наприклад, Toyota Camry" class="w-full rounded-xl border border-ink/20 bg-canvas px-4 py-3.5 text-base text-ink placeholder:text-mist/40 focus:border-accent focus:outline-none">
-                </div>
-                <fieldset>
-                  <legend class="mb-2 text-sm font-semibold">Клас авто</legend>
-                  <div class="flex flex-wrap gap-2">
-              <label><input type="radio" name="car_class" value="Седан" class="peer sr-only"><span class="chip cursor-pointer peer-checked:border-accent peer-checked:bg-accent peer-checked:font-semibold peer-checked:text-canvas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent">Седан</span></label>
-              <label><input type="radio" name="car_class" value="Кросовер" class="peer sr-only"><span class="chip cursor-pointer peer-checked:border-accent peer-checked:bg-accent peer-checked:font-semibold peer-checked:text-canvas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent">Кросовер</span></label>
-              <label><input type="radio" name="car_class" value="Позашляховик" class="peer sr-only"><span class="chip cursor-pointer peer-checked:border-accent peer-checked:bg-accent peer-checked:font-semibold peer-checked:text-canvas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent">Позашляховик</span></label>
-                  </div>
-                </fieldset>
-                <div>
-                  <label for="d-time" class="mb-2 block text-sm font-semibold">Коли вам зручно приїхати</label>
-                  <input id="d-time" name="preferred_time" type="text" autocomplete="off" placeholder="Наприклад, будні після 17:00" class="w-full rounded-xl border border-ink/20 bg-canvas px-4 py-3.5 text-base text-ink placeholder:text-mist/40 focus:border-accent focus:outline-none">
-                </div>
-                <div>
-                  <label for="d-comment" class="mb-2 block text-sm font-semibold">Побажання або питання</label>
-                  <textarea id="d-comment" name="comment" rows="3" class="w-full rounded-xl border border-ink/20 bg-canvas px-4 py-3.5 text-base text-ink placeholder:text-mist/40 focus:border-accent focus:outline-none"></textarea>
-                </div>
-                <div class="flex flex-col gap-3 sm:flex-row">
-                  <button type="submit" class="btn-accent flex flex-1 justify-center px-6 py-3.5 text-base">Надіслати</button>
-                  <button id="details-skip" type="button" class="btn-ghost flex flex-1 justify-center px-6 py-3.5 text-base">Пропустити</button>
-                </div>
-              </form>
-            </div>
-
-            <div id="lead-done" hidden>
-              <h3 id="done-title" tabindex="-1" class="text-xl font-bold">Дякуємо!</h3>
-              <p class="mt-2 text-sm leading-relaxed text-mist/80 md:text-base">Ми зв'яжемося з вами, щоб узгодити час безкоштовного огляду.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== ЛОКАЦІЯ ===================== -->
-    <section id="location" class="px-4 pb-20 md:px-6 md:pb-28" aria-labelledby="location-title">
-      <div class="mx-auto max-w-6xl">
-        <h2 id="location-title" class="text-3xl font-extrabold tracking-tight md:text-5xl">Локація</h2>
-        <div class="mt-10 grid gap-4 md:grid-cols-2 md:gap-5">
-          <div class="rounded-2xl bg-card p-6 md:p-8">
-            <h3 class="text-sm font-semibold text-mist/60">Адреса</h3>
-            <p class="mt-2 text-xl font-bold md:text-2xl">м. Івано-Франківськ, вул. Ребета</p>
-            <h3 class="mt-8 text-sm font-semibold text-mist/60">Графік роботи</h3>
-            <p class="mt-2 text-lg font-semibold">Пн–Сб: 9:00–19:00</p>
-          </div>
-          <div class="flex flex-col justify-between gap-6 rounded-2xl bg-card p-6 md:p-8">
-            <p class="leading-relaxed text-mist/80">Прокладіть маршрут у навігаторі або відкрийте адресу на карті.</p>
-            <div class="flex flex-col gap-3 sm:flex-row">
-              <a href="https://www.google.com/maps/dir/?api=1&destination=%D0%BC.%20%D0%86%D0%B2%D0%B0%D0%BD%D0%BE-%D0%A4%D1%80%D0%B0%D0%BD%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%2C%20%D0%B2%D1%83%D0%BB.%20%D0%A0%D0%B5%D0%B1%D0%B5%D1%82%D0%B0%208%D0%B1" target="_blank" rel="noopener noreferrer" data-track="route" class="btn-accent flex flex-1 justify-center px-6 py-3.5 text-base">Прокласти маршрут</a>
-              <a href="https://www.google.com/maps/search/?api=1&query=%D0%BC.%20%D0%86%D0%B2%D0%B0%D0%BD%D0%BE-%D0%A4%D1%80%D0%B0%D0%BD%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%2C%20%D0%B2%D1%83%D0%BB.%20%D0%A0%D0%B5%D0%B1%D0%B5%D1%82%D0%B0"
-                target="_blank" rel="noopener noreferrer" data-track="map"
-                class="btn-ghost flex flex-1 justify-center px-6 py-3.5 text-base">Відкрити на карті</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- ===================== КОНТАКТИ ===================== -->
-  <footer id="contacts" class="border-t border-card px-4 py-14 md:px-6 md:py-20">
-    <div class="mx-auto max-w-6xl">
-      <h2 class="text-3xl font-extrabold tracking-tight md:text-5xl">Контакти</h2>
-      <div class="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-        <div><h3 class="text-sm font-semibold text-mist/60">Зв'язок</h3><ul class="mt-3 space-y-1"><li><a href="tel:+380756741184" data-track="phone" class="block py-1 text-base transition-colors hover:text-accent">+38 (075) 674-11-84</a></li><li><a href="mailto:detailing.family.if@gmail.com" data-track="email" class="block py-1 text-base transition-colors hover:text-accent">detailing.family.if@gmail.com</a></li></ul></div>
-        <div><h3 class="text-sm font-semibold text-mist/60">Месенджери</h3><ul class="mt-3 space-y-1"><li><a href="https://t.me/detailing_family_if_admin" target="_blank" rel="noopener noreferrer" data-track="telegram" class="block py-1 text-base transition-colors hover:text-accent">Telegram</a></li><li><a href="viber://chat?number=%2B380756741184" data-track="viber" class="block py-1 text-base transition-colors hover:text-accent">Viber</a></li><li><a href="https://wa.me/380756741184" target="_blank" rel="noopener noreferrer" data-track="whatsapp" class="block py-1 text-base transition-colors hover:text-accent">WhatsApp</a></li></ul></div>
-        <div><h3 class="text-sm font-semibold text-mist/60">Соцмережі</h3><ul class="mt-3 space-y-1"><li><a href="https://www.instagram.com/detailing_family_if" target="_blank" rel="noopener noreferrer" data-track="instagram" class="block py-1 text-base transition-colors hover:text-accent">Instagram</a></li><li><a href="https://www.tiktok.com/@detailing_family_if" target="_blank" rel="noopener noreferrer" data-track="tiktok" class="block py-1 text-base transition-colors hover:text-accent">TikTok</a></li><li><a href="https://www.youtube.com/@detailing_family_if" target="_blank" rel="noopener noreferrer" data-track="youtube" class="block py-1 text-base transition-colors hover:text-accent">YouTube</a></li><li><a href="https://t.me/detailing_family_if" target="_blank" rel="noopener noreferrer" data-track="telegram_channel" class="block py-1 text-base transition-colors hover:text-accent">Telegram-канал</a></li></ul></div>
-      </div>
-      <div class="mt-14 flex flex-col gap-3 border-t border-card pt-6 text-sm text-mist/60 md:flex-row md:items-center md:justify-between">
-        <p>&copy; 2026 Detailing Family IF</p>
-        <a href="privacy.html" class="transition-colors hover:text-ink">Політика конфіденційності</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    (function () {
-      var header = document.getElementById('site-header');
-      var burger = document.getElementById('burger');
-      var menu = document.getElementById('mobile-menu');
-
-      function setMenu(open) {
-        burger.setAttribute('aria-expanded', open);
-        burger.setAttribute('aria-label', open ? 'Закрити меню' : 'Відкрити меню');
-        menu.setAttribute('aria-hidden', !open);
-        menu.classList.toggle('is-open', open);
-        document.body.classList.toggle('menu-open', open);
-      }
-      burger.addEventListener('click', function () {
-        setMenu(burger.getAttribute('aria-expanded') !== 'true');
-      });
-      menu.addEventListener('click', function (e) {
-        if (e.target.closest('a')) setMenu(false);
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') setMenu(false);
-      });
-      window.matchMedia('(min-width: 768px)').addEventListener('change', function (e) {
-        if (e.matches) setMenu(false);
-      });
-
-      function onScroll() { header.classList.toggle('is-scrolled', window.scrollY > 8); }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    })();
-  </script>
-
-  <script>
-    (function () {
-      var cards = [].slice.call(document.querySelectorAll('.svc'));
-      var wide = window.matchMedia('(min-width: 768px)');
-      function setItem(item, open) {
-        item.classList.toggle('is-open', open);
-        item.querySelector('.svc-q').setAttribute('aria-expanded', open);
-      }
-      function closeItems(card) {
-        card.querySelectorAll('.svc-item.is-open').forEach(function (i) { setItem(i, false); });
-      }
-      function setCard(card, open) {
-        card.classList.toggle('is-open', open);
-        card.querySelector('.svc-open').setAttribute('aria-expanded', open);
-        if (!open) closeItems(card);
-      }
-      cards.forEach(function (card) {
-        var openBtn = card.querySelector('.svc-open');
-        var closeBtn = card.querySelector('.svc-close');
-        openBtn.addEventListener('click', function () {
-          if (card.classList.contains('is-open')) { setCard(card, false); return; }
-          cards.forEach(function (c) { if (c !== card) setCard(c, false); });
-          setCard(card, true);
-          (window.dataLayer = window.dataLayer || []).push({ event: 'service_category_open', service_category: card.querySelector('.svc-title').textContent });
-          if (wide.matches) setTimeout(function () { closeBtn.focus({ preventScroll: true }); }, 450);
-        });
-        closeBtn.addEventListener('click', function () {
-          setCard(card, false);
-          openBtn.focus({ preventScroll: true });
-        });
-        card.querySelectorAll('.svc-q').forEach(function (q) {
-          q.addEventListener('click', function () {
-            var item = q.parentNode, willOpen = !item.classList.contains('is-open');
-            closeItems(card);
-            setItem(item, willOpen);
-          });
-        });
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') cards.forEach(function (c) { if (c.classList.contains('is-open')) setCard(c, false); });
-      });
-    })();
-  </script>
-
-  <script>
-    /* ===== Заявки: налаштування ===== */
-    (function () {
-      var CONFIG = {
-        // URL, на який надсилаються заявки (сервіс форм, вебхук або Google Apps Script).
-        // Поки він порожній, форма покаже помилку й нічого не надішле.
-        endpoint: 'https://detailing-family-crm-worker.detailing-family-if.workers.dev',
-        // Заповніть лише те, що є: порожні кнопки на сайті не з'являться.
-        contacts: {
-          telegram: 'detailing_family_if_admin',   // нік без @
-          viber: '+380756741184',      // номер із кодом країни
-          instagram: 'detailing_family_if',  // нік без @
-          whatsapp: '+380756741184',  // номер із кодом країни
-          phone: '+380756741184'      // номер із кодом країни
-        }
-      };
-
-      var dl = function (o) { (window.dataLayer = window.dataLayer || []).push(o); };
-      var $ = function (id) { return document.getElementById(id); };
-
-      /* Кнопки месенджерів показуємо лише для заповнених контактів */
-      var urls = {
-        telegram: function (v) { return 'https://t.me/' + encodeURIComponent(v); },
-        viber: function (v) { return 'viber://chat?number=' + encodeURIComponent(v); },
-        whatsapp: function (v) { return 'https://wa.me/' + v.replace(/\D/g, ''); },
-        instagram: function (v) { return 'https://instagram.com/' + encodeURIComponent(v); },
-        phone: function (v) { return 'tel:' + v.replace(/[^+\d]/g, ''); }
-      };
-      [].slice.call(document.querySelectorAll('#channels [data-channel]')).forEach(function (a) {
-        var ch = a.getAttribute('data-channel'), v = CONFIG.contacts[ch];
-        if (!v) return;
-        a.href = urls[ch](v);
-        if (ch !== 'phone') a.target = '_blank';
-        a.classList.remove('hidden'); a.classList.add('inline-flex');
-        a.addEventListener('click', function () { dl({ event: 'contact_click', channel: ch }); });
-      });
-
-      /* Джерело переходу (UTM) фіксуємо при першому заході за сесію */
-      var attr = {};
-      try { attr = JSON.parse(sessionStorage.getItem('dfif_attr') || '{}'); } catch (e) {}
-      if (!attr.landing_page) {
-        attr.landing_page = location.href.split('#')[0];
-        attr.referrer = document.referrer || '';
-        var qp = new URLSearchParams(location.search);
-        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) {
-          if (qp.get(k)) attr[k] = qp.get(k);
-        });
-        try { sessionStorage.setItem('dfif_attr', JSON.stringify(attr)); } catch (e) {}
-      }
-
-      var form = $('lead-form'), step2 = $('lead-step2'), done = $('lead-done');
-      var contact = $('lead-contact'), submit = $('lead-submit');
-      var leadId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'l' + Date.now() + Math.random().toString(16).slice(2);
-      var started = false;
-
-      function val(name) { var el = form.querySelector('[name="' + name + '"]:checked'); return el ? el.value : ''; }
-      function setErr(id, text) { var el = $(id); el.textContent = text || ''; el.hidden = !text; }
-
-      form.addEventListener('focusin', function () {
-        if (!started) { started = true; dl({ event: 'form_start', form_id: 'lead' }); }
-      });
-
-      /* Поле контакту залежить від обраного способу зв'язку */
-      function applyMethod() {
-        if (val('method') === 'telegram') {
-          contact.type = 'text'; contact.inputMode = 'text'; contact.autocomplete = 'off'; contact.placeholder = '@нік у Telegram';
-        } else {
-          contact.type = 'tel'; contact.inputMode = 'tel'; contact.autocomplete = 'tel'; contact.placeholder = '+380 __ ___ __ __';
-        }
-        setErr('err-contact', ''); contact.removeAttribute('aria-invalid');
-      }
-      [].slice.call(form.querySelectorAll('[name="method"]')).forEach(function (r) { r.addEventListener('change', applyMethod); });
-
-      function normalizePhone(v) {
-        var d = v.replace(/\D/g, '');
-        if (d.length === 10 && d.charAt(0) === '0') d = '38' + d;
-        return (d.length === 12 && d.indexOf('380') === 0) ? '+' + d : null;
-      }
-      function normalizeNick(v) {
-        var n = v.trim().replace(/^https?:\/\/t\.me\//i, '').replace(/^@/, '');
-        return /^[A-Za-z0-9_]{5,32}$/.test(n) ? '@' + n : null;
-      }
-
-      function send(payload) {
-        if (!CONFIG.endpoint) { console.warn('Заявки: не вказано CONFIG.endpoint'); return Promise.reject(new Error('no-endpoint')); }
-        var fd = new FormData();
-        Object.keys(payload).forEach(function (k) { fd.append(k, payload[k]); });
-        return fetch(CONFIG.endpoint, { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
-          .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); });
-      }
-      function base(stage) {
-        var p = { lead_id: leadId, stage: stage, page_url: location.href.split('#')[0], submitted_at: new Date().toISOString() };
-        Object.keys(attr).forEach(function (k) { p[k] = attr[k]; });
-        return p;
-      }
-      function show(el) { form.hidden = true; step2.hidden = true; done.hidden = true; el.hidden = false; var t = el.querySelector('h3'); if (t) t.focus({ preventScroll: true }); }
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var name = form.name.value.trim(), method = val('method') || 'phone', raw = contact.value, c;
-        var ok = true;
-        setErr('err-name', ''); setErr('err-contact', ''); setErr('err-consent', ''); setErr('lead-error', '');
-        form.name.removeAttribute('aria-invalid'); contact.removeAttribute('aria-invalid');
-
-        if (name.length < 2) { setErr('err-name', 'Вкажіть, як до вас звертатися.'); form.name.setAttribute('aria-invalid', 'true'); ok = false; }
-        c = method === 'telegram' ? normalizeNick(raw) : normalizePhone(raw);
-        if (!c) {
-          setErr('err-contact', method === 'telegram' ? 'Вкажіть нік у форматі @нік (від 5 символів).' : 'Вкажіть номер у форматі +380XXXXXXXXX або 0XXXXXXXXX.');
-          contact.setAttribute('aria-invalid', 'true'); ok = false;
-        }
-        if (!$('consent-processing').checked) { setErr('err-consent', 'Щоб надіслати заявку, потрібна ваша згода.'); ok = false; }
-        if (!ok) { var bad = form.querySelector('[aria-invalid="true"]') || $('consent-processing'); bad.focus(); return; }
-
-        if (form.company_url.value) { show(step2); return; } /* пастка для ботів */
-
-        var p = base('lead');
-        p.name = name; p.contact_method = method; p.contact = c;
-        p.service_interest = val('service') || 'не вказано';
-        p.consent_processing = 'true';
-        p.consent_marketing = $('consent-marketing').checked ? 'true' : 'false';
-        p.consent_version = 'v1';
-
-        submit.disabled = true; submit.textContent = 'Надсилаємо…';
-        send(p).then(function () {
-          dl({ event: 'generate_lead', form_id: 'lead', contact_method: method, service_category: p.service_interest, lead_source: attr.utm_source || 'direct' });
-          show(step2);
-        }).catch(function () {
-          setErr('lead-error', 'Не вдалося надіслати заявку. Спробуйте ще раз або напишіть нам у месенджері.');
-        }).then(function () { submit.disabled = false; submit.textContent = 'Залишити заявку'; });
-      });
-
-      /* Крок 2: необов'язкові деталі. Заявка вже збережена, тому збої тут не блокують */
-      var dform = $('details-form');
-      dform.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var p = base('details'), cls = dform.querySelector('[name="car_class"]:checked');
-        p.car = dform.car.value.trim(); p.car_class = cls ? cls.value : '';
-        p.preferred_time = dform.preferred_time.value.trim(); p.comment = dform.comment.value.trim();
-        send(p).then(function () { dl({ event: 'lead_details_submitted' }); }).catch(function () {});
-        show(done);
-      });
-      $('details-skip').addEventListener('click', function () { show(done); });
-    })();
-  </script>
-
-  <script>
-    document.addEventListener('click', function (e) {
-      var a = e.target.closest('[data-track]');
-      if (!a) return;
-      (window.dataLayer = window.dataLayer || []).push({ event: 'contact_click', channel: a.getAttribute('data-track') });
-    });
-  </script>
+if (!SUPABASE_URL) app.innerHTML = '<p class="p-6">Вкажіть SUPABASE_URL і SUPABASE_ANON_KEY на початку скрипта в crm/index.html.</p>'; else start();
+</script>
 </body>
 </html>
