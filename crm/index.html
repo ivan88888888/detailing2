@@ -17,6 +17,7 @@
 const SUPABASE_URL = 'https://blsbjolbrznefwxscavk.supabase.co';       // https://xxxx.supabase.co
 const SUPABASE_ANON_KEY = 'sb_publishable_NxMkhhDCZw-ZGZawJkQAWA_-j1t3WJj';  // ключ "anon public" (його можна публікувати, дані захищає вхід і правила бази)
 
+const SITE_URL = 'https://detailing.family.ivano-frankivsk.ua';  // адреса сайту для посилань клієнтам
 const sb = supabase.createClient(SUPABASE_URL || 'http://localhost', SUPABASE_ANON_KEY || 'x');
 const app = document.getElementById('app');
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -220,6 +221,7 @@ async function openOrder(id) {
   <h3 class="mt-4 font-bold">Послуги</h3><div class="mt-2 space-y-1 text-sm">${items.map(i => `<div class="flex items-center justify-between gap-2 rounded-xl bg-canvas px-3 py-2"><span>${esc(i.name)} × ${i.qty}</span><span class="shrink-0">${i.price} ${i.currency === 'USD' ? '$' : 'грн'}<button data-rm="${i.id}" class="ml-2 text-mist/50" aria-label="Видалити">&times;</button></span></div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div>
   <form id="af" class="mt-3 grid grid-cols-[1fr_5rem] gap-2"><select id="sv" class="${INP} col-span-2"><option value="">Додати послугу…</option>${services.filter(s => s.active).map(s => `<option value="${s.id}">${esc(s.category)}: ${esc(s.name)}</option>`).join('')}</select><input id="pr" type="number" step="any" min="0" placeholder="Ціна" class="${INP}"><input id="qt" type="number" step="any" min="0.1" value="1" class="${INP}"><button class="${BTN2} col-span-2">Додати</button></form>
   <h3 class="mt-5 font-bold">Фото</h3><div id="ph" class="mt-2 space-y-3"></div>
+  <div class="mt-4 rounded-xl bg-canvas p-3"><label class="flex gap-3 text-sm"><input id="sh" type="checkbox" class="mt-0.5 h-5 w-5 accent-accent" ${od.share_status ? 'checked' : ''}>Показувати клієнту статус і фото за посиланням</label><button id="lk" type="button" class="${BTN2} mt-3 w-full text-sm ${od.share_status ? '' : 'hidden'}">Поділитися посиланням</button></div>
   <div class="mt-4 grid gap-3"><div class="grid grid-cols-2 gap-2"><label class="text-sm text-mist/70">Знижка, грн<input id="ds" type="number" min="0" class="${INP} mt-1" value="${od.discount_uah || 0}"></label>${hasUsd ? `<label class="text-sm text-mist/70">Курс $, грн<input id="rt" type="number" step="any" min="0" class="${INP} mt-1" value="${od.usd_rate || ''}"></label>` : ''}</div>
   <p class="text-lg font-bold">Разом: ${Math.round(t.total)} грн${t.need ? ' <span class="text-sm font-normal text-mist/70">(вкажіть курс $)</span>' : ''}</p>
   <div class="grid grid-cols-2 gap-2"><select id="pm" class="${INP}"><option value="">Оплата…</option>${[['cash', 'Готівка'], ['card', 'Картка'], ['transfer', 'Переказ']].map(([k, v]) => `<option value="${k}" ${od.payment_method === k ? 'selected' : ''}>${v}</option>`).join('')}</select><input id="pd" type="number" min="0" placeholder="Сплачено, грн" class="${INP}" value="${od.paid_uah ?? ''}"></div>
@@ -227,6 +229,8 @@ async function openOrder(id) {
   <button id="sv2" class="${BTN}">Зберегти</button>${next ? `<button id="nx" class="${BTN2}">Статус: ${OS[next]}</button>` : ''}<p id="msg" class="text-sm text-mist/80"></p></div>`);
   $('x').onclick = closeModal;
   renderPhotos(id, ph.data || [], $('ph'));
+  $('sh').onchange = async e => { await sb.from('orders').update({ share_status: e.target.checked }).eq('id', id); $('lk').classList.toggle('hidden', !e.target.checked); };
+  $('lk').onclick = async () => { const url = `${SITE_URL}/status.html#${od.public_token}`; try { if (navigator.share) return await navigator.share({ title: 'Статус вашого авто', text: 'Статус вашого авто у Detailing Family IF:', url }); await navigator.clipboard.writeText(url); $('msg').textContent = 'Посилання скопійовано.'; } catch (e) { $('msg').textContent = url; } };
   const save = async () => {
     const up = { discount_uah: +$('ds').value || 0, usd_rate: $('rt') ? (+$('rt').value || null) : od.usd_rate, payment_method: $('pm').value || null, paid_uah: $('pd').value === '' ? null : +$('pd').value, intake_notes: $('in').value || null, delivery_notes: $('dn').value || null };
     const r = await sb.from('orders').update(up).eq('id', id); if (r.error) { $('msg').textContent = 'Помилка: ' + r.error.message; return null; } return up;
@@ -269,7 +273,7 @@ async function renderPhotos(id, rows, box) {
     for (let i = 0; i < files.length; i++) {
       say(`Завантаження ${i + 1} з ${files.length}…`);
       try {
-        const path = `${id}/${((crypto && typeof crypto.randomUUID === 'function') ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(36).slice(2, 10))}.jpg`, up = await sb.storage.from('order-photos').upload(path, await shrink(files[i]), { contentType: 'image/jpeg' });
+        const path = `${id}/${crypto.randomUUID()}.jpg`, up = await sb.storage.from('order-photos').upload(path, await shrink(files[i]), { contentType: 'image/jpeg' });
         if (up.error) throw up.error; const r = await sb.from('order_photos').insert({ order_id: id, kind: inp.dataset.up, path }); if (r.error) throw r.error;
       } catch (e) { fail++; console.warn(e); }
     }
