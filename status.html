@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#17181B">
+  <title>Статус вашого авто | Detailing Family IF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>tailwind.config={theme:{extend:{colors:{accent:'#FF5500',canvas:'#17181B',card:'#2E3035',ink:'#F4F1EA',mist:'#E3E4E6'},fontFamily:{sans:['Montserrat','system-ui','sans-serif']}}}}</script>
+</head>
+<body class="bg-canvas font-sans text-ink antialiased">
+  <header class="border-b border-card"><div class="mx-auto flex h-16 max-w-xl items-center px-4"><span class="text-[15px] font-extrabold tracking-tight">Detailing Family <span class="text-accent">IF</span></span></div></header>
+  <main class="mx-auto max-w-xl px-4 py-8">
+    <h1 class="text-2xl font-extrabold md:text-3xl">Статус вашого авто</h1>
+    <div id="box" class="mt-6" aria-live="polite"><p class="text-mist/70">Завантаження…</p></div>
+  </main>
+  <script>
+    /* Адреса Worker (та сама, що в CONFIG.endpoint на головній сторінці), без слеша в кінці */
+    var API = '';
+    var STEPS = [['accepted', 'Прийняли авто'], ['in_progress', 'У роботі'], ['ready', 'Готово до видачі'], ['delivered', 'Видано']];
+    var KIND = { before: 'До', during: 'Під час', after: 'Після' };
+    var box = document.getElementById('box');
+    function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
+    function load() {
+      var t = location.hash.slice(1);
+      if (!API || !/^[a-f0-9]{32}$/.test(t)) return box.replaceChildren(el('p', 'text-mist/70', 'Посилання недійсне. Зверніться до студії.'));
+      fetch(API + '/status?t=' + t, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(render)
+        .catch(function () { box.replaceChildren(el('p', 'text-mist/70', 'Не вдалося завантажити статус. Спробуйте пізніше або зв\'яжіться зі студією.')); });
+    }
+    function render(d) {
+      var cur = STEPS.findIndex(function (s) { return s[0] === d.status; }), out = [];
+      if (d.car) out.push(el('p', 'text-lg font-semibold', d.car));
+      if (d.services && d.services.length) out.push(el('p', 'mt-1 text-sm text-mist/70', d.services.join(', ')));
+      var ol = el('ol', 'mt-6 space-y-3');
+      STEPS.forEach(function (s, i) {
+        var li = el('li', 'flex items-center gap-3'), dot = el('span', 'h-3 w-3 shrink-0 rounded-full ' + (i < cur ? 'bg-accent' : i === cur ? 'bg-accent ring-4 ring-accent/30' : 'bg-card'));
+        li.append(dot, el('span', i <= cur ? 'font-semibold' : 'text-mist/50', s[1])); ol.append(li);
+      });
+      out.push(ol);
+      Object.keys(KIND).forEach(function (k) {
+        var ph = (d.photos || []).filter(function (p) { return p.kind === k; }); if (!ph.length) return;
+        var sec = el('section', 'mt-8'), g = el('div', 'mt-2 grid grid-cols-2 gap-2');
+        sec.append(el('h2', 'font-bold', KIND[k]));
+        ph.forEach(function (p) { var a = el('a'); a.href = p.url; a.target = '_blank'; a.rel = 'noopener noreferrer'; var im = el('img', 'aspect-square w-full rounded-xl object-cover'); im.src = p.url; im.alt = KIND[k]; im.loading = 'lazy'; a.append(im); g.append(a); });
+        sec.append(g); out.push(sec);
+      });
+      out.push(el('p', 'mt-8 text-xs text-mist/50', 'Сторінка оновлюється автоматично.'));
+      box.replaceChildren.apply(box, out);
+    }
+    load(); setInterval(load, 60000); window.addEventListener('hashchange', load);
+  </script>
+</body>
+</html>
