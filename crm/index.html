@@ -269,7 +269,7 @@ async function renderPhotos(id, rows, box) {
     for (let i = 0; i < files.length; i++) {
       say(`Завантаження ${i + 1} з ${files.length}…`);
       try {
-        const path = `${id}/${crypto.randomUUID()}.jpg`, up = await sb.storage.from('order-photos').upload(path, await shrink(files[i]), { contentType: 'image/jpeg' });
+        const path = `${id}/${((crypto && typeof crypto.randomUUID === 'function') ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(36).slice(2, 10))}.jpg`, up = await sb.storage.from('order-photos').upload(path, await shrink(files[i]), { contentType: 'image/jpeg' });
         if (up.error) throw up.error; const r = await sb.from('order_photos').insert({ order_id: id, kind: inp.dataset.up, path }); if (r.error) throw r.error;
       } catch (e) { fail++; console.warn(e); }
     }
