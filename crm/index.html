@@ -1,223 +1,362 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex">
-<meta name="theme-color" content="#17181B">
-<title>CRM · Detailing Family IF</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com/3.4.17"></script>
-<script>tailwind.config={theme:{extend:{colors:{accent:'#FF5500',canvas:'#17181B',card:'#2E3035',ink:'#F4F1EA',mist:'#E3E4E6'},fontFamily:{sans:['Montserrat','system-ui','sans-serif']}}}}</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#17181B">
+  <title>CRM · Detailing Family IF</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>tailwind.config = { theme: { extend: { colors: { accent: '#FF5500', canvas: '#17181B', card: '#2E3035', ink: '#F4F1EA', mist: '#E3E4E6' }, fontFamily: { sans: ['Montserrat', 'system-ui', 'sans-serif'] } } } }</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: #121316
+    }
+
+    /* Вхід: рівне світіння на 0.30 вужче з чіткою жорсткою лінією стику без сходинки */
+    .login {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: #121316
+    }
+
+.login-hero{
+  position:relative;
+  height:calc(17vh * 0.7);height:calc(17dvh * 0.7);min-height:77px;
+  background:linear-gradient(
+    180deg,
+    #141518 0%,
+    #241612 45%,
+    #8f3206 78%,
+    #ff5500 100%
+  );
+}
+
+    .login-hero::after {
+      content: none
+    }
+
+    .login-sheet {
+      flex: 1;
+      margin-top: 0;
+      padding: 2.25rem 1.5rem calc(2rem + env(safe-area-inset-bottom));
+      background: #1a1b1e;
+      border: 0;
+      border-radius: 0;
+    }
+
+    .login-form {
+      max-width: 22rem;
+      margin: 0 auto;
+      display: grid;
+      gap: .75rem
+    }
+
+    .lg-title {
+      margin: 0 0 .5rem;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #F4F1EA
+    }
+
+    .lg-title span {
+      color: #ff5500
+    }
+
+    .lg-in {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid rgba(244, 241, 234, .2);
+      background: #17181b;
+      border-radius: .75rem;
+      padding: .85rem 1rem;
+      font: inherit;
+      font-size: 1rem;
+      color: #F4F1EA
+    }
+
+    .lg-in::placeholder {
+      color: rgba(227, 228, 230, .4)
+    }
+
+    .lg-in:focus {
+      outline: none;
+      border-color: #ff5500
+    }
+
+    .lg-btn {
+      border: 0;
+      border-radius: .75rem;
+      background: #ff5500;
+      color: #17181b;
+      font: inherit;
+      font-weight: 700;
+      padding: .9rem 1rem;
+      cursor: pointer
+    }
+
+    .lg-msg {
+      min-height: 1.25rem;
+      margin: 0;
+      font-size: .875rem;
+      color: rgba(227, 228, 230, .7)
+    }
+
+    /* Головне меню: скляна панель зі світінням над нею */
+    .app-nav {
+      background: rgba(23, 24, 27, .82);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(244, 241, 234, .14)
+    }
+
+    .app-nav::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 100%;
+      height: 28px;
+      pointer-events: none;
+      background: linear-gradient(to top, rgba(255, 85, 0, .16), transparent)
+    }
+
+    .app-nav button {
+      position: relative
+    }
+
+    .app-nav .is-active::after {
+      content: "";
+      position: absolute;
+      left: 25%;
+      right: 25%;
+      top: -1px;
+      height: 2px;
+      border-radius: 2px;
+      background: #ff5500;
+      box-shadow: 0 0 12px 2px rgba(255, 85, 0, .65)
+    }
+  </style>
 </head>
-<body class="bg-canvas font-sans text-ink antialiased"><div id="app"></div>
-<script>
-/* ===== Налаштування: Supabase -> Project Settings -> API ===== */
-const SUPABASE_URL = 'https://blsbjolbrznefwxscavk.supabase.co';       // https://xxxx.supabase.co
-const SUPABASE_ANON_KEY = 'sb_publishable_NxMkhhDCZw-ZGZawJkQAWA_-j1t3WJj';  // ключ "anon public" (його можна публікувати, дані захищає вхід і правила бази)
 
-const SITE_URL = 'https://detailing.family.ivano-frankivsk.ua';  // адреса сайту для посилань клієнтам
-const sb = supabase.createClient(SUPABASE_URL || 'http://localhost', SUPABASE_ANON_KEY || 'x');
-const app = document.getElementById('app');
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const fmt = d => d ? new Date(d).toLocaleString('uk-UA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
-const ST = { new: 'Нова', in_progress: 'У роботі', booked: 'Записаний', client: 'Став клієнтом', lost: 'Не підійшло' };
-const INP = 'w-full rounded-xl border border-ink/20 bg-canvas px-4 py-3 text-base placeholder:text-mist/40 focus:border-accent focus:outline-none';
-const BTN = 'rounded-xl bg-accent px-5 py-3 font-bold text-canvas';
-const BTN2 = 'rounded-xl border border-ink/25 px-5 py-3 font-semibold';
-let tab = 'today', filter = 'new', me = null, staff = [], q = '';
+<body class="bg-canvas font-sans text-ink antialiased">
+  <div id="app"></div>
+  <script>
+    /* ===== Налаштування: Supabase -> Project Settings -> API ===== */
+    const SUPABASE_URL = 'https://blsbjolbrznefwxscavk.supabase.co';       // https://xxxx.supabase.co
+    const SUPABASE_ANON_KEY = 'sb_publishable_NxMkhhDCZw-ZGZawJkQAWA_-j1t3WJj';  // ключ "anon public" (його можна публікувати, дані захищає вхід і правила бази)
 
-const links = (c, m) => [c.phone || (m === 'phone' && c.contact) ? `<a class="${BTN2} text-sm" href="tel:${esc(c.phone || c.contact)}">Подзвонити</a>` : '',
-  (c.telegram || (m === 'telegram' && c.contact)) ? `<a class="${BTN2} text-sm" target="_blank" rel="noopener" href="https://t.me/${esc((c.telegram || c.contact).replace(/^@/, ''))}">Telegram</a>` : '',
-  (c.viber || (m === 'viber' && c.contact)) ? `<a class="${BTN2} text-sm" href="viber://chat?number=${encodeURIComponent(c.viber || c.contact)}">Viber</a>` : '',
-  (c.phone || (m === 'phone' && c.contact)) ? `<a class="${BTN2} text-sm" target="_blank" rel="noopener" href="https://wa.me/${esc((c.phone || c.contact).replace(/\D/g, ''))}">WhatsApp</a>` : ''].join('');
+    const SITE_URL = 'https://detailing.family.ivano-frankivsk.ua';  // адреса сайту для посилань клієнтам
+    const sb = supabase.createClient(SUPABASE_URL || 'http://localhost', SUPABASE_ANON_KEY || 'x');
+    const app = document.getElementById('app');
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const fmt = d => d ? new Date(d).toLocaleString('uk-UA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
+    const ST = { new: 'Нова', in_progress: 'У роботі', booked: 'Записаний', client: 'Став клієнтом', lost: 'Не підійшло' };
+    const INP = 'w-full rounded-xl border border-ink/20 bg-canvas px-4 py-3 text-base placeholder:text-mist/40 focus:border-accent focus:outline-none';
+    const BTN = 'rounded-xl bg-accent px-5 py-3 font-bold text-canvas';
+    const BTN2 = 'rounded-xl border border-ink/25 px-5 py-3 font-semibold';
+    let tab = 'today', filter = 'new', me = null, staff = [], q = '';
 
-/* ===== Вхід ===== */
-function login(msg = '') {
-  app.innerHTML = `<form id="lf" class="mx-auto mt-24 max-w-sm space-y-3 px-4"><h1 class="mb-4 text-2xl font-extrabold">CRM Detailing Family <span class="text-accent">IF</span></h1>
-  <input name="email" type="email" autocomplete="username" required placeholder="Email" class="${INP}">
-  <input name="password" type="password" autocomplete="current-password" required placeholder="Пароль" class="${INP}">
-  <button class="${BTN} w-full">Увійти</button><p class="text-sm text-mist/70">${esc(msg)}</p></form>`;
-  $('lf').onsubmit = async e => {
-    e.preventDefault(); const f = e.target;
-    const { error } = await sb.auth.signInWithPassword({ email: f.email.value, password: f.password.value });
-    error ? login('Невірний email або пароль.') : start();
-  };
-}
-const $ = id => document.getElementById(id);
-async function start() {
-  const { data: { user } } = await sb.auth.getUser(); if (!user) return login();
-  const { data } = await sb.from('staff').select('*');
-  if (!data || !data.length) { await sb.auth.signOut(); return login('Для цього акаунта немає доступу.'); }
-  me = user; staff = data; render();
-}
+    const links = (c, m) => [c.phone || (m === 'phone' && c.contact) ? `<a class="${BTN2} text-sm" href="tel:${esc(c.phone || c.contact)}">Подзвонити</a>` : '',
+    (c.telegram || (m === 'telegram' && c.contact)) ? `<a class="${BTN2} text-sm" target="_blank" rel="noopener" href="https://t.me/${esc((c.telegram || c.contact).replace(/^@/, ''))}">Telegram</a>` : '',
+    (c.viber || (m === 'viber' && c.contact)) ? `<a class="${BTN2} text-sm" href="viber://chat?number=${encodeURIComponent(c.viber || c.contact)}">Viber</a>` : '',
+    (c.phone || (m === 'phone' && c.contact)) ? `<a class="${BTN2} text-sm" target="_blank" rel="noopener" href="https://wa.me/${esc((c.phone || c.contact).replace(/\D/g, ''))}">WhatsApp</a>` : ''].join('');
 
-/* ===== Каркас ===== */
-function render() {
-  app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div class="mb-2 flex justify-end gap-4 text-xs text-mist/60"><button id="pr">Прайс</button><button id="out">Вийти</button></div><div id="view"></div></main>
-  <nav class="fixed inset-x-0 bottom-0 z-20 flex border-t border-card bg-canvas" style="padding-bottom:env(safe-area-inset-bottom)">
-  ${[['today', 'Сьогодні'], ['leads', 'Ліди'], ['clients', 'Клієнти'], ['cal', 'Календар'], ['orders', 'Замовлення']].map(([k, l]) => `<button data-tab="${k}" class="flex-1 py-4 text-xs font-semibold ${tab === k ? 'text-accent' : 'text-mist/70'}">${l}</button>`).join('')}</nav>`;
-  document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
-  $('pr').onclick = () => { tab = 'price'; render(); };
-  $('out').onclick = async () => { await sb.auth.signOut(); login(); };
-  ({ today: viewToday, leads: viewLeads, clients: viewClients, cal: viewCal, orders: viewOrders, price: viewPrice })[tab]();
-}
-function modal(html) {
-  closeModal(); const d = document.createElement('div'); d.id = 'mod';
-  d.className = 'fixed inset-0 z-30 overflow-y-auto bg-black/70 p-3';
-  d.innerHTML = `<div class="mx-auto my-4 max-w-xl rounded-2xl bg-card p-5">${html}</div>`;
-  d.addEventListener('click', e => { if (e.target === d) closeModal(); }); document.body.appendChild(d); return d;
-}
-const closeModal = () => { const m = $('mod'); if (m) m.remove(); };
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    /* ===== Вхід ===== */
+    function login(msg = '') {
+      app.innerHTML = `<div class="login"><div class="login-hero" aria-hidden="true"></div><div class="login-sheet"><form id="lf" class="login-form"><h1 class="lg-title">CRM Detailing Family <span>IF</span></h1>
+  <input class="lg-in" name="email" type="email" autocomplete="username" required placeholder="Email">
+  <input class="lg-in" name="password" type="password" autocomplete="current-password" required placeholder="Пароль">
+  <button class="lg-btn">Увійти</button><p class="lg-msg" role="alert">${esc(msg)}</p></form></div></div>`;
+      $('lf').onsubmit = async e => {
+        e.preventDefault(); const f = e.target;
+        const { error } = await sb.auth.signInWithPassword({ email: f.email.value, password: f.password.value });
+        error ? login('Невірний email або пароль.') : start();
+      };
+    }
+    const $ = id => document.getElementById(id);
+    async function start() {
+      const { data: { user } } = await sb.auth.getUser(); if (!user) return login();
+      const { data } = await sb.from('staff').select('*');
+      if (!data || !data.length) { await sb.auth.signOut(); return login('Для цього акаунта немає доступу.'); }
+      me = user; staff = data; render();
+    }
 
-/* ===== Ліди ===== */
-async function viewLeads() {
-  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Ліди</h1><div class="my-4 flex flex-wrap gap-2">${['new', 'in_progress', 'booked', 'client', 'lost', 'all'].map(k => `<button data-f="${k}" class="rounded-full border px-4 py-2 text-sm ${filter === k ? 'border-accent bg-accent font-bold text-canvas' : 'border-card text-mist/80'}">${ST[k] || 'Усі'}</button>`).join('')}</div><div id="list" class="space-y-2"></div>`;
-  document.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { filter = b.dataset.f; viewLeads(); });
-  let r = sb.from('leads').select('*').order('created_at', { ascending: false }).limit(200); if (filter !== 'all') r = r.eq('status', filter);
-  const { data, error } = await r; if (error) return $('list').textContent = 'Помилка завантаження: ' + error.message;
-  $('list').innerHTML = data.length ? data.map(l => `<button data-lead="${l.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(l.name)}</b><span class="text-xs text-mist/60">${fmt(l.created_at)}</span></div>
+    /* ===== Каркас ===== */
+    function render() {
+      app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div class="mb-2 flex justify-end gap-4 text-xs text-mist/60"><button id="pr">Прайс</button><button id="out">Вийти</button></div><div id="view"></div></main>
+  <nav class="app-nav fixed inset-x-0 bottom-0 z-20 flex" style="padding-bottom:env(safe-area-inset-bottom)">
+  ${[['today', 'Сьогодні'], ['leads', 'Ліди'], ['clients', 'Клієнти'], ['cal', 'Календар'], ['orders', 'Замовлення']].map(([k, l]) => `<button data-tab="${k}" class="flex-1 py-4 text-xs font-semibold ${tab === k ? 'is-active text-accent' : 'text-mist/70'}">${l}</button>`).join('')}</nav>`;
+      document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
+      $('pr').onclick = () => { tab = 'price'; render(); };
+      $('out').onclick = async () => { await sb.auth.signOut(); login(); };
+      ({ today: viewToday, leads: viewLeads, clients: viewClients, cal: viewCal, orders: viewOrders, price: viewPrice })[tab]();
+    }
+    function modal(html) {
+      closeModal(); const d = document.createElement('div'); d.id = 'mod';
+      d.className = 'fixed inset-0 z-30 overflow-y-auto bg-black/70 p-3';
+      d.innerHTML = `<div class="mx-auto my-4 max-w-xl rounded-2xl bg-card p-5">${html}</div>`;
+      d.addEventListener('click', e => { if (e.target === d) closeModal(); }); document.body.appendChild(d); return d;
+    }
+    const closeModal = () => { const m = $('mod'); if (m) m.remove(); };
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    /* ===== Ліди ===== */
+    async function viewLeads() {
+      $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Ліди</h1><div class="my-4 flex flex-wrap gap-2">${['new', 'in_progress', 'booked', 'client', 'lost', 'all'].map(k => `<button data-f="${k}" class="rounded-full border px-4 py-2 text-sm ${filter === k ? 'border-accent bg-accent font-bold text-canvas' : 'border-card text-mist/80'}">${ST[k] || 'Усі'}</button>`).join('')}</div><div id="list" class="space-y-2"></div>`;
+      document.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { filter = b.dataset.f; viewLeads(); });
+      let r = sb.from('leads').select('*').order('created_at', { ascending: false }).limit(200); if (filter !== 'all') r = r.eq('status', filter);
+      const { data, error } = await r; if (error) return $('list').textContent = 'Помилка завантаження: ' + error.message;
+      $('list').innerHTML = data.length ? data.map(l => `<button data-lead="${l.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(l.name)}</b><span class="text-xs text-mist/60">${fmt(l.created_at)}</span></div>
     <div class="mt-1 text-sm text-mist/80">${esc(l.contact)} · ${esc(l.service_interest || '')}</div><div class="mt-2 text-xs ${l.status === 'new' ? 'font-bold text-accent' : 'text-mist/60'}">${ST[l.status]}${l.next_contact_at ? ' · наступний контакт ' + esc(l.next_contact_at) : ''}</div></button>`).join('') : '<p class="text-mist/60">Заявок немає.</p>';
-  document.querySelectorAll('[data-lead]').forEach(b => b.onclick = () => openLead(data.find(x => x.id === b.dataset.lead)));
-}
-function openLead(l) {
-  const m = modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${esc(l.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+      document.querySelectorAll('[data-lead]').forEach(b => b.onclick = () => openLead(data.find(x => x.id === b.dataset.lead)));
+    }
+    function openLead(l) {
+      const m = modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${esc(l.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <p class="mt-1 text-sm text-mist/80">${esc(l.contact_method)}: ${esc(l.contact)} · ${fmt(l.created_at)}</p><div class="mt-3 flex flex-wrap gap-2">${links({ contact: l.contact }, l.contact_method)}</div>
   <dl class="mt-4 space-y-1 text-sm">${[['Послуга', l.service_interest], ['Авто', [l.car, l.car_class].filter(Boolean).join(', ')], ['Зручний час', l.preferred_time], ['Побажання', l.comment], ['Джерело', [l.utm_source, l.utm_medium, l.utm_campaign].filter(Boolean).join(' / ') || 'пряме'], ['Згода на пропозиції', l.consent_marketing ? 'так' : 'ні']].map(([k, v]) => v ? `<div><dt class="inline text-mist/60">${k}: </dt><dd class="inline">${esc(v)}</dd></div>` : '').join('')}</dl>
   <div class="mt-5 grid gap-3"><select id="st" class="${INP}">${Object.entries(ST).map(([k, v]) => `<option value="${k}" ${l.status === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
   <input id="lr" class="${INP}" placeholder="Причина відмови (якщо не підійшло)" value="${esc(l.lost_reason)}"><label class="text-sm text-mist/70">Наступний контакт<input id="nc" type="date" class="${INP} mt-1" value="${esc(l.next_contact_at)}"></label>
   <select id="as" class="${INP}"><option value="">Відповідальний: не призначено</option>${staff.map(s => `<option value="${s.user_id}" ${l.assignee === s.user_id ? 'selected' : ''}>${esc(s.name)}</option>`).join('')}</select>
   <button id="sv" class="${BTN}">Зберегти</button>${l.client_id ? '' : `<button id="mk" class="${BTN2}">Створити клієнта із заявки</button>`}<p id="msg" class="text-sm text-mist/70"></p></div>`);
-  $('x').onclick = closeModal;
-  $('sv').onclick = async () => {
-    const st = $('st').value, up = { status: st, lost_reason: $('lr').value || null, next_contact_at: $('nc').value || null, assignee: $('as').value || null };
-    if (l.status === 'new' && st !== 'new' && !l.first_response_at) up.first_response_at = new Date().toISOString();
-    const { error } = await sb.from('leads').update(up).eq('id', l.id);
-    if (error) return $('msg').textContent = 'Помилка: ' + error.message;
-    if (st !== l.status) await sb.from('timeline').insert({ lead_id: l.id, client_id: l.client_id, kind: 'status', text: `Статус: ${ST[st]}`, created_by: me.id });
-    closeModal(); render();
-  };
-  if ($('mk')) $('mk').onclick = async () => {
-    $('mk').disabled = true; const ph = l.contact_method === 'phone' ? l.contact : null;
-    let c = null; if (ph) c = (await sb.from('clients').select('*').eq('phone', ph).maybeSingle()).data;
-    if (!c) {
-      const r = await sb.from('clients').insert({ name: l.name, phone: ph, telegram: l.contact_method === 'telegram' ? l.contact : null, viber: l.contact_method === 'viber' ? l.contact : null,
-        source: l.utm_source || 'direct', utm_source: l.utm_source, utm_medium: l.utm_medium, utm_campaign: l.utm_campaign, consent_processing: !!l.consent_processing, consent_processing_at: l.created_at,
-        consent_marketing: !!l.consent_marketing, consent_marketing_at: l.consent_marketing ? l.created_at : null, consent_version: l.consent_version }).select().single();
-      if (r.error) { $('mk').disabled = false; return $('msg').textContent = 'Помилка: ' + r.error.message; } c = r.data;
-      if (l.car) await sb.from('cars').insert({ client_id: c.id, model: l.car, car_class: l.car_class || null });
+      $('x').onclick = closeModal;
+      $('sv').onclick = async () => {
+        const st = $('st').value, up = { status: st, lost_reason: $('lr').value || null, next_contact_at: $('nc').value || null, assignee: $('as').value || null };
+        if (l.status === 'new' && st !== 'new' && !l.first_response_at) up.first_response_at = new Date().toISOString();
+        const { error } = await sb.from('leads').update(up).eq('id', l.id);
+        if (error) return $('msg').textContent = 'Помилка: ' + error.message;
+        if (st !== l.status) await sb.from('timeline').insert({ lead_id: l.id, client_id: l.client_id, kind: 'status', text: `Статус: ${ST[st]}`, created_by: me.id });
+        closeModal(); render();
+      };
+      if ($('mk')) $('mk').onclick = async () => {
+        $('mk').disabled = true; const ph = l.contact_method === 'phone' ? l.contact : null;
+        let c = null; if (ph) c = (await sb.from('clients').select('*').eq('phone', ph).maybeSingle()).data;
+        if (!c) {
+          const r = await sb.from('clients').insert({
+            name: l.name, phone: ph, telegram: l.contact_method === 'telegram' ? l.contact : null, viber: l.contact_method === 'viber' ? l.contact : null,
+            source: l.utm_source || 'direct', utm_source: l.utm_source, utm_medium: l.utm_medium, utm_campaign: l.utm_campaign, consent_processing: !!l.consent_processing, consent_processing_at: l.created_at,
+            consent_marketing: !!l.consent_marketing, consent_marketing_at: l.consent_marketing ? l.created_at : null, consent_version: l.consent_version
+          }).select().single();
+          if (r.error) { $('mk').disabled = false; return $('msg').textContent = 'Помилка: ' + r.error.message; } c = r.data;
+          if (l.car) await sb.from('cars').insert({ client_id: c.id, model: l.car, car_class: l.car_class || null });
+        }
+        await sb.from('leads').update({ status: 'client', client_id: c.id }).eq('id', l.id);
+        await sb.from('timeline').insert({ client_id: c.id, lead_id: l.id, kind: 'status', text: 'Клієнта створено із заявки', created_by: me.id });
+        closeModal(); openClient(c.id);
+      };
     }
-    await sb.from('leads').update({ status: 'client', client_id: c.id }).eq('id', l.id);
-    await sb.from('timeline').insert({ client_id: c.id, lead_id: l.id, kind: 'status', text: 'Клієнта створено із заявки', created_by: me.id });
-    closeModal(); openClient(c.id);
-  };
-}
 
-/* ===== Клієнти ===== */
-async function viewClients() {
-  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Клієнти</h1><button id="nc" class="${BTN} px-4 py-2 text-sm">+ Клієнт</button></div>
+    /* ===== Клієнти ===== */
+    async function viewClients() {
+      $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Клієнти</h1><button id="nc" class="${BTN} px-4 py-2 text-sm">+ Клієнт</button></div>
   <input id="q" type="search" placeholder="Ім'я, телефон або номер авто" value="${esc(q)}" class="${INP} my-4"><div id="list" class="space-y-2"></div>`;
-  $('nc').onclick = newClient; let t; $('q').oninput = e => { q = e.target.value.trim(); clearTimeout(t); t = setTimeout(load, 250); }; load();
-  async function load() {
-    let ids = []; if (q) { const c = await sb.from('cars').select('client_id').ilike('plate', `%${q}%`).limit(20); ids = (c.data || []).map(x => x.client_id); }
-    let r = sb.from('clients').select('*').order('created_at', { ascending: false }).limit(100);
-    if (q) { const s = q.replace(/[,()%]/g, ' '); r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%,telegram.ilike.%${s}%${ids.length ? `,id.in.(${ids.join(',')})` : ''}`); }
-    const { data, error } = await r; if (error) return $('list').textContent = 'Помилка: ' + error.message;
-    $('list').innerHTML = data.length ? data.map(c => `<button data-c="${c.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${esc(c.name)}</b><div class="text-sm text-mist/80">${esc(c.phone || c.telegram || c.viber || '')}</div></button>`).join('') : '<p class="text-mist/60">Нікого не знайдено.</p>';
-    document.querySelectorAll('[data-c]').forEach(b => b.onclick = () => openClient(b.dataset.c));
-  }
-}
-function newClient() {
-  modal(`<h2 class="mb-3 text-xl font-bold">Новий клієнт</h2><form id="nf" class="grid gap-3"><input name="name" required placeholder="Ім'я" class="${INP}"><input name="phone" type="tel" placeholder="Телефон +380…" class="${INP}">
+      $('nc').onclick = newClient; let t; $('q').oninput = e => { q = e.target.value.trim(); clearTimeout(t); t = setTimeout(load, 250); }; load();
+      async function load() {
+        let ids = []; if (q) { const c = await sb.from('cars').select('client_id').ilike('plate', `%${q}%`).limit(20); ids = (c.data || []).map(x => x.client_id); }
+        let r = sb.from('clients').select('*').order('created_at', { ascending: false }).limit(100);
+        if (q) { const s = q.replace(/[,()%]/g, ' '); r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%,telegram.ilike.%${s}%${ids.length ? `,id.in.(${ids.join(',')})` : ''}`); }
+        const { data, error } = await r; if (error) return $('list').textContent = 'Помилка: ' + error.message;
+        $('list').innerHTML = data.length ? data.map(c => `<button data-c="${c.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${esc(c.name)}</b><div class="text-sm text-mist/80">${esc(c.phone || c.telegram || c.viber || '')}</div></button>`).join('') : '<p class="text-mist/60">Нікого не знайдено.</p>';
+        document.querySelectorAll('[data-c]').forEach(b => b.onclick = () => openClient(b.dataset.c));
+      }
+    }
+    function newClient() {
+      modal(`<h2 class="mb-3 text-xl font-bold">Новий клієнт</h2><form id="nf" class="grid gap-3"><input name="name" required placeholder="Ім'я" class="${INP}"><input name="phone" type="tel" placeholder="Телефон +380…" class="${INP}">
   <label class="flex gap-3 text-sm text-mist/80"><input name="cp" type="checkbox" class="mt-0.5 h-5 w-5 accent-accent">Клієнт дав згоду на обробку даних</label><button class="${BTN}">Зберегти</button><p id="msg" class="text-sm"></p></form>`);
-  $('nf').onsubmit = async e => {
-    e.preventDefault(); const f = e.target, d = f.phone.value.replace(/\D/g, ''); const ph = d.length === 10 && d[0] === '0' ? '+38' + d : d.length === 12 && d.startsWith('380') ? '+' + d : null;
-    if (f.phone.value && !ph) return $('msg').textContent = 'Телефон: формат +380XXXXXXXXX або 0XXXXXXXXX.';
-    const { data, error } = await sb.from('clients').insert({ name: f.name.value.trim(), phone: ph, source: 'вручну', consent_processing: f.cp.checked, consent_processing_at: f.cp.checked ? new Date().toISOString() : null }).select().single();
-    if (error) return $('msg').textContent = error.code === '23505' ? 'Клієнт із таким телефоном уже є.' : 'Помилка: ' + error.message; closeModal(); openClient(data.id);
-  };
-}
-async function openClient(id) {
-  const [c, cars, tl] = await Promise.all([sb.from('clients').select('*').eq('id', id).single(), sb.from('cars').select('*').eq('client_id', id), sb.from('timeline').select('*').eq('client_id', id).order('created_at', { ascending: false }).limit(50)]);
-  if (c.error) return; const k = c.data;
-  const m = modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${esc(k.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+      $('nf').onsubmit = async e => {
+        e.preventDefault(); const f = e.target, d = f.phone.value.replace(/\D/g, ''); const ph = d.length === 10 && d[0] === '0' ? '+38' + d : d.length === 12 && d.startsWith('380') ? '+' + d : null;
+        if (f.phone.value && !ph) return $('msg').textContent = 'Телефон: формат +380XXXXXXXXX або 0XXXXXXXXX.';
+        const { data, error } = await sb.from('clients').insert({ name: f.name.value.trim(), phone: ph, source: 'вручну', consent_processing: f.cp.checked, consent_processing_at: f.cp.checked ? new Date().toISOString() : null }).select().single();
+        if (error) return $('msg').textContent = error.code === '23505' ? 'Клієнт із таким телефоном уже є.' : 'Помилка: ' + error.message; closeModal(); openClient(data.id);
+      };
+    }
+    async function openClient(id) {
+      const [c, cars, tl] = await Promise.all([sb.from('clients').select('*').eq('id', id).single(), sb.from('cars').select('*').eq('client_id', id), sb.from('timeline').select('*').eq('client_id', id).order('created_at', { ascending: false }).limit(50)]);
+      if (c.error) return; const k = c.data;
+      const m = modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${esc(k.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <p class="mt-1 text-sm text-mist/80">${esc([k.phone, k.telegram, k.viber, k.email].filter(Boolean).join(' · '))}</p><div class="mt-3 flex flex-wrap gap-2">${links(k, '')}</div>
   <p class="mt-3 text-xs text-mist/60">Згода на обробку: ${k.consent_processing ? 'так' : 'ні'} · на пропозиції: ${k.consent_marketing ? 'так' : 'ні'}${k.source ? ' · джерело: ' + esc(k.source) : ''}</p>
   <button id="no2" class="${BTN2} mt-4 w-full">Нове замовлення</button><h3 class="mt-5 font-bold">Авто</h3><div class="mt-2 space-y-1 text-sm">${cars.data.length ? cars.data.map(a => `<div>${esc([a.brand, a.model, a.car_class, a.color, a.plate].filter(Boolean).join(' · '))}</div>`).join('') : '<span class="text-mist/60">Немає</span>'}</div>
   <form id="cf" class="mt-3 grid grid-cols-2 gap-2"><input name="model" required placeholder="Марка і модель" class="${INP} col-span-2"><select name="cls" class="${INP}"><option value="">Клас</option><option>Седан</option><option>Кросовер</option><option>Позашляховик</option></select><input name="plate" placeholder="Номер" class="${INP}"><button class="${BTN2} col-span-2">Додати авто</button></form>
   <h3 class="mt-5 font-bold">Історія</h3><form id="nf2" class="mt-2 flex gap-2"><input name="t" required placeholder="Нотатка" class="${INP}"><button class="${BTN} px-4">+</button></form>
   <div class="mt-3 space-y-2 text-sm">${tl.data.map(e => `<div class="border-l-2 border-accent pl-3"><span class="text-xs text-mist/60">${fmt(e.created_at)}</span><br>${esc(e.text)}</div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div>`);
-  $('x').onclick = closeModal;
-  $('no2').onclick = () => { closeModal(); newOrder(id); };
-  $('cf').onsubmit = async e => { e.preventDefault(); const f = e.target; await sb.from('cars').insert({ client_id: id, model: f.model.value.trim(), car_class: f.cls.value || null, plate: f.plate.value.trim() || null }); openClient(id); };
-  $('nf2').onsubmit = async e => { e.preventDefault(); await sb.from('timeline').insert({ client_id: id, kind: 'note', text: e.target.t.value.trim(), created_by: me.id }); openClient(id); };
-}
+      $('x').onclick = closeModal;
+      $('no2').onclick = () => { closeModal(); newOrder(id); };
+      $('cf').onsubmit = async e => { e.preventDefault(); const f = e.target; await sb.from('cars').insert({ client_id: id, model: f.model.value.trim(), car_class: f.cls.value || null, plate: f.plate.value.trim() || null }); openClient(id); };
+      $('nf2').onsubmit = async e => { e.preventDefault(); await sb.from('timeline').insert({ client_id: id, kind: 'note', text: e.target.t.value.trim(), created_by: me.id }); openClient(id); };
+    }
 
-/* ===== Прайс ===== */
-let services = [];
-async function loadServices() { const { data } = await sb.from('services').select('*').order('sort'); services = data || []; return services; }
-async function viewPrice() {
-  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Прайс</h1><button id="ns" class="${BTN} px-4 py-2 text-sm">+ Послуга</button></div><div id="list" class="mt-4 space-y-5"></div>`;
-  $('ns').onclick = () => editService(null); await loadServices();
-  const by = {}; services.forEach(s => (by[s.category] = by[s.category] || []).push(s));
-  $('list').innerHTML = Object.entries(by).map(([c, a]) => `<section><h2 class="mb-2 font-bold text-mist/70">${esc(c)}</h2><div class="space-y-1">${a.map(s => `<button data-s="${s.id}" class="flex w-full justify-between gap-3 rounded-xl bg-card px-4 py-3 text-left text-sm ${s.active ? '' : 'opacity-40'}"><span>${esc(s.name)}</span><span class="shrink-0 text-right text-mist/70">${esc(s.price_text || '')}${s.return_interval_days ? '<br>повернення ' + s.return_interval_days + ' дн.' : ''}</span></button>`).join('')}</div></section>`).join('');
-  document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => editService(services.find(x => x.id == b.dataset.s)));
-}
-function editService(s) {
-  s = s || { active: true, currency: 'UAH' };
-  modal(`<h2 class="mb-3 text-xl font-bold">${s.id ? 'Послуга' : 'Нова послуга'}</h2><form id="sf" class="grid gap-3">
+    /* ===== Прайс ===== */
+    let services = [];
+    async function loadServices() { const { data } = await sb.from('services').select('*').order('sort'); services = data || []; return services; }
+    async function viewPrice() {
+      $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Прайс</h1><button id="ns" class="${BTN} px-4 py-2 text-sm">+ Послуга</button></div><div id="list" class="mt-4 space-y-5"></div>`;
+      $('ns').onclick = () => editService(null); await loadServices();
+      const by = {}; services.forEach(s => (by[s.category] = by[s.category] || []).push(s));
+      $('list').innerHTML = Object.entries(by).map(([c, a]) => `<section><h2 class="mb-2 font-bold text-mist/70">${esc(c)}</h2><div class="space-y-1">${a.map(s => `<button data-s="${s.id}" class="flex w-full justify-between gap-3 rounded-xl bg-card px-4 py-3 text-left text-sm ${s.active ? '' : 'opacity-40'}"><span>${esc(s.name)}</span><span class="shrink-0 text-right text-mist/70">${esc(s.price_text || '')}${s.return_interval_days ? '<br>повернення ' + s.return_interval_days + ' дн.' : ''}</span></button>`).join('')}</div></section>`).join('');
+      document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => editService(services.find(x => x.id == b.dataset.s)));
+    }
+    function editService(s) {
+      s = s || { active: true, currency: 'UAH' };
+      modal(`<h2 class="mb-3 text-xl font-bold">${s.id ? 'Послуга' : 'Нова послуга'}</h2><form id="sf" class="grid gap-3">
   <input name="category" list="cats" required placeholder="Категорія" value="${esc(s.category)}" class="${INP}"><datalist id="cats">${[...new Set(services.map(x => x.category))].map(c => `<option value="${esc(c)}">`).join('')}</datalist>
   <input name="name" required placeholder="Назва" value="${esc(s.name)}" class="${INP}">
   <div class="grid grid-cols-2 gap-2"><input name="price" type="number" step="any" min="0" placeholder="Ціна від" value="${esc(s.price_from)}" class="${INP}"><select name="cur" class="${INP}"><option value="UAH" ${s.currency === 'UAH' ? 'selected' : ''}>грн</option><option value="USD" ${s.currency === 'USD' ? 'selected' : ''}>$</option></select></div>
   <input name="ptext" placeholder="Як показувати ціну (напр. від 700 грн)" value="${esc(s.price_text)}" class="${INP}"><input name="dur" placeholder="Орієнтовний час" value="${esc(s.duration_text)}" class="${INP}">
   <label class="text-sm text-mist/70">Інтервал повернення, днів<input name="ret" type="number" min="1" class="${INP} mt-1" value="${esc(s.return_interval_days)}"></label>
   <label class="flex gap-3 text-sm"><input name="act" type="checkbox" class="h-5 w-5 accent-accent" ${s.active ? 'checked' : ''}>Показувати в замовленнях</label><button class="${BTN}">Зберегти</button><p id="msg" class="text-sm"></p></form>`);
-  $('sf').onsubmit = async e => {
-    e.preventDefault(); const f = e.target;
-    const row = { category: f.category.value.trim(), name: f.name.value.trim(), price_from: f.price.value || null, currency: f.cur.value, price_text: f.ptext.value || null, duration_text: f.dur.value || null, return_interval_days: f.ret.value || null, active: f.act.checked };
-    const { error } = s.id ? await sb.from('services').update(row).eq('id', s.id) : await sb.from('services').insert({ ...row, sort: 1000 });
-    error ? $('msg').textContent = 'Помилка: ' + error.message : (closeModal(), viewPrice());
-  };
-}
+      $('sf').onsubmit = async e => {
+        e.preventDefault(); const f = e.target;
+        const row = { category: f.category.value.trim(), name: f.name.value.trim(), price_from: f.price.value || null, currency: f.cur.value, price_text: f.ptext.value || null, duration_text: f.dur.value || null, return_interval_days: f.ret.value || null, active: f.act.checked };
+        const { error } = s.id ? await sb.from('services').update(row).eq('id', s.id) : await sb.from('services').insert({ ...row, sort: 1000 });
+        error ? $('msg').textContent = 'Помилка: ' + error.message : (closeModal(), viewPrice());
+      };
+    }
 
-/* ===== Замовлення ===== */
-const OS = { accepted: 'Прийнято', in_progress: 'У роботі', ready: 'Готово', delivered: 'Видано' }, OSN = Object.keys(OS);
-let ofilter = 'accepted';
-const calc = (items, rate, disc) => { let u = 0, need = false; (items || []).forEach(i => { const v = i.price * i.qty; if (i.currency === 'USD') { rate ? u += v * rate : need = true; } else u += v; }); return { total: Math.max(0, u - (disc || 0)), need }; };
-async function viewOrders() {
-  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Замовлення</h1><button id="no" class="${BTN} px-4 py-2 text-sm">+ Замовлення</button></div>
+    /* ===== Замовлення ===== */
+    const OS = { accepted: 'Прийнято', in_progress: 'У роботі', ready: 'Готово', delivered: 'Видано' }, OSN = Object.keys(OS);
+    let ofilter = 'accepted';
+    const calc = (items, rate, disc) => { let u = 0, need = false; (items || []).forEach(i => { const v = i.price * i.qty; if (i.currency === 'USD') { rate ? u += v * rate : need = true; } else u += v; }); return { total: Math.max(0, u - (disc || 0)), need }; };
+    async function viewOrders() {
+      $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Замовлення</h1><button id="no" class="${BTN} px-4 py-2 text-sm">+ Замовлення</button></div>
   <div class="my-4 flex flex-wrap gap-2">${[...OSN, 'all'].map(k => `<button data-of="${k}" class="rounded-full border px-4 py-2 text-sm ${ofilter === k ? 'border-accent bg-accent font-bold text-canvas' : 'border-card text-mist/80'}">${OS[k] || 'Усі'}</button>`).join('')}</div><div id="list" class="space-y-2"></div>`;
-  $('no').onclick = () => newOrder(); document.querySelectorAll('[data-of]').forEach(b => b.onclick = () => { ofilter = b.dataset.of; viewOrders(); });
-  let r = sb.from('orders').select('*, clients(name), cars(model,plate), order_items(price,currency,qty)').order('created_at', { ascending: false }).limit(100); if (ofilter !== 'all') r = r.eq('status', ofilter);
-  const { data, error } = await r; if (error) return $('list').textContent = 'Помилка: ' + error.message;
-  $('list').innerHTML = data.length ? data.map(o => { const t = calc(o.order_items, o.usd_rate, o.discount_uah); return `<button data-o="${o.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(o.clients && o.clients.name)}</b><span class="text-xs text-mist/60">${fmt(o.created_at)}</span></div>
-    <div class="text-sm text-mist/80">${esc(o.cars ? [o.cars.model, o.cars.plate].filter(Boolean).join(' · ') : 'авто не вказано')}</div><div class="mt-2 text-sm"><span class="text-accent">${OS[o.status]}</span> · ${Math.round(t.total)} грн${t.need ? ' (потрібен курс $)' : ''}</div></button>`; }).join('') : '<p class="text-mist/60">Замовлень немає.</p>';
-  document.querySelectorAll('[data-o]').forEach(b => b.onclick = () => openOrder(b.dataset.o));
-}
-function newOrder(cid) {
-  modal(`<h2 class="mb-3 text-xl font-bold">Нове замовлення</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Пошук клієнта: ім'я або телефон" class="${INP} ${cid ? 'hidden' : ''}"><select id="cl" size="${cid ? 1 : 4}" class="${INP}"></select>
+      $('no').onclick = () => newOrder(); document.querySelectorAll('[data-of]').forEach(b => b.onclick = () => { ofilter = b.dataset.of; viewOrders(); });
+      let r = sb.from('orders').select('*, clients(name), cars(model,plate), order_items(price,currency,qty)').order('created_at', { ascending: false }).limit(100); if (ofilter !== 'all') r = r.eq('status', ofilter);
+      const { data, error } = await r; if (error) return $('list').textContent = 'Помилка: ' + error.message;
+      $('list').innerHTML = data.length ? data.map(o => {
+        const t = calc(o.order_items, o.usd_rate, o.discount_uah); return `<button data-o="${o.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(o.clients && o.clients.name)}</b><span class="text-xs text-mist/60">${fmt(o.created_at)}</span></div>
+    <div class="text-sm text-mist/80">${esc(o.cars ? [o.cars.model, o.cars.plate].filter(Boolean).join(' · ') : 'авто не вказано')}</div><div class="mt-2 text-sm"><span class="text-accent">${OS[o.status]}</span> · ${Math.round(t.total)} грн${t.need ? ' (потрібен курс $)' : ''}</div></button>`;
+      }).join('') : '<p class="text-mist/60">Замовлень немає.</p>';
+      document.querySelectorAll('[data-o]').forEach(b => b.onclick = () => openOrder(b.dataset.o));
+    }
+    function newOrder(cid) {
+      modal(`<h2 class="mb-3 text-xl font-bold">Нове замовлення</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Пошук клієнта: ім'я або телефон" class="${INP} ${cid ? 'hidden' : ''}"><select id="cl" size="${cid ? 1 : 4}" class="${INP}"></select>
   <select id="ca" class="${INP}"><option value="">Авто</option></select><textarea id="in" rows="2" placeholder="Стан авто при отриманні" class="${INP}"></textarea><button id="go" class="${BTN}">Створити</button><p id="msg" class="text-sm"></p></div>`);
-  const pick = async () => { const { data } = await sb.from('cars').select('*').eq('client_id', $('cl').value); $('ca').innerHTML = '<option value="">Авто</option>' + (data || []).map(a => `<option value="${a.id}">${esc([a.model, a.plate].filter(Boolean).join(' · '))}</option>`).join(''); };
-  const fill = async () => {
-    const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20);
-    if (cid) r = r.eq('id', cid); else if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`);
-    const { data } = await r; $('cl').innerHTML = (data || []).map(c => `<option value="${c.id}">${esc(c.name)} ${esc(c.phone || '')}</option>`).join(''); if (cid) pick();
-  };
-  let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; $('cl').onchange = pick; fill();
-  $('go').onclick = async () => {
-    if (!$('cl').value) return $('msg').textContent = 'Оберіть клієнта.';
-    const { data, error } = await sb.from('orders').insert({ client_id: $('cl').value, car_id: $('ca').value || null, intake_notes: $('in').value || null }).select().single();
-    if (error) return $('msg').textContent = 'Помилка: ' + error.message; closeModal(); openOrder(data.id);
-  };
-}
-async function openOrder(id) {
-  if (!services.length) await loadServices();
-  const [o, it, ph] = await Promise.all([sb.from('orders').select('*, clients(id,name,phone), cars(model,plate)').eq('id', id).single(), sb.from('order_items').select('*').eq('order_id', id).order('name'), sb.from('order_photos').select('*').eq('order_id', id).order('created_at')]);
-  if (o.error) return; const od = o.data, items = it.data, hasUsd = items.some(i => i.currency === 'USD');
-  const t = calc(items, od.usd_rate, od.discount_uah), next = OSN[OSN.indexOf(od.status) + 1];
-  modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(od.clients.name)}</h2><p class="text-sm text-mist/70">${esc(od.cars ? [od.cars.model, od.cars.plate].filter(Boolean).join(' · ') : 'авто не вказано')} · ${OS[od.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+      const pick = async () => { const { data } = await sb.from('cars').select('*').eq('client_id', $('cl').value); $('ca').innerHTML = '<option value="">Авто</option>' + (data || []).map(a => `<option value="${a.id}">${esc([a.model, a.plate].filter(Boolean).join(' · '))}</option>`).join(''); };
+      const fill = async () => {
+        const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20);
+        if (cid) r = r.eq('id', cid); else if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`);
+        const { data } = await r; $('cl').innerHTML = (data || []).map(c => `<option value="${c.id}">${esc(c.name)} ${esc(c.phone || '')}</option>`).join(''); if (cid) pick();
+      };
+      let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; $('cl').onchange = pick; fill();
+      $('go').onclick = async () => {
+        if (!$('cl').value) return $('msg').textContent = 'Оберіть клієнта.';
+        const { data, error } = await sb.from('orders').insert({ client_id: $('cl').value, car_id: $('ca').value || null, intake_notes: $('in').value || null }).select().single();
+        if (error) return $('msg').textContent = 'Помилка: ' + error.message; closeModal(); openOrder(data.id);
+      };
+    }
+    async function openOrder(id) {
+      if (!services.length) await loadServices();
+      const [o, it, ph] = await Promise.all([sb.from('orders').select('*, clients(id,name,phone), cars(model,plate)').eq('id', id).single(), sb.from('order_items').select('*').eq('order_id', id).order('name'), sb.from('order_photos').select('*').eq('order_id', id).order('created_at')]);
+      if (o.error) return; const od = o.data, items = it.data, hasUsd = items.some(i => i.currency === 'USD');
+      const t = calc(items, od.usd_rate, od.discount_uah), next = OSN[OSN.indexOf(od.status) + 1];
+      modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(od.clients.name)}</h2><p class="text-sm text-mist/70">${esc(od.cars ? [od.cars.model, od.cars.plate].filter(Boolean).join(' · ') : 'авто не вказано')} · ${OS[od.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <h3 class="mt-4 font-bold">Послуги</h3><div class="mt-2 space-y-1 text-sm">${items.map(i => `<div class="flex items-center justify-between gap-2 rounded-xl bg-canvas px-3 py-2"><span>${esc(i.name)} × ${i.qty}</span><span class="shrink-0">${i.price} ${i.currency === 'USD' ? '$' : 'грн'}<button data-rm="${i.id}" class="ml-2 text-mist/50" aria-label="Видалити">&times;</button></span></div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div>
   <form id="af" class="mt-3 grid grid-cols-[1fr_5rem] gap-2"><select id="sv" class="${INP} col-span-2"><option value="">Додати послугу…</option>${services.filter(s => s.active).map(s => `<option value="${s.id}">${esc(s.category)}: ${esc(s.name)}</option>`).join('')}</select><input id="pr" type="number" step="any" min="0" placeholder="Ціна" class="${INP}"><input id="qt" type="number" step="any" min="0.1" value="1" class="${INP}"><button class="${BTN2} col-span-2">Додати</button></form>
   <h3 class="mt-5 font-bold">Фото</h3><div id="ph" class="mt-2 space-y-3"></div>
@@ -227,135 +366,138 @@ async function openOrder(id) {
   <div class="grid grid-cols-2 gap-2"><select id="pm" class="${INP}"><option value="">Оплата…</option>${[['cash', 'Готівка'], ['card', 'Картка'], ['transfer', 'Переказ']].map(([k, v]) => `<option value="${k}" ${od.payment_method === k ? 'selected' : ''}>${v}</option>`).join('')}</select><input id="pd" type="number" min="0" placeholder="Сплачено, грн" class="${INP}" value="${od.paid_uah ?? ''}"></div>
   <textarea id="in" rows="2" placeholder="Стан авто при отриманні" class="${INP}">${esc(od.intake_notes)}</textarea><textarea id="dn" rows="2" placeholder="Нотатки при видачі" class="${INP}">${esc(od.delivery_notes)}</textarea>
   <button id="sv2" class="${BTN}">Зберегти</button>${next ? `<button id="nx" class="${BTN2}">Статус: ${OS[next]}</button>` : ''}<p id="msg" class="text-sm text-mist/80"></p></div>`);
-  $('x').onclick = closeModal;
-  renderPhotos(id, ph.data || [], $('ph'));
-  $('sh').onchange = async e => { await sb.from('orders').update({ share_status: e.target.checked }).eq('id', id); $('lk').classList.toggle('hidden', !e.target.checked); };
-  $('lk').onclick = async () => { const url = `${SITE_URL}/status.html#${od.public_token}`; try { if (navigator.share) return await navigator.share({ title: 'Статус вашого авто', text: 'Статус вашого авто у Detailing Family IF:', url }); await navigator.clipboard.writeText(url); $('msg').textContent = 'Посилання скопійовано.'; } catch (e) { $('msg').textContent = url; } };
-  const save = async () => {
-    const up = { discount_uah: +$('ds').value || 0, usd_rate: $('rt') ? (+$('rt').value || null) : od.usd_rate, payment_method: $('pm').value || null, paid_uah: $('pd').value === '' ? null : +$('pd').value, intake_notes: $('in').value || null, delivery_notes: $('dn').value || null };
-    const r = await sb.from('orders').update(up).eq('id', id); if (r.error) { $('msg').textContent = 'Помилка: ' + r.error.message; return null; } return up;
-  };
-  $('sv2').onclick = async () => { if (await save()) openOrder(id); };
-  $('sv').onchange = e => { const s = services.find(x => x.id == e.target.value); $('pr').value = s && s.price_from != null ? s.price_from : ''; };
-  $('af').onsubmit = async e => {
-    e.preventDefault(); const s = services.find(x => x.id == $('sv').value); if (!s || $('pr').value === '') return;
-    await sb.from('order_items').insert({ order_id: id, service_id: s.id, name: s.name, price: +$('pr').value, currency: s.currency, qty: +$('qt').value || 1 }); await save(); openOrder(id);
-  };
-  document.querySelectorAll('[data-rm]').forEach(b => b.onclick = async () => { await sb.from('order_items').delete().eq('id', b.dataset.rm); await save(); openOrder(id); });
-  if ($('nx')) $('nx').onclick = async () => {
-    const up = await save(); if (!up) return; const tt = calc(items, up.usd_rate, up.discount_uah);
-    if (next === 'delivered') {
-      if (tt.need) return $('msg').textContent = 'Вкажіть курс $ перед видачею.';
-      const now = new Date(); await sb.from('orders').update({ status: next, delivered_at: now.toISOString(), paid_at: up.paid_uah ? now.toISOString() : null }).eq('id', id);
-      for (const i of items) { const s = services.find(x => x.id === i.service_id); if (s && s.return_interval_days) await sb.from('order_items').update({ remind_at: new Date(now.getTime() + s.return_interval_days * 864e5).toISOString().slice(0, 10) }).eq('id', i.id); }
-      await sb.from('timeline').insert({ client_id: od.client_id, kind: 'order', text: `Замовлення видано: ${items.map(i => i.name).join(', ')} · ${Math.round(tt.total)} грн`, created_by: me.id });
-    } else await sb.from('orders').update({ status: next }).eq('id', id);
-    openOrder(id);
-  };
-}
-
-/* ===== Фото замовлень ===== */
-const KP = { before: 'До', during: 'Під час', after: 'Після' };
-const shrink = f => new Promise((res, rej) => {
-  const img = new Image(), u = URL.createObjectURL(f);
-  img.onload = () => { const k = Math.min(1, 1600 / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
-    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u); c.toBlob(b => b ? res(b) : rej(new Error('не вдалося стиснути')), 'image/jpeg', 0.8); };
-  img.onerror = () => rej(new Error('не вдалося прочитати файл')); img.src = u;
-});
-async function renderPhotos(id, rows, box) {
-  const urls = rows.length ? ((await sb.storage.from('order-photos').createSignedUrls(rows.map(r => r.path), 3600)).data || []) : [];
-  const url = p => (urls.find(u => u.path === p) || {}).signedUrl || '';
-  box.innerHTML = Object.entries(KP).map(([k, l]) => `<div><div class="mb-1 flex items-center justify-between text-sm"><span class="font-semibold">${l}</span><label class="${BTN2} cursor-pointer px-3 py-1 text-sm">+ Фото<input type="file" accept="image/*" multiple data-up="${k}" class="sr-only"></label></div>
-    <div class="grid grid-cols-3 gap-2">${rows.filter(r => r.kind === k).map(r => `<div class="relative"><a href="${esc(url(r.path))}" target="_blank" rel="noopener"><img src="${esc(url(r.path))}" alt="${l}" loading="lazy" class="aspect-square w-full rounded-xl object-cover"></a><button type="button" data-dp="${r.id}" data-path="${esc(r.path)}" class="absolute right-1 top-1 h-6 w-6 rounded-full bg-black/70 text-sm leading-none" aria-label="Видалити фото">&times;</button></div>`).join('')}</div></div>`).join('') + '<p id="phm" class="text-xs text-mist/70"></p>';
-  const reload = async () => renderPhotos(id, (await sb.from('order_photos').select('*').eq('order_id', id).order('created_at')).data || [], box);
-  box.querySelectorAll('[data-up]').forEach(inp => inp.onchange = async () => {
-    const files = [...inp.files], say = t => { const m = $('phm'); if (m) m.textContent = t; }; let fail = 0;
-    for (let i = 0; i < files.length; i++) {
-      say(`Завантаження ${i + 1} з ${files.length}…`);
-      try {
-        const path = `${id}/${crypto.randomUUID()}.jpg`, up = await sb.storage.from('order-photos').upload(path, await shrink(files[i]), { contentType: 'image/jpeg' });
-        if (up.error) throw up.error; const r = await sb.from('order_photos').insert({ order_id: id, kind: inp.dataset.up, path }); if (r.error) throw r.error;
-      } catch (e) { fail++; console.warn(e); }
+      $('x').onclick = closeModal;
+      renderPhotos(id, ph.data || [], $('ph'));
+      $('sh').onchange = async e => { await sb.from('orders').update({ share_status: e.target.checked }).eq('id', id); $('lk').classList.toggle('hidden', !e.target.checked); };
+      $('lk').onclick = async () => { const url = `${SITE_URL}/status.html#${od.public_token}`; try { if (navigator.share) return await navigator.share({ title: 'Статус вашого авто', text: 'Статус вашого авто у Detailing Family IF:', url }); await navigator.clipboard.writeText(url); $('msg').textContent = 'Посилання скопійовано.'; } catch (e) { $('msg').textContent = url; } };
+      const save = async () => {
+        const up = { discount_uah: +$('ds').value || 0, usd_rate: $('rt') ? (+$('rt').value || null) : od.usd_rate, payment_method: $('pm').value || null, paid_uah: $('pd').value === '' ? null : +$('pd').value, intake_notes: $('in').value || null, delivery_notes: $('dn').value || null };
+        const r = await sb.from('orders').update(up).eq('id', id); if (r.error) { $('msg').textContent = 'Помилка: ' + r.error.message; return null; } return up;
+      };
+      $('sv2').onclick = async () => { if (await save()) openOrder(id); };
+      $('sv').onchange = e => { const s = services.find(x => x.id == e.target.value); $('pr').value = s && s.price_from != null ? s.price_from : ''; };
+      $('af').onsubmit = async e => {
+        e.preventDefault(); const s = services.find(x => x.id == $('sv').value); if (!s || $('pr').value === '') return;
+        await sb.from('order_items').insert({ order_id: id, service_id: s.id, name: s.name, price: +$('pr').value, currency: s.currency, qty: +$('qt').value || 1 }); await save(); openOrder(id);
+      };
+      document.querySelectorAll('[data-rm]').forEach(b => b.onclick = async () => { await sb.from('order_items').delete().eq('id', b.dataset.rm); await save(); openOrder(id); });
+      if ($('nx')) $('nx').onclick = async () => {
+        const up = await save(); if (!up) return; const tt = calc(items, up.usd_rate, up.discount_uah);
+        if (next === 'delivered') {
+          if (tt.need) return $('msg').textContent = 'Вкажіть курс $ перед видачею.';
+          const now = new Date(); await sb.from('orders').update({ status: next, delivered_at: now.toISOString(), paid_at: up.paid_uah ? now.toISOString() : null }).eq('id', id);
+          for (const i of items) { const s = services.find(x => x.id === i.service_id); if (s && s.return_interval_days) await sb.from('order_items').update({ remind_at: new Date(now.getTime() + s.return_interval_days * 864e5).toISOString().slice(0, 10) }).eq('id', i.id); }
+          await sb.from('timeline').insert({ client_id: od.client_id, kind: 'order', text: `Замовлення видано: ${items.map(i => i.name).join(', ')} · ${Math.round(tt.total)} грн`, created_by: me.id });
+        } else await sb.from('orders').update({ status: next }).eq('id', id);
+        openOrder(id);
+      };
     }
-    await reload(); if (fail) say(`Не вдалося завантажити: ${fail}. Перевірте, що виконано photos.sql.`);
-  });
-  box.querySelectorAll('[data-dp]').forEach(b => b.onclick = async () => {
-    if (!confirm('Видалити це фото?')) return;
-    await sb.storage.from('order-photos').remove([b.dataset.path]); await sb.from('order_photos').delete().eq('id', b.dataset.dp); reload();
-  });
-}
 
-/* ===== Сьогодні ===== */
-const dayRange = d => { const a = new Date(d); a.setHours(0, 0, 0, 0); const b = new Date(a); b.setDate(b.getDate() + 1); return [a.toISOString(), b.toISOString()]; };
-const hm = d => new Date(d).toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
-const iso = d => { const x = new Date(d); return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0'); };
-const KIND = { inspection: 'Огляд', work: 'Робота' }, AS = { planned: 'Запланований', done: 'Був', cancelled: 'Скасований', no_show: 'Не прийшов' };
-const wait = l => { const m = Math.round((Date.now() - new Date(l.created_at)) / 60000); return m < 60 ? m + ' хв' : m < 1440 ? Math.floor(m / 60) + ' год' : Math.floor(m / 1440) + ' дн'; };
-async function viewToday() {
-  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Сьогодні</h1><div id="tb" class="mt-4 space-y-6"><p class="text-mist/60">Завантаження…</p></div>`;
-  const [a, b] = dayRange(new Date()), today = iso(new Date()), soon = iso(new Date(Date.now() + 7 * 864e5));
-  const [nl, fu, ap, rm] = await Promise.all([
-    sb.from('leads').select('*').eq('status', 'new').order('created_at'),
-    sb.from('leads').select('*').in('status', ['in_progress', 'booked']).lte('next_contact_at', today).order('next_contact_at'),
-    sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').eq('status', 'planned').gte('starts_at', a).lt('starts_at', b).order('starts_at'),
-    sb.from('order_items').select('id,name,remind_at,orders(client_id,clients(id,name,phone,telegram,viber,consent_marketing))').not('remind_at', 'is', null).lte('remind_at', soon).order('remind_at')]);
-  if (nl.error || ap.error || rm.error) return $('tb').textContent = 'Помилка завантаження.';
-  const sec = (t, n, body) => `<section><h2 class="mb-2 font-bold">${t} <span class="text-mist/60">${n}</span></h2><div class="space-y-2">${body || '<p class="text-sm text-mist/60">Немає</p>'}</div></section>`;
-  const lead = (l, note) => `<button data-l="${l.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${esc(l.name)}</b> <span class="text-sm text-accent">${note}</span><div class="text-sm text-mist/80">${esc(l.contact)} · ${esc(l.service_interest || '')}</div></button>`;
-  const all = [...nl.data, ...fu.data];
-  $('tb').innerHTML =
-    sec('Нові заявки', nl.data.length, nl.data.map(l => lead(l, 'чекає ' + wait(l))).join('')) +
-    sec('Передзвонити', fu.data.length, fu.data.map(l => lead(l, 'контакт ' + l.next_contact_at)).join('')) +
-    sec('Записи на сьогодні', ap.data.length, ap.data.map(x => `<button data-a="${x.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${hm(x.starts_at)}</b> · ${esc(x.clients && x.clients.name)} <span class="text-sm text-mist/70">${KIND[x.kind]}${x.cars ? ' · ' + esc(x.cars.model) : ''}</span></button>`).join('')) +
-    sec('Кому нагадати (7 днів)', rm.data.length, rm.data.map(r => { const c = r.orders.clients; return `<div class="rounded-2xl bg-card p-4"><b>${esc(c.name)}</b> <span class="text-sm text-mist/70">· ${esc(r.name)} · до ${esc(r.remind_at)}</span>${c.consent_marketing ? '' : '<div class="text-xs text-accent">Немає згоди на пропозиції: краще подзвонити</div>'}<div class="mt-2 flex flex-wrap gap-2">${links(c, '')}<button data-done="${r.id}" data-c="${c.id}" data-n="${esc(r.name)}" class="${BTN2} text-sm">Зроблено</button></div></div>`; }).join(''));
-  document.querySelectorAll('[data-l]').forEach(b => b.onclick = () => openLead(all.find(x => x.id === b.dataset.l)));
-  document.querySelectorAll('[data-a]').forEach(b => b.onclick = () => openAppt(ap.data.find(x => x.id === b.dataset.a)));
-  document.querySelectorAll('[data-done]').forEach(b => b.onclick = async () => {
-    await sb.from('order_items').update({ remind_at: null }).eq('id', b.dataset.done);
-    await sb.from('timeline').insert({ client_id: b.dataset.c, kind: 'note', text: 'Нагадування про повторний візит: ' + b.dataset.n, created_by: me.id }); viewToday();
-  });
-}
+    /* ===== Фото замовлень ===== */
+    const KP = { before: 'До', during: 'Під час', after: 'Після' };
+    const shrink = f => new Promise((res, rej) => {
+      const img = new Image(), u = URL.createObjectURL(f);
+      img.onload = () => {
+        const k = Math.min(1, 1600 / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u); c.toBlob(b => b ? res(b) : rej(new Error('не вдалося стиснути')), 'image/jpeg', 0.8);
+      };
+      img.onerror = () => rej(new Error('не вдалося прочитати файл')); img.src = u;
+    });
+    async function renderPhotos(id, rows, box) {
+      const urls = rows.length ? ((await sb.storage.from('order-photos').createSignedUrls(rows.map(r => r.path), 3600)).data || []) : [];
+      const url = p => (urls.find(u => u.path === p) || {}).signedUrl || '';
+      box.innerHTML = Object.entries(KP).map(([k, l]) => `<div><div class="mb-1 flex items-center justify-between text-sm"><span class="font-semibold">${l}</span><label class="${BTN2} cursor-pointer px-3 py-1 text-sm">+ Фото<input type="file" accept="image/*" multiple data-up="${k}" class="sr-only"></label></div>
+    <div class="grid grid-cols-3 gap-2">${rows.filter(r => r.kind === k).map(r => `<div class="relative"><a href="${esc(url(r.path))}" target="_blank" rel="noopener"><img src="${esc(url(r.path))}" alt="${l}" loading="lazy" class="aspect-square w-full rounded-xl object-cover"></a><button type="button" data-dp="${r.id}" data-path="${esc(r.path)}" class="absolute right-1 top-1 h-6 w-6 rounded-full bg-black/70 text-sm leading-none" aria-label="Видалити фото">&times;</button></div>`).join('')}</div></div>`).join('') + '<p id="phm" class="text-xs text-mist/70"></p>';
+      const reload = async () => renderPhotos(id, (await sb.from('order_photos').select('*').eq('order_id', id).order('created_at')).data || [], box);
+      box.querySelectorAll('[data-up]').forEach(inp => inp.onchange = async () => {
+        const files = [...inp.files], say = t => { const m = $('phm'); if (m) m.textContent = t; }; let fail = 0;
+        for (let i = 0; i < files.length; i++) {
+          say(`Завантаження ${i + 1} з ${files.length}…`);
+          try {
+            const path = `${id}/${crypto.randomUUID()}.jpg`, up = await sb.storage.from('order-photos').upload(path, await shrink(files[i]), { contentType: 'image/jpeg' });
+            if (up.error) throw up.error; const r = await sb.from('order_photos').insert({ order_id: id, kind: inp.dataset.up, path }); if (r.error) throw r.error;
+          } catch (e) { fail++; console.warn(e); }
+        }
+        await reload(); if (fail) say(`Не вдалося завантажити: ${fail}. Перевірте, що виконано photos.sql.`);
+      });
+      box.querySelectorAll('[data-dp]').forEach(b => b.onclick = async () => {
+        if (!confirm('Видалити це фото?')) return;
+        await sb.storage.from('order-photos').remove([b.dataset.path]); await sb.from('order_photos').delete().eq('id', b.dataset.dp); reload();
+      });
+    }
 
-/* ===== Календар ===== */
-let cdate = new Date();
-async function viewCal() {
-  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Календар</h1><button id="na" class="${BTN} px-4 py-2 text-sm">+ Запис</button></div>
+    /* ===== Сьогодні ===== */
+    const dayRange = d => { const a = new Date(d); a.setHours(0, 0, 0, 0); const b = new Date(a); b.setDate(b.getDate() + 1); return [a.toISOString(), b.toISOString()]; };
+    const hm = d => new Date(d).toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+    const iso = d => { const x = new Date(d); return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0'); };
+    const KIND = { inspection: 'Огляд', work: 'Робота' }, AS = { planned: 'Запланований', done: 'Був', cancelled: 'Скасований', no_show: 'Не прийшов' };
+    const wait = l => { const m = Math.round((Date.now() - new Date(l.created_at)) / 60000); return m < 60 ? m + ' хв' : m < 1440 ? Math.floor(m / 60) + ' год' : Math.floor(m / 1440) + ' дн'; };
+    async function viewToday() {
+      $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Сьогодні</h1><div id="tb" class="mt-4 space-y-6"><p class="text-mist/60">Завантаження…</p></div>`;
+      const [a, b] = dayRange(new Date()), today = iso(new Date()), soon = iso(new Date(Date.now() + 7 * 864e5));
+      const [nl, fu, ap, rm] = await Promise.all([
+        sb.from('leads').select('*').eq('status', 'new').order('created_at'),
+        sb.from('leads').select('*').in('status', ['in_progress', 'booked']).lte('next_contact_at', today).order('next_contact_at'),
+        sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').eq('status', 'planned').gte('starts_at', a).lt('starts_at', b).order('starts_at'),
+        sb.from('order_items').select('id,name,remind_at,orders(client_id,clients(id,name,phone,telegram,viber,consent_marketing))').not('remind_at', 'is', null).lte('remind_at', soon).order('remind_at')]);
+      if (nl.error || ap.error || rm.error) return $('tb').textContent = 'Помилка завантаження.';
+      const sec = (t, n, body) => `<section><h2 class="mb-2 font-bold">${t} <span class="text-mist/60">${n}</span></h2><div class="space-y-2">${body || '<p class="text-sm text-mist/60">Немає</p>'}</div></section>`;
+      const lead = (l, note) => `<button data-l="${l.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${esc(l.name)}</b> <span class="text-sm text-accent">${note}</span><div class="text-sm text-mist/80">${esc(l.contact)} · ${esc(l.service_interest || '')}</div></button>`;
+      const all = [...nl.data, ...fu.data];
+      $('tb').innerHTML =
+        sec('Нові заявки', nl.data.length, nl.data.map(l => lead(l, 'чекає ' + wait(l))).join('')) +
+        sec('Передзвонити', fu.data.length, fu.data.map(l => lead(l, 'контакт ' + l.next_contact_at)).join('')) +
+        sec('Записи на сьогодні', ap.data.length, ap.data.map(x => `<button data-a="${x.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${hm(x.starts_at)}</b> · ${esc(x.clients && x.clients.name)} <span class="text-sm text-mist/70">${KIND[x.kind]}${x.cars ? ' · ' + esc(x.cars.model) : ''}</span></button>`).join('')) +
+        sec('Кому нагадати (7 днів)', rm.data.length, rm.data.map(r => { const c = r.orders.clients; return `<div class="rounded-2xl bg-card p-4"><b>${esc(c.name)}</b> <span class="text-sm text-mist/70">· ${esc(r.name)} · до ${esc(r.remind_at)}</span>${c.consent_marketing ? '' : '<div class="text-xs text-accent">Немає згоди на пропозиції: краще подзвонити</div>'}<div class="mt-2 flex flex-wrap gap-2">${links(c, '')}<button data-done="${r.id}" data-c="${c.id}" data-n="${esc(r.name)}" class="${BTN2} text-sm">Зроблено</button></div></div>`; }).join(''));
+      document.querySelectorAll('[data-l]').forEach(b => b.onclick = () => openLead(all.find(x => x.id === b.dataset.l)));
+      document.querySelectorAll('[data-a]').forEach(b => b.onclick = () => openAppt(ap.data.find(x => x.id === b.dataset.a)));
+      document.querySelectorAll('[data-done]').forEach(b => b.onclick = async () => {
+        await sb.from('order_items').update({ remind_at: null }).eq('id', b.dataset.done);
+        await sb.from('timeline').insert({ client_id: b.dataset.c, kind: 'note', text: 'Нагадування про повторний візит: ' + b.dataset.n, created_by: me.id }); viewToday();
+      });
+    }
+
+    /* ===== Календар ===== */
+    let cdate = new Date();
+    async function viewCal() {
+      $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Календар</h1><button id="na" class="${BTN} px-4 py-2 text-sm">+ Запис</button></div>
   <div class="my-4 flex gap-2"><button id="pv" class="${BTN2} px-4" aria-label="Попередній день">&lsaquo;</button><input id="dt" type="date" value="${iso(cdate)}" class="${INP}"><button id="nx" class="${BTN2} px-4" aria-label="Наступний день">&rsaquo;</button></div><div id="list" class="space-y-2"></div>`;
-  const go = d => { cdate = d; viewCal(); };
-  $('pv').onclick = () => go(new Date(cdate.getTime() - 864e5)); $('nx').onclick = () => go(new Date(cdate.getTime() + 864e5));
-  $('dt').onchange = e => e.target.value && go(new Date(e.target.value + 'T12:00')); $('na').onclick = () => newAppt();
-  const [a, b] = dayRange(cdate); const { data, error } = await sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').gte('starts_at', a).lt('starts_at', b).order('starts_at');
-  if (error) return $('list').textContent = 'Помилка: ' + error.message;
-  $('list').innerHTML = data.length ? data.map(x => `<button data-a="${x.id}" class="block w-full rounded-2xl bg-card p-4 text-left ${x.status === 'planned' ? '' : 'opacity-60'}"><b>${hm(x.starts_at)}${x.duration_min ? ' · ' + x.duration_min + ' хв' : ''}</b> · ${esc(x.clients && x.clients.name)}<div class="text-sm text-mist/70">${KIND[x.kind]}${x.cars ? ' · ' + esc(x.cars.model) : ''} · ${AS[x.status]}</div></button>`).join('') : '<p class="text-mist/60">На цей день записів немає.</p>';
-  document.querySelectorAll('[data-a]').forEach(btn => btn.onclick = () => openAppt(data.find(x => x.id === btn.dataset.a)));
-}
-function openAppt(x) {
-  modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(x.clients && x.clients.name)}</h2><p class="text-sm text-mist/70">${KIND[x.kind]} · ${fmt(x.starts_at)}${x.cars ? ' · ' + esc(x.cars.model) : ''} · ${AS[x.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+      const go = d => { cdate = d; viewCal(); };
+      $('pv').onclick = () => go(new Date(cdate.getTime() - 864e5)); $('nx').onclick = () => go(new Date(cdate.getTime() + 864e5));
+      $('dt').onchange = e => e.target.value && go(new Date(e.target.value + 'T12:00')); $('na').onclick = () => newAppt();
+      const [a, b] = dayRange(cdate); const { data, error } = await sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').gte('starts_at', a).lt('starts_at', b).order('starts_at');
+      if (error) return $('list').textContent = 'Помилка: ' + error.message;
+      $('list').innerHTML = data.length ? data.map(x => `<button data-a="${x.id}" class="block w-full rounded-2xl bg-card p-4 text-left ${x.status === 'planned' ? '' : 'opacity-60'}"><b>${hm(x.starts_at)}${x.duration_min ? ' · ' + x.duration_min + ' хв' : ''}</b> · ${esc(x.clients && x.clients.name)}<div class="text-sm text-mist/70">${KIND[x.kind]}${x.cars ? ' · ' + esc(x.cars.model) : ''} · ${AS[x.status]}</div></button>`).join('') : '<p class="text-mist/60">На цей день записів немає.</p>';
+      document.querySelectorAll('[data-a]').forEach(btn => btn.onclick = () => openAppt(data.find(x => x.id === btn.dataset.a)));
+    }
+    function openAppt(x) {
+      modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(x.clients && x.clients.name)}</h2><p class="text-sm text-mist/70">${KIND[x.kind]} · ${fmt(x.starts_at)}${x.cars ? ' · ' + esc(x.cars.model) : ''} · ${AS[x.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <div class="mt-3 flex flex-wrap gap-2">${links(x.clients || {}, '')}</div>${x.notes ? `<p class="mt-3 text-sm">${esc(x.notes)}</p>` : ''}
   <div class="mt-4 grid gap-2">${['done', 'cancelled', 'no_show'].map(k => `<button data-s="${k}" class="${BTN2}">${AS[k]}</button>`).join('')}<button id="mo" class="${BTN}">Створити замовлення</button></div>`);
-  $('x').onclick = closeModal; $('mo').onclick = () => { closeModal(); newOrder(x.client_id); };
-  document.querySelectorAll('[data-s]').forEach(b => b.onclick = async () => {
-    await sb.from('appointments').update({ status: b.dataset.s }).eq('id', x.id);
-    await sb.from('timeline').insert({ client_id: x.client_id, kind: 'visit', text: `${KIND[x.kind]} ${fmt(x.starts_at)}: ${AS[b.dataset.s]}`, created_by: me.id }); closeModal(); render();
-  });
-}
-function newAppt() {
-  const d0 = new Date(cdate); d0.setHours(10, 0, 0, 0); const loc = new Date(d0 - d0.getTimezoneOffset() * 6e4).toISOString().slice(0, 16);
-  modal(`<h2 class="mb-3 text-xl font-bold">Новий запис</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Пошук клієнта: ім'я або телефон" class="${INP}"><select id="cl" size="4" class="${INP}"></select><select id="ca" class="${INP}"><option value="">Авто</option></select>
+      $('x').onclick = closeModal; $('mo').onclick = () => { closeModal(); newOrder(x.client_id); };
+      document.querySelectorAll('[data-s]').forEach(b => b.onclick = async () => {
+        await sb.from('appointments').update({ status: b.dataset.s }).eq('id', x.id);
+        await sb.from('timeline').insert({ client_id: x.client_id, kind: 'visit', text: `${KIND[x.kind]} ${fmt(x.starts_at)}: ${AS[b.dataset.s]}`, created_by: me.id }); closeModal(); render();
+      });
+    }
+    function newAppt() {
+      const d0 = new Date(cdate); d0.setHours(10, 0, 0, 0); const loc = new Date(d0 - d0.getTimezoneOffset() * 6e4).toISOString().slice(0, 16);
+      modal(`<h2 class="mb-3 text-xl font-bold">Новий запис</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Пошук клієнта: ім'я або телефон" class="${INP}"><select id="cl" size="4" class="${INP}"></select><select id="ca" class="${INP}"><option value="">Авто</option></select>
   <select id="kd" class="${INP}"><option value="inspection">Огляд</option><option value="work">Робота</option></select><input id="st" type="datetime-local" value="${loc}" class="${INP}"><input id="du" type="number" min="5" step="5" placeholder="Тривалість, хв" class="${INP}">
   <select id="as" class="${INP}"><option value="">Хто веде</option>${staff.map(s => `<option value="${s.user_id}">${esc(s.name)}</option>`).join('')}</select><textarea id="nt" rows="2" placeholder="Нотатки" class="${INP}"></textarea><button id="go" class="${BTN}">Створити</button><p id="msg" class="text-sm"></p></div>`);
-  const pick = async () => { const { data } = await sb.from('cars').select('*').eq('client_id', $('cl').value); $('ca').innerHTML = '<option value="">Авто</option>' + (data || []).map(a => `<option value="${a.id}">${esc([a.model, a.plate].filter(Boolean).join(' · '))}</option>`).join(''); };
-  const fill = async () => { const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20); if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`); const { data } = await r; $('cl').innerHTML = (data || []).map(c => `<option value="${c.id}">${esc(c.name)} ${esc(c.phone || '')}</option>`).join(''); };
-  let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; $('cl').onchange = pick; fill();
-  $('go').onclick = async () => {
-    if (!$('cl').value || !$('st').value) return $('msg').textContent = 'Оберіть клієнта й час.';
-    const { error } = await sb.from('appointments').insert({ client_id: $('cl').value, car_id: $('ca').value || null, kind: $('kd').value, starts_at: new Date($('st').value).toISOString(), duration_min: +$('du').value || null, assignee: $('as').value || null, notes: $('nt').value || null });
-    if (error) return $('msg').textContent = 'Помилка: ' + error.message;
-    await sb.from('timeline').insert({ client_id: $('cl').value, kind: 'visit', text: `Запис: ${KIND[$('kd').value]} ${fmt(new Date($('st').value))}`, created_by: me.id }); closeModal(); render();
-  };
-}
+      const pick = async () => { const { data } = await sb.from('cars').select('*').eq('client_id', $('cl').value); $('ca').innerHTML = '<option value="">Авто</option>' + (data || []).map(a => `<option value="${a.id}">${esc([a.model, a.plate].filter(Boolean).join(' · '))}</option>`).join(''); };
+      const fill = async () => { const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20); if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`); const { data } = await r; $('cl').innerHTML = (data || []).map(c => `<option value="${c.id}">${esc(c.name)} ${esc(c.phone || '')}</option>`).join(''); };
+      let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; $('cl').onchange = pick; fill();
+      $('go').onclick = async () => {
+        if (!$('cl').value || !$('st').value) return $('msg').textContent = 'Оберіть клієнта й час.';
+        const { error } = await sb.from('appointments').insert({ client_id: $('cl').value, car_id: $('ca').value || null, kind: $('kd').value, starts_at: new Date($('st').value).toISOString(), duration_min: +$('du').value || null, assignee: $('as').value || null, notes: $('nt').value || null });
+        if (error) return $('msg').textContent = 'Помилка: ' + error.message;
+        await sb.from('timeline').insert({ client_id: $('cl').value, kind: 'visit', text: `Запис: ${KIND[$('kd').value]} ${fmt(new Date($('st').value))}`, created_by: me.id }); closeModal(); render();
+      };
+    }
 
-if (!SUPABASE_URL) app.innerHTML = '<p class="p-6">Вкажіть SUPABASE_URL і SUPABASE_ANON_KEY на початку скрипта в crm/index.html.</p>'; else start();
-</script>
+    if (!SUPABASE_URL) app.innerHTML = '<p class="p-6">Вкажіть SUPABASE_URL і SUPABASE_ANON_KEY на початку скрипта в crm/index.html.</p>'; else start();
+  </script>
 </body>
+
 </html>
