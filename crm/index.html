@@ -76,14 +76,16 @@ async function start() {
 
 /* ===== Каркас ===== */
 function render() {
-  app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div class="mb-2 flex justify-end gap-4 text-xs text-mist/60"><button id="sk">Склад</button><button id="pr">Прайс</button><button id="out">Вийти</button></div><div id="view"></div></main>
+  app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div class="mb-2 flex justify-end gap-4 text-xs text-mist/60"><button id="ly">Бонуси</button><button id="an">Аналітика</button><button id="sk">Склад</button><button id="pr">Прайс</button><button id="out">Вийти</button></div><div id="view"></div></main>
   <nav class="app-nav fixed inset-x-0 bottom-0 z-20 flex" style="padding-bottom:env(safe-area-inset-bottom)">
   ${[['today', 'Сьогодні'], ['leads', 'Ліди'], ['clients', 'Клієнти'], ['cal', 'Календар'], ['orders', 'Замовлення']].map(([k, l]) => `<button data-tab="${k}" class="flex-1 py-4 text-xs font-semibold ${tab === k ? 'is-active text-accent' : 'text-mist/70'}">${l}</button>`).join('')}</nav>`;
   document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
   $('pr').onclick = () => { tab = 'price'; render(); };
   $('sk').onclick = () => { tab = 'stock'; render(); };
+  $('an').onclick = () => { tab = 'stats'; render(); };
+  $('ly').onclick = () => { tab = 'loyalty'; render(); };
   $('out').onclick = async () => { await sb.auth.signOut(); login(); };
-  ({ today: viewToday, leads: viewLeads, clients: viewClients, cal: viewCal, orders: viewOrders, price: viewPrice, stock: viewStock })[tab]();
+  ({ today: viewToday, leads: viewLeads, clients: viewClients, cal: viewCal, orders: viewOrders, price: viewPrice, stock: viewStock, stats: viewStats, loyalty: viewLoyalty })[tab]();
 }
 function modal(html) {
   closeModal(); const d = document.createElement('div'); d.id = 'mod';
@@ -167,12 +169,13 @@ async function openClient(id) {
   const m = modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${esc(k.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <p class="mt-1 text-sm text-mist/80">${esc([k.phone, k.telegram, k.viber, k.email].filter(Boolean).join(' · '))}</p><div class="mt-3 flex flex-wrap gap-2">${links(k, '')}</div>
   <p class="mt-3 text-xs text-mist/60">Згода на обробку: ${k.consent_processing ? 'так' : 'ні'} · на пропозиції: ${k.consent_marketing ? 'так' : 'ні'}${k.source ? ' · джерело: ' + esc(k.source) : ''}</p>
-  <button id="no2" class="${BTN2} mt-4 w-full">Нове замовлення</button><h3 class="mt-5 font-bold">Авто</h3><div class="mt-2 space-y-1 text-sm">${cars.data.length ? cars.data.map(a => `<div>${esc([a.brand, a.model, a.car_class, a.color, a.plate].filter(Boolean).join(' · '))}</div>`).join('') : '<span class="text-mist/60">Немає</span>'}</div>
+  <button id="no2" class="${BTN2} mt-4 w-full">Нове замовлення</button><button id="bn" class="${BTN2} mt-2 w-full">Бонуси та рекомендації</button><h3 class="mt-5 font-bold">Авто</h3><div class="mt-2 space-y-1 text-sm">${cars.data.length ? cars.data.map(a => `<div>${esc([a.brand, a.model, a.car_class, a.color, a.plate].filter(Boolean).join(' · '))}</div>`).join('') : '<span class="text-mist/60">Немає</span>'}</div>
   <form id="cf" class="mt-3 grid grid-cols-2 gap-2"><input name="model" required placeholder="Марка і модель" class="${INP} col-span-2"><select name="cls" class="${INP}"><option value="">Клас</option><option>Седан</option><option>Кросовер</option><option>Позашляховик</option></select><input name="plate" placeholder="Номер" class="${INP}"><button class="${BTN2} col-span-2">Додати авто</button></form>
   <h3 class="mt-5 font-bold">Історія</h3><form id="nf2" class="mt-2 flex gap-2"><input name="t" required placeholder="Нотатка" class="${INP}"><button class="${BTN} px-4">+</button></form>
   <div class="mt-3 space-y-2 text-sm">${tl.data.map(e => `<div class="border-l-2 border-accent pl-3"><span class="text-xs text-mist/60">${fmt(e.created_at)}</span><br>${esc(e.text)}</div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div>`);
   $('x').onclick = closeModal;
   $('no2').onclick = () => { closeModal(); newOrder(id); };
+  $('bn').onclick = () => { closeModal(); openBonus(id); };
   $('cf').onsubmit = async e => { e.preventDefault(); const f = e.target; await sb.from('cars').insert({ client_id: id, model: f.model.value.trim(), car_class: f.cls.value || null, plate: f.plate.value.trim() || null }); openClient(id); };
   $('nf2').onsubmit = async e => { e.preventDefault(); await sb.from('timeline').insert({ client_id: id, kind: 'note', text: e.target.t.value.trim(), created_by: me.id }); openClient(id); };
 }
@@ -193,13 +196,13 @@ function editService(s) {
   <input name="category" list="cats" required placeholder="Категорія" value="${esc(s.category)}" class="${INP}"><datalist id="cats">${[...new Set(services.map(x => x.category))].map(c => `<option value="${esc(c)}">`).join('')}</datalist>
   <input name="name" required placeholder="Назва" value="${esc(s.name)}" class="${INP}">
   <div class="grid grid-cols-2 gap-2"><input name="price" type="number" step="any" min="0" placeholder="Ціна від" value="${esc(s.price_from)}" class="${INP}"><select name="cur" class="${INP}"><option value="UAH" ${s.currency === 'UAH' ? 'selected' : ''}>грн</option><option value="USD" ${s.currency === 'USD' ? 'selected' : ''}>$</option></select></div>
-  <input name="ptext" placeholder="Як показувати ціну (напр. від 700 грн)" value="${esc(s.price_text)}" class="${INP}"><input name="dur" placeholder="Орієнтовний час" value="${esc(s.duration_text)}" class="${INP}">
+  <input name="ptext" placeholder="Як показувати ціну (напр. від 700 грн)" value="${esc(s.price_text)}" class="${INP}"><input name="dur" placeholder="Орієнтовний час" value="${esc(s.duration_text)}" class="${INP}"><label class="text-sm text-mist/70">Робочий час майстра, хв (для собівартості)<input name="wm" type="number" min="0" class="${INP} mt-1" value="${esc(s.work_minutes)}"></label>
   <label class="text-sm text-mist/70">Інтервал повернення, днів<input name="ret" type="number" min="1" class="${INP} mt-1" value="${esc(s.return_interval_days)}"></label>
   <label class="flex gap-3 text-sm"><input name="act" type="checkbox" class="h-5 w-5 accent-accent" ${s.active ? 'checked' : ''}>Показувати в замовленнях</label><button class="${BTN}">Зберегти</button>${s.id ? `<button type="button" id="nm2" class="${BTN2}">Норми витрат матеріалів</button>` : ''}<p id="msg" class="text-sm"></p></form>`);
   if ($('nm2')) $('nm2').onclick = () => openNorms(s);
   $('sf').onsubmit = async e => {
     e.preventDefault(); const f = e.target;
-    const row = { category: f.category.value.trim(), name: f.name.value.trim(), price_from: f.price.value || null, currency: f.cur.value, price_text: f.ptext.value || null, duration_text: f.dur.value || null, return_interval_days: f.ret.value || null, active: f.act.checked };
+    const row = { category: f.category.value.trim(), name: f.name.value.trim(), price_from: f.price.value || null, currency: f.cur.value, price_text: f.ptext.value || null, duration_text: f.dur.value || null, work_minutes: f.wm.value || null, return_interval_days: f.ret.value || null, active: f.act.checked };
     const { error } = s.id ? await sb.from('services').update(row).eq('id', s.id) : await sb.from('services').insert({ ...row, sort: 1000 });
     error ? $('msg').textContent = 'Помилка: ' + error.message : (closeModal(), viewPrice());
   };
@@ -240,13 +243,15 @@ async function openOrder(id) {
   const [o, it, ph] = await Promise.all([sb.from('orders').select('*, clients(id,name,phone), cars(model,plate)').eq('id', id).single(), sb.from('order_items').select('*').eq('order_id', id).order('name'), sb.from('order_photos').select('*').eq('order_id', id).order('created_at')]);
   if (o.error) return; const od = o.data, items = it.data, hasUsd = items.some(i => i.currency === 'USD');
   const t = calc(items, od.usd_rate, od.discount_uah), next = OSN[OSN.indexOf(od.status) + 1];
+  if (!LS) await loadLoyalty(); const bal = (await clientBonus(od.client_id)).balance, maxB = Math.floor(Math.max(0, Math.min(bal, t.total * (+LS.max_pay_share_percent) / 100)));
   modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(od.clients.name)}</h2><p class="text-sm text-mist/70">${esc(od.cars ? [od.cars.model, od.cars.plate].filter(Boolean).join(' · ') : 'авто не вказано')} · ${OS[od.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <h3 class="mt-4 font-bold">Послуги</h3><div class="mt-2 space-y-1 text-sm">${items.map(i => `<div class="flex items-center justify-between gap-2 rounded-xl bg-canvas px-3 py-2"><span>${esc(i.name)} × ${i.qty}</span><span class="shrink-0">${i.price} ${i.currency === 'USD' ? '$' : 'грн'}<button data-rm="${i.id}" class="ml-2 text-mist/50" aria-label="Видалити">&times;</button></span></div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div>
   <form id="af" class="mt-3 grid grid-cols-[1fr_5rem] gap-2"><select id="sv" class="${INP} col-span-2"><option value="">Додати послугу…</option>${services.filter(s => s.active).map(s => `<option value="${s.id}">${esc(s.category)}: ${esc(s.name)}</option>`).join('')}</select><input id="pr" type="number" step="any" min="0" placeholder="Ціна" class="${INP}"><input id="qt" type="number" step="any" min="0.1" value="1" class="${INP}"><button class="${BTN2} col-span-2">Додати</button></form>
   <h3 class="mt-5 font-bold">Фото</h3><div id="ph" class="mt-2 space-y-3"></div>
   <div class="mt-4 rounded-xl bg-canvas p-3"><label class="flex gap-3 text-sm"><input id="sh" type="checkbox" class="mt-0.5 h-5 w-5 accent-accent" ${od.share_status ? 'checked' : ''}>Показувати клієнту статус і фото за посиланням</label><button id="lk" type="button" class="${BTN2} mt-3 w-full text-sm ${od.share_status ? '' : 'hidden'}">Поділитися посиланням</button></div>
   <div class="mt-4 grid gap-3"><div class="grid grid-cols-2 gap-2"><label class="text-sm text-mist/70">Знижка, грн<input id="ds" type="number" min="0" class="${INP} mt-1" value="${od.discount_uah || 0}"></label><label class="text-sm text-mist/70">Коеф. витрат матеріалів<input id="mf" type="number" step="any" min="0" class="${INP} mt-1" value="${od.material_factor ?? 1}"></label>${hasUsd ? `<label class="text-sm text-mist/70">Курс $, грн<input id="rt" type="number" step="any" min="0" class="${INP} mt-1" value="${od.usd_rate || ''}"></label>` : ''}</div>
-  <p class="text-lg font-bold">Разом: ${Math.round(t.total)} грн${t.need ? ' <span class="text-sm font-normal text-mist/70">(вкажіть курс $)</span>' : ''}</p>${od.stock_deducted ? `<p class="text-sm text-mist/70">Матеріали: ${Math.round(od.materials_cost_uah || 0)} грн · маржа ${Math.round(t.total - (od.materials_cost_uah || 0))} грн</p>` : ''}
+  <p class="text-lg font-bold">Разом: ${Math.round(t.total)} грн${t.need ? ' <span class="text-sm font-normal text-mist/70">(вкажіть курс $)</span>' : ''}</p>${od.stock_deducted ? `<p class="text-sm text-mist/70">Матеріали ${Math.round(od.materials_cost_uah || 0)} грн · робота ${Math.round(od.labor_cost_uah || 0)} грн · маржа ${Math.round(t.total - (od.bonus_used_uah || 0) - (od.materials_cost_uah || 0) - (od.labor_cost_uah || 0))} грн</p>` : ''}
+  ${od.status !== 'delivered' && maxB > 0 ? `<label class="text-sm text-mist/70">Списати бонуси, грн (доступно ${Math.floor(bal)}, максимум ${maxB})<input id="bu" type="number" min="0" max="${maxB}" class="${INP} mt-1" value="${od.bonus_used_uah || 0}"></label>` : ''}${od.bonus_used_uah > 0 ? `<p class="text-sm">До сплати: ${Math.round(t.total - od.bonus_used_uah)} грн (бонусами ${od.bonus_used_uah} грн)</p>` : ''}
   <div class="grid grid-cols-2 gap-2"><select id="pm" class="${INP}"><option value="">Оплата…</option>${[['cash', 'Готівка'], ['card', 'Картка'], ['transfer', 'Переказ']].map(([k, v]) => `<option value="${k}" ${od.payment_method === k ? 'selected' : ''}>${v}</option>`).join('')}</select><input id="pd" type="number" min="0" placeholder="Сплачено, грн" class="${INP}" value="${od.paid_uah ?? ''}"></div>
   <textarea id="in" rows="2" placeholder="Стан авто при отриманні" class="${INP}">${esc(od.intake_notes)}</textarea><textarea id="dn" rows="2" placeholder="Нотатки при видачі" class="${INP}">${esc(od.delivery_notes)}</textarea>
   <button id="sv2" class="${BTN}">Зберегти</button>${next ? `<button id="nx" class="${BTN2}">Статус: ${OS[next]}</button>` : ''}<p id="msg" class="text-sm text-mist/80"></p></div>`);
@@ -255,7 +260,9 @@ async function openOrder(id) {
   $('sh').onchange = async e => { await sb.from('orders').update({ share_status: e.target.checked }).eq('id', id); $('lk').classList.toggle('hidden', !e.target.checked); };
   $('lk').onclick = async () => { const url = `${SITE_URL}/status.html#${od.public_token}`; try { if (navigator.share) return await navigator.share({ title: 'Статус вашого авто', text: 'Статус вашого авто у Detailing Family IF:', url }); await navigator.clipboard.writeText(url); $('msg').textContent = 'Посилання скопійовано.'; } catch (e) { $('msg').textContent = url; } };
   const save = async () => {
-    const up = { discount_uah: +$('ds').value || 0, usd_rate: $('rt') ? (+$('rt').value || null) : od.usd_rate, payment_method: $('pm').value || null, paid_uah: $('pd').value === '' ? null : +$('pd').value, intake_notes: $('in').value || null, delivery_notes: $('dn').value || null, material_factor: +$('mf').value || 1 };
+    const bu = $('bu') ? Math.max(0, +$('bu').value || 0) : (od.bonus_used_uah || 0);
+    if (bu > maxB && od.status !== 'delivered') { $('msg').textContent = `Бонусами можна оплатити не більше ${maxB} грн.`; return null; }
+    const up = { discount_uah: +$('ds').value || 0, usd_rate: $('rt') ? (+$('rt').value || null) : od.usd_rate, payment_method: $('pm').value || null, paid_uah: $('pd').value === '' ? null : +$('pd').value, intake_notes: $('in').value || null, delivery_notes: $('dn').value || null, material_factor: +$('mf').value || 1, bonus_used_uah: bu };
     const r = await sb.from('orders').update(up).eq('id', id); if (r.error) { $('msg').textContent = 'Помилка: ' + r.error.message; return null; } return up;
   };
   $('sv2').onclick = async () => { if (await save()) openOrder(id); };
@@ -271,7 +278,7 @@ async function openOrder(id) {
       if (tt.need) return $('msg').textContent = 'Вкажіть курс $ перед видачею.';
       const now = new Date(); await sb.from('orders').update({ status: next, delivered_at: now.toISOString(), paid_at: up.paid_uah ? now.toISOString() : null }).eq('id', id);
       for (const i of items) { const s = services.find(x => x.id === i.service_id); if (s && s.return_interval_days) await sb.from('order_items').update({ remind_at: new Date(now.getTime() + s.return_interval_days * 864e5).toISOString().slice(0, 10) }).eq('id', i.id); }
-      if (!od.stock_deducted) await deductStock(od, items, up.material_factor);
+      if (!od.stock_deducted) { await deductStock(od, items, up.material_factor, up.usd_rate, (up.discount_uah || 0) + (up.bonus_used_uah || 0)); await loyaltyOnDelivered(od, up, tt.total); }
       await sb.from('timeline').insert({ client_id: od.client_id, kind: 'order', text: `Замовлення видано: ${items.map(i => i.name).join(', ')} · ${Math.round(tt.total)} грн`, created_by: me.id });
     } else await sb.from('orders').update({ status: next }).eq('id', id);
     openOrder(id);
@@ -350,15 +357,124 @@ async function openNorms(s) {
   $('nf3').onsubmit = async e => { e.preventDefault(); const f = e.target; await sb.from('service_norms').upsert({ service_id: s.id, material_id: +f.m.value, qty: +f.q.value }, { onConflict: 'service_id,material_id' }); openNorms(s); };
   document.querySelectorAll('[data-dn]').forEach(b => b.onclick = async () => { await sb.from('service_norms').delete().eq('id', b.dataset.dn); openNorms(s); });
 }
-/* Списання матеріалів за нормами при видачі замовлення */
-async function deductStock(od, items, factor) {
-  const ids = items.map(i => i.service_id).filter(Boolean); if (!ids.length) return;
-  const [n, v] = await Promise.all([sb.from('service_norms').select('*').in('service_id', ids), sb.from('v_stock').select('id,avg_cost')]);
-  const cost = {}, need = {}; (v.data || []).forEach(x => cost[x.id] = +x.avg_cost || 0);
-  items.forEach(i => (n.data || []).filter(x => x.service_id === i.service_id).forEach(x => need[x.material_id] = (need[x.material_id] || 0) + x.qty * i.qty * (factor || 1)));
+
+/* ===== Аналітика ===== */
+let sper = 'month';
+const money = n => Math.round(n || 0).toLocaleString('uk-UA') + ' грн';
+async function viewStats() {
+  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Аналітика</h1><button id="ss" class="${BTN2} px-4 py-2 text-sm">Налаштування</button></div>
+  <div class="my-4 flex flex-wrap gap-2">${[['month', 'Цей місяць'], ['30', '30 днів'], ['90', '90 днів'], ['all', 'Весь час']].map(([k, l]) => `<button data-p="${k}" class="rounded-full border px-4 py-2 text-sm ${sper === k ? 'border-accent bg-accent font-bold text-canvas' : 'border-card text-mist/80'}">${l}</button>`).join('')}</div><div id="st" class="space-y-6"><p class="text-mist/60">Рахуємо…</p></div>`;
+  $('ss').onclick = openStatSettings; document.querySelectorAll('[data-p]').forEach(b => b.onclick = () => { sper = b.dataset.p; viewStats(); });
+  const now = new Date(), from = sper === 'all' ? '1970-01-01' : sper === 'month' ? iso(new Date(now.getFullYear(), now.getMonth(), 1)) : iso(new Date(Date.now() - +sper * 864e5));
+  const [o, l, ad, al] = await Promise.all([
+    sb.from('orders').select('id,client_id,total_uah,materials_cost_uah,labor_cost_uah,clients(source),order_items(name,revenue_uah,materials_cost_uah,labor_cost_uah,qty)').eq('status', 'delivered').gte('delivered_at', from),
+    sb.from('leads').select('utm_source,status').gte('created_at', from), sb.from('ad_spend').select('*').gte('month', from.slice(0, 7) + '-01'), sb.from('orders').select('client_id').eq('status', 'delivered')]);
+  if (o.error) return $('st').textContent = 'Помилка: ' + o.error.message + ' (чи виконано analytics.sql?)';
+  const ord = o.data, sum = (a, f) => a.reduce((x, y) => x + (+f(y) || 0), 0), key = s => (s || 'direct').toLowerCase();
+  const rev = sum(ord, x => x.total_uah), mat = sum(ord, x => x.materials_cost_uah), lab = sum(ord, x => x.labor_cost_uah), spend = sum(ad.data || [], x => x.amount_uah), gross = rev - mat - lab;
+  const cnt = {}; (al.data || []).forEach(x => cnt[x.client_id] = (cnt[x.client_id] || 0) + 1); const cl = [...new Set(ord.map(x => x.client_id))], rep = cl.filter(c => cnt[c] > 1).length;
+  const svc = {}; ord.forEach(x => (x.order_items || []).forEach(i => { const a = svc[i.name] = svc[i.name] || { n: 0, r: 0, c: 0 }; a.n += +i.qty || 0; a.r += +i.revenue_uah || 0; a.c += (+i.materials_cost_uah || 0) + (+i.labor_cost_uah || 0); }));
+  const ch = {}, C = k => ch[k] = ch[k] || { leads: 0, won: 0, rev: 0, cost: 0, spend: 0 };
+  (l.data || []).forEach(x => { const c = C(key(x.utm_source)); c.leads++; if (x.status === 'client') c.won++; });
+  ord.forEach(x => { const c = C(key(x.clients && x.clients.source)); c.rev += +x.total_uah || 0; c.cost += (+x.materials_cost_uah || 0) + (+x.labor_cost_uah || 0); });
+  (ad.data || []).forEach(x => C(key(x.channel)).spend += +x.amount_uah || 0);
+  const kpi = (t, v, s = '') => `<div class="rounded-2xl bg-card p-4"><div class="text-xs text-mist/60">${t}</div><div class="mt-1 text-lg font-bold">${v}</div>${s ? `<div class="text-xs text-mist/60">${s}</div>` : ''}</div>`;
+  const row = (a, b, c = '') => `<div class="flex justify-between gap-3 rounded-xl bg-card px-4 py-3 text-sm"><span>${a}</span><span class="shrink-0 text-right">${b}${c ? `<br><span class="text-xs text-mist/60">${c}</span>` : ''}</span></div>`;
+  const sv = Object.entries(svc).map(([n, a]) => [n, a, a.r - a.c]).sort((a, b) => b[2] - a[2]);
+  $('st').innerHTML = !ord.length ? '<p class="text-mist/60">У цьому періоді ще немає виданих замовлень.</p>' :
+    `<div class="grid grid-cols-2 gap-2">${kpi('Виручка', money(rev), ord.length + ' замовл., сер. чек ' + money(rev / ord.length))}${kpi('Прибуток (до реклами)', money(gross), 'матеріали ' + money(mat) + ', робота ' + money(lab))}${kpi('Реклама', money(spend))}${kpi('Після реклами', money(gross - spend))}${kpi('Клієнтів', cl.length, 'повторних ' + (cl.length ? Math.round(rep / cl.length * 100) : 0) + '%')}</div>
+    <section><h2 class="mb-2 font-bold">Послуги за прибутком</h2><div class="space-y-1">${sv.map(([n, a, m]) => row(esc(n) + ' <span class="text-xs text-mist/60">×' + a.n + '</span>', money(m), a.r ? Math.round(m / a.r * 100) + '% від ' + money(a.r) : '')).join('')}</div></section>
+    <section><h2 class="mb-2 font-bold">Канали</h2><div class="space-y-1">${Object.entries(ch).sort((a, b) => b[1].rev - a[1].rev).map(([k, c]) => { const m = c.rev - c.cost; return row(esc(k) + ' <span class="text-xs text-mist/60">заявок ' + c.leads + ', клієнтів ' + c.won + '</span>', money(m), c.spend ? 'реклама ' + money(c.spend) + ', окупність ' + Math.round((m - c.spend) / c.spend * 100) + '%' : 'виручка ' + money(c.rev)); }).join('')}</div></section>`;
+}
+async function openStatSettings() {
+  const [cfg, ad] = await Promise.all([sb.from('settings').select('*').eq('id', 1).maybeSingle(), sb.from('ad_spend').select('*').order('month', { ascending: false }).limit(12)]);
+  modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">Налаштування аналітики</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+  <form id="hf" class="mt-3 grid gap-2"><label class="text-sm text-mist/70">Вартість години майстра, грн<input name="h" type="number" min="0" step="any" class="${INP} mt-1" value="${cfg.data ? cfg.data.hourly_cost_uah : 0}"></label><button class="${BTN2}">Зберегти</button></form>
+  <p class="mt-2 text-xs text-mist/60">Береться на момент видачі замовлення й множиться на «робочий час» послуги з прайсу.</p>
+  <h3 class="mt-5 font-bold">Витрати на рекламу</h3><form id="af2" class="mt-2 grid grid-cols-2 gap-2"><input name="m" type="month" required class="${INP}"><input name="c" required list="chs" placeholder="Канал (instagram, tiktok…)" class="${INP}"><datalist id="chs"><option value="instagram"><option value="facebook"><option value="tiktok"><option value="google"><option value="youtube"></datalist><input name="a" type="number" min="0" step="any" required placeholder="Сума, грн" class="${INP}"><button class="${BTN2}">Додати</button></form>
+  <p class="mt-2 text-xs text-mist/60">Назва каналу має збігатися з utm_source у посиланнях.</p>
+  <div class="mt-3 space-y-1 text-sm">${(ad.data || []).map(x => `<div class="flex justify-between rounded-xl bg-canvas px-3 py-2"><span>${esc(String(x.month).slice(0, 7))} · ${esc(x.channel)}</span><span>${Math.round(x.amount_uah)} грн<button data-da="${x.id}" class="ml-2 text-mist/50" aria-label="Видалити">&times;</button></span></div>`).join('')}</div>`);
+  $('x').onclick = closeModal;
+  $('hf').onsubmit = async e => { e.preventDefault(); await sb.from('settings').upsert({ id: 1, hourly_cost_uah: +e.target.h.value || 0 }); closeModal(); viewStats(); };
+  $('af2').onsubmit = async e => { e.preventDefault(); const f = e.target; await sb.from('ad_spend').insert({ month: f.m.value + '-01', channel: f.c.value.trim().toLowerCase(), amount_uah: +f.a.value }); openStatSettings(); };
+  document.querySelectorAll('[data-da]').forEach(b => b.onclick = async () => { await sb.from('ad_spend').delete().eq('id', b.dataset.da); openStatSettings(); });
+}
+/* Списання матеріалів і розрахунок собівартості при видачі замовлення */
+async function deductStock(od, items, factor, rate, disc) {
+  const ids = items.map(i => i.service_id).filter(Boolean);
+  const [n, v, cfg] = await Promise.all([ids.length ? sb.from('service_norms').select('*').in('service_id', ids) : { data: [] }, sb.from('v_stock').select('id,avg_cost'), sb.from('settings').select('hourly_cost_uah').eq('id', 1).maybeSingle()]);
+  const cost = {}, need = {}, hourly = +(cfg.data && cfg.data.hourly_cost_uah) || 0, f = factor || 1; (v.data || []).forEach(x => cost[x.id] = +x.avg_cost || 0);
+  const gross = items.reduce((a, i) => a + i.price * i.qty * (i.currency === 'USD' ? (rate || 0) : 1), 0), k = gross > 0 ? Math.max(0, (gross - (disc || 0)) / gross) : 1;
+  let T = { rev: 0, mat: 0, lab: 0 };
+  for (const i of items) {
+    const norms = (n.data || []).filter(x => x.service_id === i.service_id), s = services.find(x => x.id === i.service_id);
+    const rev = i.price * i.qty * (i.currency === 'USD' ? (rate || 0) : 1) * k, mat = norms.reduce((a, x) => a + x.qty * i.qty * f * (cost[x.material_id] || 0), 0), lab = ((s && s.work_minutes) || 0) / 60 * i.qty * hourly;
+    norms.forEach(x => need[x.material_id] = (need[x.material_id] || 0) + x.qty * i.qty * f); T.rev += rev; T.mat += mat; T.lab += lab;
+    await sb.from('order_items').update({ revenue_uah: rev, materials_cost_uah: mat, labor_cost_uah: lab }).eq('id', i.id);
+  }
   const rows = Object.entries(need).map(([m, q]) => ({ material_id: +m, kind: 'out', qty: -q, unit_cost_uah: cost[m] || 0, order_id: od.id, note: 'Списання за замовленням', created_by: me.id }));
   if (rows.length) await sb.from('stock_moves').insert(rows);
-  await sb.from('orders').update({ stock_deducted: true, materials_cost_uah: rows.reduce((a, r) => a - r.qty * r.unit_cost_uah, 0) }).eq('id', od.id);
+  await sb.from('orders').update({ stock_deducted: true, total_uah: T.rev, materials_cost_uah: T.mat, labor_cost_uah: T.lab }).eq('id', od.id);
+}
+
+/* ===== Бонуси, кешбек, рекомендації ===== */
+let LS = null;
+async function loadLoyalty() { const { data } = await sb.from('loyalty_settings').select('*').eq('id', 1).maybeSingle(); LS = data || { cashback_percent: 0, max_pay_share_percent: 100, referral_referrer_uah: 0, referral_referred_uah: 0, referral_min_order_uah: 0 }; return LS; }
+/* Баланс за правилом "найстаріші бонуси спливають першими"; прострочені не враховуються */
+function bonusBalance(moves, at = Date.now()) {
+  const lots = []; moves.slice().sort((a, b) => new Date(a.created_at) - new Date(b.created_at)).forEach(m => {
+    const t = +new Date(m.created_at), a = +m.amount_uah;
+    if (a > 0) lots.push({ r: a, e: m.expires_at ? +new Date(m.expires_at + 'T23:59:59') : Infinity });
+    else { let need = -a; for (const l of lots) { if (need <= 0) break; if (l.e >= t && l.r > 0) { const u = Math.min(l.r, need); l.r -= u; need -= u; } } }
+  });
+  return lots.reduce((s, l) => s + (l.e >= at ? l.r : 0), 0);
+}
+async function clientBonus(id) { const { data } = await sb.from('bonus_moves').select('*').eq('client_id', id).order('created_at'); return { moves: data || [], balance: bonusBalance(data || []) }; }
+async function viewLoyalty() {
+  await loadLoyalty(); const L = LS, fld = (k, t, step = 'any') => `<label class="text-sm text-mist/70">${t}<input name="${k}" type="number" step="${step}" min="0" class="${INP} mt-1" value="${L[k] ?? ''}"></label>`;
+  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Бонуси і рекомендації</h1><p class="mt-2 text-sm text-mist/70">Нуль означає «вимкнено». Усі суми у гривнях. Цифри визначаєте ви, перед запуском порахуйте, скільки програма коштує з маржі.</p>
+  <form id="lf2" class="mt-4 grid gap-3">${fld('cashback_percent', 'Кешбек, % від суми, сплаченої грошима')}${fld('bonus_valid_days', 'Строк дії бонусів, днів (порожньо = безстроково)', '1')}${fld('max_pay_share_percent', 'Максимум чека, який можна оплатити бонусами, %')}
+  <h2 class="mt-3 font-bold">Рекомендації</h2>${fld('referral_referrer_uah', 'Бонус тому, хто порекомендував')}${fld('referral_referred_uah', 'Бонус новому клієнту')}${fld('referral_min_order_uah', 'Мінімальна сума першого замовлення')}${fld('referral_max_per_referrer', 'Максимум винагород на одного рекомендатора (порожньо = без ліміту)', '1')}
+  <p class="text-xs text-mist/60">Бонус за рекомендацію нараховується обом лише після першого видачі замовлення нового клієнта на потрібну суму.</p><button class="${BTN}">Зберегти</button><p id="msg" class="text-sm"></p></form>`;
+  $('lf2').onsubmit = async e => {
+    e.preventDefault(); const f = e.target, n = k => f[k].value === '' ? null : +f[k].value;
+    const row = { id: 1, cashback_percent: n('cashback_percent') || 0, bonus_valid_days: n('bonus_valid_days'), max_pay_share_percent: n('max_pay_share_percent') ?? 100, referral_referrer_uah: n('referral_referrer_uah') || 0, referral_referred_uah: n('referral_referred_uah') || 0, referral_min_order_uah: n('referral_min_order_uah') || 0, referral_max_per_referrer: n('referral_max_per_referrer') };
+    const { error } = await sb.from('loyalty_settings').upsert(row); $('msg').textContent = error ? 'Помилка: ' + error.message + ' (чи виконано loyalty.sql?)' : 'Збережено.'; if (!error) LS = row;
+  };
+}
+async function openBonus(id) {
+  const [c, b, rf] = await Promise.all([sb.from('clients').select('id,name,referred_by').eq('id', id).single(), clientBonus(id), sb.from('clients').select('id,name').eq('referred_by', id)]);
+  const k = c.data, by = k.referred_by ? (await sb.from('clients').select('name').eq('id', k.referred_by).single()).data : null;
+  modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(k.name)}</h2><p class="text-sm text-mist/70">Бонуси та рекомендації</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+  <p class="mt-4 text-2xl font-extrabold">${Math.floor(b.balance)} грн</p><p class="text-xs text-mist/60">доступні бонуси (прострочені не враховано)</p>
+  <form id="bf" class="mt-3 grid grid-cols-2 gap-2"><input name="a" type="number" step="any" required placeholder="± сума, грн" class="${INP}"><input name="n" required placeholder="Причина" class="${INP}"><button class="${BTN2} col-span-2">Скоригувати вручну</button></form>
+  <h3 class="mt-5 font-bold">Рекомендація</h3><p class="mt-1 text-sm">${by ? 'Привів: ' + esc(by.name) : 'Не вказано, хто порекомендував'}</p>
+  <input id="rs" type="search" placeholder="Знайти того, хто порекомендував" class="${INP} mt-2"><select id="rl" size="3" class="${INP} mt-2"></select><button id="rsv" class="${BTN2} mt-2 w-full">Зберегти, хто привів</button>
+  ${(rf.data || []).length ? `<p class="mt-3 text-sm text-mist/70">Привів клієнтів: ${rf.data.map(x => esc(x.name)).join(', ')}</p>` : ''}
+  <h3 class="mt-5 font-bold">Історія</h3><div class="mt-2 space-y-1 text-sm">${b.moves.slice().reverse().slice(0, 20).map(x => `<div class="flex justify-between gap-3 border-l-2 border-accent pl-3"><span>${fmt(x.created_at)} · ${esc(x.note || x.kind)}${x.expires_at ? ' · до ' + esc(x.expires_at) : ''}</span><span class="shrink-0">${+x.amount_uah > 0 ? '+' : ''}${+x.amount_uah}</span></div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div><p id="msg" class="mt-2 text-sm"></p>`);
+  $('x').onclick = closeModal;
+  $('bf').onsubmit = async e => { e.preventDefault(); const a = +e.target.a.value; if (!a) return; if (a < 0 && -a > b.balance) return $('msg').textContent = 'Не можна списати більше, ніж є на балансі.';
+    await sb.from('bonus_moves').insert({ client_id: id, kind: 'adjust', amount_uah: a, note: e.target.n.value.trim(), created_by: me.id }); openBonus(id); };
+  const fill = async () => { const s = $('rs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').neq('id', id).order('created_at', { ascending: false }).limit(15); if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`); const { data } = await r; $('rl').innerHTML = (data || []).map(x => `<option value="${x.id}">${esc(x.name)} ${esc(x.phone || '')}</option>`).join(''); };
+  let t; $('rs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; fill();
+  $('rsv').onclick = async () => { if (!$('rl').value) return; await sb.from('clients').update({ referred_by: $('rl').value }).eq('id', id); openBonus(id); };
+}
+/* Кешбек, списання бонусів і винагороди за рекомендацію при видачі замовлення */
+async function loyaltyOnDelivered(od, up, total) {
+  if (!LS) await loadLoyalty(); const used = +up.bonus_used_uah || 0, paid = Math.max(0, total - used), mv = [];
+  const exp = LS.bonus_valid_days ? iso(new Date(Date.now() + LS.bonus_valid_days * 864e5)) : null;
+  if (used > 0) mv.push({ client_id: od.client_id, kind: 'redeem', amount_uah: -used, order_id: od.id, note: 'Оплата бонусами' });
+  const cb = Math.round(paid * (+LS.cashback_percent || 0) / 100); if (cb > 0) mv.push({ client_id: od.client_id, kind: 'cashback', amount_uah: cb, order_id: od.id, expires_at: exp, note: `Кешбек ${LS.cashback_percent}%` });
+  const { data: c } = await sb.from('clients').select('referred_by').eq('id', od.client_id).single();
+  if (c && c.referred_by && paid >= (+LS.referral_min_order_uah || 0) && (+LS.referral_referrer_uah > 0 || +LS.referral_referred_uah > 0)) {
+    const [prev, cnt] = await Promise.all([sb.from('orders').select('id').eq('client_id', od.client_id).eq('status', 'delivered').neq('id', od.id).limit(1), sb.from('bonus_moves').select('id', { count: 'exact', head: true }).eq('client_id', c.referred_by).eq('kind', 'referral')]);
+    if (!(prev.data || []).length && (!LS.referral_max_per_referrer || (cnt.count || 0) < LS.referral_max_per_referrer)) {
+      if (+LS.referral_referrer_uah > 0) mv.push({ client_id: c.referred_by, kind: 'referral', amount_uah: +LS.referral_referrer_uah, order_id: od.id, expires_at: exp, note: 'Бонус за рекомендацію' });
+      if (+LS.referral_referred_uah > 0) mv.push({ client_id: od.client_id, kind: 'referral', amount_uah: +LS.referral_referred_uah, order_id: od.id, expires_at: exp, note: 'Бонус за першу покупку за рекомендацією' });
+    }
+  }
+  if (mv.length) await sb.from('bonus_moves').insert(mv.map(x => ({ ...x, created_by: me.id })));
+  await sb.from('orders').update({ bonus_accrued_uah: cb }).eq('id', od.id);
 }
 
 /* ===== Сьогодні ===== */
