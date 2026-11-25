@@ -38,6 +38,7 @@ body{margin:0;background:#121316}
 const SUPABASE_URL = 'https://blsbjolbrznefwxscavk.supabase.co';       // https://xxxx.supabase.co
 const SUPABASE_ANON_KEY = 'sb_publishable_NxMkhhDCZw-ZGZawJkQAWA_-j1t3WJj';  // ключ "anon public" (його можна публікувати, дані захищає вхід і правила бази)
 
+const WORKER_URL = '';  // адреса Worker (та сама, що в status.html), без слеша в кінці
 const SITE_URL = 'https://detailing.family.ivano-frankivsk.ua';  // адреса сайту для посилань клієнтам
 const sb = supabase.createClient(SUPABASE_URL || 'http://localhost', SUPABASE_ANON_KEY || 'x');
 const app = document.getElementById('app');
@@ -78,14 +79,15 @@ async function start() {
 function render() {
   app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div class="mb-2 flex justify-end gap-4 text-xs text-mist/60"><button id="ly">Бонуси</button><button id="an">Аналітика</button><button id="sk">Склад</button><button id="pr">Прайс</button><button id="out">Вийти</button></div><div id="view"></div></main>
   <nav class="app-nav fixed inset-x-0 bottom-0 z-20 flex" style="padding-bottom:env(safe-area-inset-bottom)">
-  ${[['today', 'Сьогодні'], ['leads', 'Ліди'], ['clients', 'Клієнти'], ['cal', 'Календар'], ['orders', 'Замовлення']].map(([k, l]) => `<button data-tab="${k}" class="flex-1 py-4 text-xs font-semibold ${tab === k ? 'is-active text-accent' : 'text-mist/70'}">${l}</button>`).join('')}</nav>`;
+  ${[['today', 'Сьогодні'], ['leads', 'Ліди'], ['chat', 'Чат'], ['clients', 'Клієнти'], ['cal', 'Календар'], ['orders', 'Замовлення']].map(([k, l]) => `<button data-tab="${k}" class="flex-1 py-4 text-[11px] font-semibold ${tab === k ? 'is-active text-accent' : 'text-mist/70'}">${l}</button>`).join('')}</nav>`;
   document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
   $('pr').onclick = () => { tab = 'price'; render(); };
   $('sk').onclick = () => { tab = 'stock'; render(); };
   $('an').onclick = () => { tab = 'stats'; render(); };
   $('ly').onclick = () => { tab = 'loyalty'; render(); };
+  unreadBadge();
   $('out').onclick = async () => { await sb.auth.signOut(); login(); };
-  ({ today: viewToday, leads: viewLeads, clients: viewClients, cal: viewCal, orders: viewOrders, price: viewPrice, stock: viewStock, stats: viewStats, loyalty: viewLoyalty })[tab]();
+  ({ today: viewToday, leads: viewLeads, chat: viewChat, clients: viewClients, cal: viewCal, orders: viewOrders, price: viewPrice, stock: viewStock, stats: viewStats, loyalty: viewLoyalty })[tab]();
 }
 function modal(html) {
   closeModal(); const d = document.createElement('div'); d.id = 'mod';
@@ -475,6 +477,56 @@ async function loyaltyOnDelivered(od, up, total) {
   }
   if (mv.length) await sb.from('bonus_moves').insert(mv.map(x => ({ ...x, created_by: me.id })));
   await sb.from('orders').update({ bonus_accrued_uah: cb }).eq('id', od.id);
+}
+
+/* ===== Чат (єдина переписка) ===== */
+const CH = { telegram: 'Telegram', viber: 'Viber', whatsapp: 'WhatsApp', instagram: 'Instagram' };
+async function unreadBadge() {
+  const { data } = await sb.from('conversations').select('unread').gt('unread', 0), n = (data || []).reduce((a, x) => a + x.unread, 0), b = document.querySelector('[data-tab=chat]');
+  if (b && n) b.insertAdjacentHTML('beforeend', ` <span class="rounded-full bg-accent px-1.5 text-[10px] font-bold text-canvas">${n}</span>`);
+}
+async function viewChat() {
+  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Чат</h1><p class="mt-1 text-xs text-mist/60">Підключені Telegram та Instagram. Viber і WhatsApp додамо пізніше.</p><div id="list" class="mt-4 space-y-2"></div>`;
+  const { data, error } = await sb.from('conversations').select('*').order('last_message_at', { ascending: false }).limit(100);
+  if (error) return $('list').textContent = 'Помилка: ' + error.message + ' (чи виконано inbox.sql?)';
+  $('list').innerHTML = data.length ? data.map(c => `<button data-cv="${c.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(c.display_name || c.username || c.external_id)}</b><span class="text-xs text-mist/60">${fmt(c.last_message_at)}</span></div>
+    <div class="mt-1 flex justify-between gap-3 text-sm text-mist/80"><span class="truncate">${esc(c.last_text)}</span>${c.unread ? `<span class="shrink-0 rounded-full bg-accent px-2 text-xs font-bold text-canvas">${c.unread}</span>` : ''}</div>
+    <div class="mt-1 text-xs text-mist/50">${CH[c.channel]}${c.client_id ? '' : ' · не прив\'язано до клієнта'}</div></button>`).join('') : '<p class="text-mist/60">Розмов ще немає. Вони з\'являться, коли клієнт напише на ваш Telegram після підключення бота.</p>';
+  document.querySelectorAll('[data-cv]').forEach(b => b.onclick = () => openChat(data.find(x => x.id === b.dataset.cv)));
+}
+async function openChat(c) {
+  modal(`<div class="flex items-start justify-between gap-3"><div><h2 class="text-xl font-bold">${esc(c.display_name || c.username || c.external_id)}</h2><p class="text-xs text-mist/60">${CH[c.channel]}${c.username ? ' · @' + esc(c.username) : ''}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+  <div class="mt-3 flex flex-wrap gap-2">${c.client_id ? '<button id="oc" class="' + BTN2 + ' px-3 py-2 text-sm">Картка клієнта</button>' : '<button id="lk" class="' + BTN2 + ' px-3 py-2 text-sm">Прив\'язати до клієнта</button><button id="mk" class="' + BTN2 + ' px-3 py-2 text-sm">Створити клієнта</button>'}</div>
+  <div id="thr" class="mt-3 max-h-[45vh] space-y-2 overflow-y-auto rounded-xl bg-canvas p-3 text-sm"></div>
+  <form id="sf2" class="mt-3 flex gap-2"><textarea name="t" rows="2" required placeholder="Повідомлення…" class="${INP}"></textarea><button class="${BTN} px-4">Надіслати</button></form><p id="win" class="mt-1 text-xs text-mist/60"></p><p id="msg" class="mt-2 text-sm text-mist/80"></p>`);
+  $('x').onclick = closeModal;
+  const load = async () => {
+    if (!$('thr')) return; const { data } = await sb.from('messages').select('*').eq('conversation_id', c.id).order('created_at').limit(200), box = $('thr'), end = box.scrollTop + box.clientHeight >= box.scrollHeight - 40;
+    box.innerHTML = (data || []).map(m => `<div class="flex ${m.direction === 'out' ? 'justify-end' : ''}"><div class="max-w-[85%] rounded-2xl px-3 py-2 ${m.direction === 'out' ? 'bg-accent text-canvas' : 'bg-card'}"><div class="whitespace-pre-wrap break-words">${esc(m.text)}</div><div class="mt-1 text-[10px] opacity-60">${fmt(m.created_at)}</div></div></div>`).join('') || '<span class="text-mist/60">Повідомлень немає</span>';
+    if (c.channel === 'instagram') { const li = (data || []).filter(m => m.direction === 'in').pop(), left = li ? 864e5 - (Date.now() - new Date(li.created_at)) : 0; $('win').textContent = left > 0 ? `Відповісти в Instagram можна ще ${Math.floor(left / 36e5)} год ${Math.floor(left % 36e5 / 6e4)} хв` : 'Минуло понад 24 години від останнього повідомлення клієнта: Instagram не дозволяє відповісти з CRM. Відповідайте в застосунку Instagram.'; $('sf2').querySelector('button').disabled = left <= 0; }
+    if (end) box.scrollTop = box.scrollHeight; await sb.from('conversations').update({ unread: 0 }).eq('id', c.id).gt('unread', 0);
+  };
+  await load(); $('thr').scrollTop = $('thr').scrollHeight; const timer = setInterval(() => { $('thr') ? load() : clearInterval(timer); }, 10000);
+  $('sf2').onsubmit = async e => {
+    e.preventDefault(); const f = e.target, text = f.t.value.trim(); if (!text) return; $('msg').textContent = 'Надсилаємо…';
+    try {
+      const tok = (await sb.auth.getSession()).data.session.access_token;
+      const r = await fetch(WORKER_URL + '/chat-send', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + tok }, body: JSON.stringify({ conversation_id: c.id, text }) });
+      if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || r.status);
+      f.t.value = ''; $('msg').textContent = ''; load();
+    } catch (err) { $('msg').textContent = 'Не вдалося надіслати: ' + (err.message === 'window_closed' ? 'минуло понад 24 години, Instagram не дозволяє відповісти з CRM' : err.message) + (WORKER_URL ? '' : ' (вкажіть WORKER_URL у файлі CRM)'); }
+  };
+  if ($('oc')) $('oc').onclick = () => { closeModal(); openClient(c.client_id); };
+  if ($('mk')) $('mk').onclick = async () => {
+    const { data, error } = await sb.from('clients').insert({ name: c.display_name || c.username || 'Клієнт', telegram: c.username ? '@' + c.username : null, source: 'telegram' }).select().single();
+    if (error) return $('msg').textContent = 'Помилка: ' + error.message; await sb.from('conversations').update({ client_id: data.id }).eq('id', c.id); closeModal(); openClient(data.id);
+  };
+  if ($('lk')) $('lk').onclick = () => {
+    modal(`<h2 class="mb-3 text-xl font-bold">Прив'язати до клієнта</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Ім'я або телефон" class="${INP}"><select id="cl" size="5" class="${INP}"></select><button id="go" class="${BTN}">Прив'язати</button></div>`);
+    const fill = async () => { const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20); if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`); const { data } = await r; $('cl').innerHTML = (data || []).map(x => `<option value="${x.id}">${esc(x.name)} ${esc(x.phone || '')}</option>`).join(''); };
+    let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; fill();
+    $('go').onclick = async () => { if (!$('cl').value) return; await sb.from('conversations').update({ client_id: $('cl').value }).eq('id', c.id); closeModal(); openClient($('cl').value); };
+  };
 }
 
 /* ===== Сьогодні ===== */
