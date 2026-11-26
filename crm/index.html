@@ -79,7 +79,7 @@ async function start() {
 function render() {
   app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div class="mb-2 flex justify-end gap-4 text-xs text-mist/60"><button id="ly">Бонуси</button><button id="an">Аналітика</button><button id="sk">Склад</button><button id="pr">Прайс</button><button id="out">Вийти</button></div><div id="view"></div></main>
   <nav class="app-nav fixed inset-x-0 bottom-0 z-20 flex" style="padding-bottom:env(safe-area-inset-bottom)">
-  ${[['today', 'Сьогодні'], ['leads', 'Ліди'], ['chat', 'Чат'], ['clients', 'Клієнти'], ['cal', 'Календар'], ['orders', 'Замовлення']].map(([k, l]) => `<button data-tab="${k}" class="flex-1 py-4 text-[11px] font-semibold ${tab === k ? 'is-active text-accent' : 'text-mist/70'}">${l}</button>`).join('')}</nav>`;
+  ${[['today', 'Сьогодні'], ['leads', 'Ліди'], ['chat', 'Мультичат'], ['clients', 'Клієнти'], ['cal', 'Календар'], ['orders', 'Замовлення']].map(([k, l]) => `<button data-tab="${k}" class="flex-1 py-4 text-[11px] font-semibold ${tab === k ? 'is-active text-accent' : 'text-mist/70'}">${l}</button>`).join('')}</nav>`;
   document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
   $('pr').onclick = () => { tab = 'price'; render(); };
   $('sk').onclick = () => { tab = 'stock'; render(); };
@@ -479,14 +479,14 @@ async function loyaltyOnDelivered(od, up, total) {
   await sb.from('orders').update({ bonus_accrued_uah: cb }).eq('id', od.id);
 }
 
-/* ===== Чат (єдина переписка) ===== */
+/* ===== Мультичат (єдина переписка) ===== */
 const CH = { telegram: 'Telegram', viber: 'Viber', whatsapp: 'WhatsApp', instagram: 'Instagram' };
 async function unreadBadge() {
   const { data } = await sb.from('conversations').select('unread').gt('unread', 0), n = (data || []).reduce((a, x) => a + x.unread, 0), b = document.querySelector('[data-tab=chat]');
-  if (b && n) b.insertAdjacentHTML('beforeend', ` <span class="rounded-full bg-accent px-1.5 text-[10px] font-bold text-canvas">${n}</span>`);
+  if (b && n) b.insertAdjacentHTML('beforeend', `<span class="absolute right-1 top-1.5 rounded-full bg-accent px-1.5 text-[10px] font-bold leading-4 text-canvas">${n}</span>`);
 }
 async function viewChat() {
-  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Чат</h1><p class="mt-1 text-xs text-mist/60">Підключені Telegram та Instagram. Viber і WhatsApp додамо пізніше.</p><div id="list" class="mt-4 space-y-2"></div>`;
+  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Мультичат</h1><p class="mt-1 text-xs text-mist/60">Підключені Telegram та Instagram. Viber і WhatsApp додамо пізніше.</p><div id="list" class="mt-4 space-y-2"></div>`;
   const { data, error } = await sb.from('conversations').select('*').order('last_message_at', { ascending: false }).limit(100);
   if (error) return $('list').textContent = 'Помилка: ' + error.message + ' (чи виконано inbox.sql?)';
   $('list').innerHTML = data.length ? data.map(c => `<button data-cv="${c.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(c.display_name || c.username || c.external_id)}</b><span class="text-xs text-mist/60">${fmt(c.last_message_at)}</span></div>
