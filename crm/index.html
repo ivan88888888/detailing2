@@ -1,252 +1,373 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex">
-<meta name="theme-color" content="#17181B">
-<title>CRM · Detailing Family IF</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com/3.4.17"></script>
-<script>tailwind.config={theme:{extend:{colors:{accent:'#FF5500',canvas:'#17181B',card:'#2E3035',ink:'#F4F1EA',mist:'#E3E4E6'},fontFamily:{sans:['Montserrat','system-ui','sans-serif']}}}}</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<style>
-body{margin:0;background:#121316}
-/* Вхід: темний екран зі світінням і нижнім "листом" із формою */
-.login{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:#121316}
-.login-hero{position:relative;height:17vh;height:17dvh;min-height:110px;background:linear-gradient(180deg,#17181b 0%,#17181b 35%,rgba(255,85,0,.5) 85%,#ff5500 100%)}
-.login-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:rgba(244,241,234,.6)}
-.login-sheet{flex:1;margin-top:-1px;padding:1.75rem 1.5rem calc(2rem + env(safe-area-inset-bottom));background:#1a1b1e;border:1px solid rgba(244,241,234,.12);border-bottom:0;border-radius:18px 18px 0 0}
-.login-form{max-width:22rem;margin:0 auto;display:grid;gap:.75rem}
-.lg-title{margin:0 0 .5rem;font-size:1.5rem;font-weight:800;color:#F4F1EA}
-.lg-title span{color:#ff5500}
-.lg-in{width:100%;box-sizing:border-box;border:1px solid rgba(244,241,234,.2);background:#17181b;border-radius:.75rem;padding:.85rem 1rem;font:inherit;font-size:1rem;color:#F4F1EA}
-.lg-in::placeholder{color:rgba(227,228,230,.4)}
-.lg-in:focus{outline:none;border-color:#ff5500}
-.lg-btn{border:0;border-radius:.75rem;background:#ff5500;color:#17181b;font:inherit;font-weight:700;padding:.9rem 1rem;cursor:pointer}
-.lg-msg{min-height:1.25rem;margin:0;font-size:.875rem;color:rgba(227,228,230,.7)}
-/* Головне меню: скляна панель зі світінням над нею */
-.app-nav{background:rgba(23,24,27,.82);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid rgba(244,241,234,.14)}
-.app-nav::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:28px;pointer-events:none;background:linear-gradient(to top,rgba(255,85,0,.16),transparent)}
-.app-nav button{position:relative}
-.app-nav .is-active::after{content:"";position:absolute;left:25%;right:25%;top:-1px;height:2px;border-radius:2px;background:#ff5500;box-shadow:0 0 12px 2px rgba(255,85,0,.65)}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#17181B">
+  <title>CRM · Detailing Family IF</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>tailwind.config = { theme: { extend: { colors: { accent: '#FF5500', canvas: '#17181B', card: '#2E3035', ink: '#F4F1EA', mist: '#E3E4E6' }, fontFamily: { sans: ['Montserrat', 'system-ui', 'sans-serif'] } } } }</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: #121316
+    }
+
+    /* Вхід: темний екран зі світінням і нижнім "листом" із формою */
+    .login {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: #121316
+    }
+
+    .login-hero {
+      position: relative;
+      height: 17vh;
+      height: 17dvh;
+      min-height: 110px;
+      background: linear-gradient(180deg, #17181b 0%, #17181b 35%, rgba(255, 85, 0, .5) 85%, #ff5500 100%)
+    }
+
+    .login-hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background: rgba(244, 241, 234, .6)
+    }
+
+    .login-sheet {
+      flex: 1;
+      margin-top: -1px;
+      padding: 1.75rem 1.5rem calc(2rem + env(safe-area-inset-bottom));
+      background: #1a1b1e;
+      border: 1px solid rgba(244, 241, 234, .12);
+      border-bottom: 0;
+      border-radius: 18px 18px 0 0
+    }
+
+    .login-form {
+      max-width: 22rem;
+      margin: 0 auto;
+      display: grid;
+      gap: .75rem
+    }
+
+    .lg-title {
+      margin: 0 0 .5rem;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #F4F1EA
+    }
+
+    .lg-title span {
+      color: #ff5500
+    }
+
+    .lg-in {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid rgba(244, 241, 234, .2);
+      background: #17181b;
+      border-radius: .75rem;
+      padding: .85rem 1rem;
+      font: inherit;
+      font-size: 1rem;
+      color: #F4F1EA
+    }
+
+    .lg-in::placeholder {
+      color: rgba(227, 228, 230, .4)
+    }
+
+    .lg-in:focus {
+      outline: none;
+      border-color: #ff5500
+    }
+
+    .lg-btn {
+      border: 0;
+      border-radius: .75rem;
+      background: #ff5500;
+      color: #17181b;
+      font: inherit;
+      font-weight: 700;
+      padding: .9rem 1rem;
+      cursor: pointer
+    }
+
+    .lg-msg {
+      min-height: 1.25rem;
+      margin: 0;
+      font-size: .875rem;
+      color: rgba(227, 228, 230, .7)
+    }
+
+    /* Головне меню: скляна панель зі світінням над нею */
+    .app-nav {
+      background: rgba(23, 24, 27, .82);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(244, 241, 234, .14)
+    }
+
+    .app-nav::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 100%;
+      height: 28px;
+      pointer-events: none;
+      background: linear-gradient(to top, rgba(255, 85, 0, .16), transparent)
+    }
+
+    .app-nav button {
+      position: relative
+    }
+
+    .app-nav .is-active::after {
+      content: "";
+      position: absolute;
+      left: 25%;
+      right: 25%;
+      top: -1px;
+      height: 2px;
+      border-radius: 2px;
+      background: #ff5500;
+      box-shadow: 0 0 12px 2px rgba(255, 85, 0, .65)
+    }
+  </style>
 </head>
-<body class="bg-canvas font-sans text-ink antialiased"><div id="app"></div>
-<script>
-/* ===== Налаштування: Supabase -> Project Settings -> API ===== */
-const SUPABASE_URL = 'https://blsbjolbrznefwxscavk.supabase.co';       // https://xxxx.supabase.co
-const SUPABASE_ANON_KEY = 'sb_publishable_NxMkhhDCZw-ZGZawJkQAWA_-j1t3WJj';  // ключ "anon public" (його можна публікувати, дані захищає вхід і правила бази)
 
-const WORKER_URL = '';  // адреса Worker (та сама, що в status.html), без слеша в кінці
-const SITE_URL = 'https://detailing.family.ivano-frankivsk.ua';  // адреса сайту для посилань клієнтам
-const sb = supabase.createClient(SUPABASE_URL || 'http://localhost', SUPABASE_ANON_KEY || 'x');
-const app = document.getElementById('app');
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const fmt = d => d ? new Date(d).toLocaleString('uk-UA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
-const ST = { new: 'Нова', in_progress: 'У роботі', booked: 'Записаний', client: 'Став клієнтом', lost: 'Не підійшло' };
-const INP = 'w-full rounded-xl border border-ink/20 bg-canvas px-4 py-3 text-base placeholder:text-mist/40 focus:border-accent focus:outline-none';
-const BTN = 'rounded-xl bg-accent px-5 py-3 font-bold text-canvas';
-const BTN2 = 'rounded-xl border border-ink/25 px-5 py-3 font-semibold';
-let tab = 'today', filter = 'new', me = null, staff = [], q = '';
+<body class="bg-canvas font-sans text-ink antialiased">
+  <div id="app"></div>
+  <script>
+    /* ===== Налаштування: Supabase -> Project Settings -> API ===== */
+    const SUPABASE_URL = 'https://blsbjolbrznefwxscavk.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_NxMkhhDCZw-ZGZawJkQAWA_-j1t3WJj';
 
-const links = (c, m) => [c.phone || (m === 'phone' && c.contact) ? `<a class="${BTN2} text-sm" href="tel:${esc(c.phone || c.contact)}">Подзвонити</a>` : '',
-  (c.telegram || (m === 'telegram' && c.contact)) ? `<a class="${BTN2} text-sm" target="_blank" rel="noopener" href="https://t.me/${esc((c.telegram || c.contact).replace(/^@/, ''))}">Telegram</a>` : '',
-  (c.viber || (m === 'viber' && c.contact)) ? `<a class="${BTN2} text-sm" href="viber://chat?number=${encodeURIComponent(c.viber || c.contact)}">Viber</a>` : '',
-  (c.phone || (m === 'phone' && c.contact)) ? `<a class="${BTN2} text-sm" target="_blank" rel="noopener" href="https://wa.me/${esc((c.phone || c.contact).replace(/\D/g, ''))}">WhatsApp</a>` : ''].join('');
+    const WORKER_URL = 'https://detailing-lead.detailing-family-if.workers.dev';
+    const SITE_URL = 'https://detailing.family.ivano-frankivsk.ua';
+    const sb = supabase.createClient(SUPABASE_URL || 'http://localhost', SUPABASE_ANON_KEY || 'x');
+    const app = document.getElementById('app');
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const fmt = d => d ? new Date(d).toLocaleString('uk-UA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
+    const ST = { new: 'Нова', in_progress: 'У роботі', booked: 'Записаний', client: 'Став клієнтом', lost: 'Не підійшло' };
+    const INP = 'w-full rounded-xl border border-ink/20 bg-canvas px-4 py-3 text-base placeholder:text-mist/40 focus:border-accent focus:outline-none';
+    const BTN = 'rounded-xl bg-accent px-5 py-3 font-bold text-canvas';
+    const BTN2 = 'rounded-xl border border-ink/25 px-5 py-3 font-semibold';
+    let tab = 'today', filter = 'new', me = null, staff = [], q = '';
 
-/* ===== Вхід ===== */
-function login(msg = '') {
-  app.innerHTML = `<div class="login"><div class="login-hero" aria-hidden="true"></div><div class="login-sheet"><form id="lf" class="login-form"><h1 class="lg-title">CRM Detailing Family <span>IF</span></h1>
+    const links = (c, m) => [c.phone || (m === 'phone' && c.contact) ? `<a class="${BTN2} text-sm" href="tel:${esc(c.phone || c.contact)}">Подзвонити</a>` : '',
+    (c.telegram || (m === 'telegram' && c.contact)) ? `<a class="${BTN2} text-sm" target="_blank" rel="noopener" href="https://t.me/${esc((c.telegram || c.contact).replace(/^@/, ''))}">Telegram</a>` : '',
+    (c.viber || (m === 'viber' && c.contact)) ? `<a class="${BTN2} text-sm" href="viber://chat?number=${encodeURIComponent(c.viber || c.contact)}">Viber</a>` : '',
+    (c.phone || (m === 'phone' && c.contact)) ? `<a class="${BTN2} text-sm" target="_blank" rel="noopener" href="https://wa.me/${esc((c.phone || c.contact).replace(/\D/g, ''))}">WhatsApp</a>` : ''].join('');
+
+    /* ===== Вхід ===== */
+    function login(msg = '') {
+      app.innerHTML = `<div class="login"><div class="login-hero" aria-hidden="true"></div><div class="login-sheet"><form id="lf" class="login-form"><h1 class="lg-title">CRM Detailing Family <span>IF</span></h1>
   <input class="lg-in" name="email" type="email" autocomplete="username" required placeholder="Email">
   <input class="lg-in" name="password" type="password" autocomplete="current-password" required placeholder="Пароль">
   <button class="lg-btn">Увійти</button><p class="lg-msg" role="alert">${esc(msg)}</p></form></div></div>`;
-  $('lf').onsubmit = async e => {
-    e.preventDefault(); const f = e.target;
-    const { error } = await sb.auth.signInWithPassword({ email: f.email.value, password: f.password.value });
-    error ? login('Невірний email або пароль.') : start();
-  };
-}
-const $ = id => document.getElementById(id);
-async function start() {
-  const { data: { user } } = await sb.auth.getUser(); if (!user) return login();
-  const { data } = await sb.from('staff').select('*');
-  if (!data || !data.length) { await sb.auth.signOut(); return login('Для цього акаунта немає доступу.'); }
-  me = user; staff = data; render();
-}
+      $('lf').onsubmit = async e => {
+        e.preventDefault(); const f = e.target;
+        const { error } = await sb.auth.signInWithPassword({ email: f.email.value, password: f.password.value });
+        error ? login('Невірний email або пароль.') : start();
+      };
+    }
+    const $ = id => document.getElementById(id);
+    async function start() {
+      const { data: { user } } = await sb.auth.getUser(); if (!user) return login();
+      const { data } = await sb.from('staff').select('*');
+      if (!data || !data.length) { await sb.auth.signOut(); return login('Для цього акаунта немає доступу.'); }
+      me = user; staff = data; render();
+    }
 
-/* ===== Каркас ===== */
-function render() {
-  app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div class="mb-2 flex justify-end gap-4 text-xs text-mist/60"><button id="ly">Бонуси</button><button id="an">Аналітика</button><button id="sk">Склад</button><button id="pr">Прайс</button><button id="out">Вийти</button></div><div id="view"></div></main>
+    /* ===== Каркас ===== */
+    function render() {
+      app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div class="mb-2 flex justify-end gap-4 text-xs text-mist/60"><button id="ly">Бонуси</button><button id="an">Аналітика</button><button id="sk">Склад</button><button id="pr">Прайс</button><button id="out">Вийти</button></div><div id="view"></div></main>
   <nav class="app-nav fixed inset-x-0 bottom-0 z-20 flex" style="padding-bottom:env(safe-area-inset-bottom)">
   ${[['today', 'Сьогодні'], ['leads', 'Ліди'], ['chat', 'Мультичат'], ['clients', 'Клієнти'], ['cal', 'Календар'], ['orders', 'Замовлення']].map(([k, l]) => `<button data-tab="${k}" class="flex-1 py-4 text-[11px] font-semibold ${tab === k ? 'is-active text-accent' : 'text-mist/70'}">${l}</button>`).join('')}</nav>`;
-  document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
-  $('pr').onclick = () => { tab = 'price'; render(); };
-  $('sk').onclick = () => { tab = 'stock'; render(); };
-  $('an').onclick = () => { tab = 'stats'; render(); };
-  $('ly').onclick = () => { tab = 'loyalty'; render(); };
-  unreadBadge();
-  $('out').onclick = async () => { await sb.auth.signOut(); login(); };
-  ({ today: viewToday, leads: viewLeads, chat: viewChat, clients: viewClients, cal: viewCal, orders: viewOrders, price: viewPrice, stock: viewStock, stats: viewStats, loyalty: viewLoyalty })[tab]();
-}
-function modal(html) {
-  closeModal(); const d = document.createElement('div'); d.id = 'mod';
-  d.className = 'fixed inset-0 z-30 overflow-y-auto bg-black/70 p-3';
-  d.innerHTML = `<div class="mx-auto my-4 max-w-xl rounded-2xl bg-card p-5">${html}</div>`;
-  d.addEventListener('click', e => { if (e.target === d) closeModal(); }); document.body.appendChild(d); return d;
-}
-const closeModal = () => { const m = $('mod'); if (m) m.remove(); };
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+      document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
+      $('pr').onclick = () => { tab = 'price'; render(); };
+      $('sk').onclick = () => { tab = 'stock'; render(); };
+      $('an').onclick = () => { tab = 'stats'; render(); };
+      $('ly').onclick = () => { tab = 'loyalty'; render(); };
+      unreadBadge();
+      $('out').onclick = async () => { await sb.auth.signOut(); login(); };
+      ({ today: viewToday, leads: viewLeads, chat: viewChat, clients: viewClients, cal: viewCal, orders: viewOrders, price: viewPrice, stock: viewStock, stats: viewStats, loyalty: viewLoyalty })[tab]();
+    }
+    function modal(html) {
+      closeModal(); const d = document.createElement('div'); d.id = 'mod';
+      d.className = 'fixed inset-0 z-30 overflow-y-auto bg-black/70 p-3';
+      d.innerHTML = `<div class="mx-auto my-4 max-w-xl rounded-2xl bg-card p-5">${html}</div>`;
+      d.addEventListener('click', e => { if (e.target === d) closeModal(); }); document.body.appendChild(d); return d;
+    }
+    const closeModal = () => { const m = $('mod'); if (m) m.remove(); };
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-/* ===== Ліди ===== */
-async function viewLeads() {
-  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Ліди</h1><div class="my-4 flex flex-wrap gap-2">${['new', 'in_progress', 'booked', 'client', 'lost', 'all'].map(k => `<button data-f="${k}" class="rounded-full border px-4 py-2 text-sm ${filter === k ? 'border-accent bg-accent font-bold text-canvas' : 'border-card text-mist/80'}">${ST[k] || 'Усі'}</button>`).join('')}</div><div id="list" class="space-y-2"></div>`;
-  document.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { filter = b.dataset.f; viewLeads(); });
-  let r = sb.from('leads').select('*').order('created_at', { ascending: false }).limit(200); if (filter !== 'all') r = r.eq('status', filter);
-  const { data, error } = await r; if (error) return $('list').textContent = 'Помилка завантаження: ' + error.message;
-  $('list').innerHTML = data.length ? data.map(l => `<button data-lead="${l.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(l.name)}</b><span class="text-xs text-mist/60">${fmt(l.created_at)}</span></div>
+    /* ===== Ліди ===== */
+    async function viewLeads() {
+      $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Ліди</h1><div class="my-4 flex flex-wrap gap-2">${['new', 'in_progress', 'booked', 'client', 'lost', 'all'].map(k => `<button data-f="${k}" class="rounded-full border px-4 py-2 text-sm ${filter === k ? 'border-accent bg-accent font-bold text-canvas' : 'border-card text-mist/80'}">${ST[k] || 'Усі'}</button>`).join('')}</div><div id="list" class="space-y-2"></div>`;
+      document.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { filter = b.dataset.f; viewLeads(); });
+      let r = sb.from('leads').select('*').order('created_at', { ascending: false }).limit(200); if (filter !== 'all') r = r.eq('status', filter);
+      const { data, error } = await r; if (error) return $('list').textContent = 'Помилка завантаження: ' + error.message;
+      $('list').innerHTML = data.length ? data.map(l => `<button data-lead="${l.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(l.name)}</b><span class="text-xs text-mist/60">${fmt(l.created_at)}</span></div>
     <div class="mt-1 text-sm text-mist/80">${esc(l.contact)} · ${esc(l.service_interest || '')}</div><div class="mt-2 text-xs ${l.status === 'new' ? 'font-bold text-accent' : 'text-mist/60'}">${ST[l.status]}${l.next_contact_at ? ' · наступний контакт ' + esc(l.next_contact_at) : ''}</div></button>`).join('') : '<p class="text-mist/60">Заявок немає.</p>';
-  document.querySelectorAll('[data-lead]').forEach(b => b.onclick = () => openLead(data.find(x => x.id === b.dataset.lead)));
-}
-function openLead(l) {
-  const m = modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${esc(l.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+      document.querySelectorAll('[data-lead]').forEach(b => b.onclick = () => openLead(data.find(x => x.id === b.dataset.lead)));
+    }
+    function openLead(l) {
+      const m = modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${esc(l.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <p class="mt-1 text-sm text-mist/80">${esc(l.contact_method)}: ${esc(l.contact)} · ${fmt(l.created_at)}</p><div class="mt-3 flex flex-wrap gap-2">${links({ contact: l.contact }, l.contact_method)}</div>
   <dl class="mt-4 space-y-1 text-sm">${[['Послуга', l.service_interest], ['Авто', [l.car, l.car_class].filter(Boolean).join(', ')], ['Зручний час', l.preferred_time], ['Побажання', l.comment], ['Джерело', [l.utm_source, l.utm_medium, l.utm_campaign].filter(Boolean).join(' / ') || 'пряме'], ['Згода на пропозиції', l.consent_marketing ? 'так' : 'ні']].map(([k, v]) => v ? `<div><dt class="inline text-mist/60">${k}: </dt><dd class="inline">${esc(v)}</dd></div>` : '').join('')}</dl>
   <div class="mt-5 grid gap-3"><select id="st" class="${INP}">${Object.entries(ST).map(([k, v]) => `<option value="${k}" ${l.status === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
   <input id="lr" class="${INP}" placeholder="Причина відмови (якщо не підійшло)" value="${esc(l.lost_reason)}"><label class="text-sm text-mist/70">Наступний контакт<input id="nc" type="date" class="${INP} mt-1" value="${esc(l.next_contact_at)}"></label>
   <select id="as" class="${INP}"><option value="">Відповідальний: не призначено</option>${staff.map(s => `<option value="${s.user_id}" ${l.assignee === s.user_id ? 'selected' : ''}>${esc(s.name)}</option>`).join('')}</select>
   <button id="sv" class="${BTN}">Зберегти</button>${l.client_id ? '' : `<button id="mk" class="${BTN2}">Створити клієнта із заявки</button>`}<p id="msg" class="text-sm text-mist/70"></p></div>`);
-  $('x').onclick = closeModal;
-  $('sv').onclick = async () => {
-    const st = $('st').value, up = { status: st, lost_reason: $('lr').value || null, next_contact_at: $('nc').value || null, assignee: $('as').value || null };
-    if (l.status === 'new' && st !== 'new' && !l.first_response_at) up.first_response_at = new Date().toISOString();
-    const { error } = await sb.from('leads').update(up).eq('id', l.id);
-    if (error) return $('msg').textContent = 'Помилка: ' + error.message;
-    if (st !== l.status) await sb.from('timeline').insert({ lead_id: l.id, client_id: l.client_id, kind: 'status', text: `Статус: ${ST[st]}`, created_by: me.id });
-    closeModal(); render();
-  };
-  if ($('mk')) $('mk').onclick = async () => {
-    $('mk').disabled = true; const ph = l.contact_method === 'phone' ? l.contact : null;
-    let c = null; if (ph) c = (await sb.from('clients').select('*').eq('phone', ph).maybeSingle()).data;
-    if (!c) {
-      const r = await sb.from('clients').insert({ name: l.name, phone: ph, telegram: l.contact_method === 'telegram' ? l.contact : null, viber: l.contact_method === 'viber' ? l.contact : null,
-        source: l.utm_source || 'direct', utm_source: l.utm_source, utm_medium: l.utm_medium, utm_campaign: l.utm_campaign, consent_processing: !!l.consent_processing, consent_processing_at: l.created_at,
-        consent_marketing: !!l.consent_marketing, consent_marketing_at: l.consent_marketing ? l.created_at : null, consent_version: l.consent_version }).select().single();
-      if (r.error) { $('mk').disabled = false; return $('msg').textContent = 'Помилка: ' + r.error.message; } c = r.data;
-      if (l.car) await sb.from('cars').insert({ client_id: c.id, model: l.car, car_class: l.car_class || null });
+      $('x').onclick = closeModal;
+      $('sv').onclick = async () => {
+        const st = $('st').value, up = { status: st, lost_reason: $('lr').value || null, next_contact_at: $('nc').value || null, assignee: $('as').value || null };
+        if (l.status === 'new' && st !== 'new' && !l.first_response_at) up.first_response_at = new Date().toISOString();
+        const { error } = await sb.from('leads').update(up).eq('id', l.id);
+        if (error) return $('msg').textContent = 'Помилка: ' + error.message;
+        if (st !== l.status) await sb.from('timeline').insert({ lead_id: l.id, client_id: l.client_id, kind: 'status', text: `Статус: ${ST[st]}`, created_by: me.id });
+        closeModal(); render();
+      };
+      if ($('mk')) $('mk').onclick = async () => {
+        $('mk').disabled = true; const ph = l.contact_method === 'phone' ? l.contact : null;
+        let c = null; if (ph) c = (await sb.from('clients').select('*').eq('phone', ph).maybeSingle()).data;
+        if (!c) {
+          const r = await sb.from('clients').insert({
+            name: l.name, phone: ph, telegram: l.contact_method === 'telegram' ? l.contact : null, viber: l.contact_method === 'viber' ? l.contact : null,
+            source: l.utm_source || 'direct', utm_source: l.utm_source, utm_medium: l.utm_medium, utm_campaign: l.utm_campaign, consent_processing: !!l.consent_processing, consent_processing_at: l.created_at,
+            consent_marketing: !!l.consent_marketing, consent_marketing_at: l.consent_marketing ? l.created_at : null, consent_version: l.consent_version
+          }).select().single();
+          if (r.error) { $('mk').disabled = false; return $('msg').textContent = 'Помилка: ' + r.error.message; } c = r.data;
+          if (l.car) await sb.from('cars').insert({ client_id: c.id, model: l.car, car_class: l.car_class || null });
+        }
+        await sb.from('leads').update({ status: 'client', client_id: c.id }).eq('id', l.id);
+        await sb.from('timeline').insert({ client_id: c.id, lead_id: l.id, kind: 'status', text: 'Клієнта створено із заявки', created_by: me.id });
+        closeModal(); openClient(c.id);
+      };
     }
-    await sb.from('leads').update({ status: 'client', client_id: c.id }).eq('id', l.id);
-    await sb.from('timeline').insert({ client_id: c.id, lead_id: l.id, kind: 'status', text: 'Клієнта створено із заявки', created_by: me.id });
-    closeModal(); openClient(c.id);
-  };
-}
 
-/* ===== Клієнти ===== */
-async function viewClients() {
-  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Клієнти</h1><button id="nc" class="${BTN} px-4 py-2 text-sm">+ Клієнт</button></div>
+    /* ===== Клієнти ===== */
+    async function viewClients() {
+      $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Клієнти</h1><button id="nc" class="${BTN} px-4 py-2 text-sm">+ Клієнт</button></div>
   <input id="q" type="search" placeholder="Ім'я, телефон або номер авто" value="${esc(q)}" class="${INP} my-4"><div id="list" class="space-y-2"></div>`;
-  $('nc').onclick = newClient; let t; $('q').oninput = e => { q = e.target.value.trim(); clearTimeout(t); t = setTimeout(load, 250); }; load();
-  async function load() {
-    let ids = []; if (q) { const c = await sb.from('cars').select('client_id').ilike('plate', `%${q}%`).limit(20); ids = (c.data || []).map(x => x.client_id); }
-    let r = sb.from('clients').select('*').order('created_at', { ascending: false }).limit(100);
-    if (q) { const s = q.replace(/[,()%]/g, ' '); r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%,telegram.ilike.%${s}%${ids.length ? `,id.in.(${ids.join(',')})` : ''}`); }
-    const { data, error } = await r; if (error) return $('list').textContent = 'Помилка: ' + error.message;
-    $('list').innerHTML = data.length ? data.map(c => `<button data-c="${c.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${esc(c.name)}</b><div class="text-sm text-mist/80">${esc(c.phone || c.telegram || c.viber || '')}</div></button>`).join('') : '<p class="text-mist/60">Нікого не знайдено.</p>';
-    document.querySelectorAll('[data-c]').forEach(b => b.onclick = () => openClient(b.dataset.c));
-  }
-}
-function newClient() {
-  modal(`<h2 class="mb-3 text-xl font-bold">Новий клієнт</h2><form id="nf" class="grid gap-3"><input name="name" required placeholder="Ім'я" class="${INP}"><input name="phone" type="tel" placeholder="Телефон +380…" class="${INP}">
+      $('nc').onclick = newClient; let t; $('q').oninput = e => { q = e.target.value.trim(); clearTimeout(t); t = setTimeout(load, 250); }; load();
+      async function load() {
+        let ids = []; if (q) { const c = await sb.from('cars').select('client_id').ilike('plate', `%${q}%`).limit(20); ids = (c.data || []).map(x => x.client_id); }
+        let r = sb.from('clients').select('*').order('created_at', { ascending: false }).limit(100);
+        if (q) { const s = q.replace(/[,()%]/g, ' '); r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%,telegram.ilike.%${s}%${ids.length ? `,id.in.(${ids.join(',')})` : ''}`); }
+        const { data, error } = await r; if (error) return $('list').textContent = 'Помилка: ' + error.message;
+        $('list').innerHTML = data.length ? data.map(c => `<button data-c="${c.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${esc(c.name)}</b><div class="text-sm text-mist/80">${esc(c.phone || c.telegram || c.viber || '')}</div></button>`).join('') : '<p class="text-mist/60">Нікого не знайдено.</p>';
+        document.querySelectorAll('[data-c]').forEach(b => b.onclick = () => openClient(b.dataset.c));
+      }
+    }
+    function newClient() {
+      modal(`<h2 class="mb-3 text-xl font-bold">Новий клієнт</h2><form id="nf" class="grid gap-3"><input name="name" required placeholder="Ім'я" class="${INP}"><input name="phone" type="tel" placeholder="Телефон +380…" class="${INP}">
   <label class="flex gap-3 text-sm text-mist/80"><input name="cp" type="checkbox" class="mt-0.5 h-5 w-5 accent-accent">Клієнт дав згоду на обробку даних</label><button class="${BTN}">Зберегти</button><p id="msg" class="text-sm"></p></form>`);
-  $('nf').onsubmit = async e => {
-    e.preventDefault(); const f = e.target, d = f.phone.value.replace(/\D/g, ''); const ph = d.length === 10 && d[0] === '0' ? '+38' + d : d.length === 12 && d.startsWith('380') ? '+' + d : null;
-    if (f.phone.value && !ph) return $('msg').textContent = 'Телефон: формат +380XXXXXXXXX або 0XXXXXXXXX.';
-    const { data, error } = await sb.from('clients').insert({ name: f.name.value.trim(), phone: ph, source: 'вручну', consent_processing: f.cp.checked, consent_processing_at: f.cp.checked ? new Date().toISOString() : null }).select().single();
-    if (error) return $('msg').textContent = error.code === '23505' ? 'Клієнт із таким телефоном уже є.' : 'Помилка: ' + error.message; closeModal(); openClient(data.id);
-  };
-}
-async function openClient(id) {
-  const [c, cars, tl] = await Promise.all([sb.from('clients').select('*').eq('id', id).single(), sb.from('cars').select('*').eq('client_id', id), sb.from('timeline').select('*').eq('client_id', id).order('created_at', { ascending: false }).limit(50)]);
-  if (c.error) return; const k = c.data;
-  const m = modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${esc(k.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+      $('nf').onsubmit = async e => {
+        e.preventDefault(); const f = e.target, d = f.phone.value.replace(/\D/g, ''); const ph = d.length === 10 && d[0] === '0' ? '+38' + d : d.length === 12 && d.startsWith('380') ? '+' + d : null;
+        if (f.phone.value && !ph) return $('msg').textContent = 'Телефон: формат +380XXXXXXXXX або 0XXXXXXXXX.';
+        const { data, error } = await sb.from('clients').insert({ name: f.name.value.trim(), phone: ph, source: 'вручну', consent_processing: f.cp.checked, consent_processing_at: f.cp.checked ? new Date().toISOString() : null }).select().single();
+        if (error) return $('msg').textContent = error.code === '23505' ? 'Клієнт із таким телефоном уже є.' : 'Помилка: ' + error.message; closeModal(); openClient(data.id);
+      };
+    }
+    async function openClient(id) {
+      const [c, cars, tl] = await Promise.all([sb.from('clients').select('*').eq('id', id).single(), sb.from('cars').select('*').eq('client_id', id), sb.from('timeline').select('*').eq('client_id', id).order('created_at', { ascending: false }).limit(50)]);
+      if (c.error) return; const k = c.data;
+      const m = modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${esc(k.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <p class="mt-1 text-sm text-mist/80">${esc([k.phone, k.telegram, k.viber, k.email].filter(Boolean).join(' · '))}</p><div class="mt-3 flex flex-wrap gap-2">${links(k, '')}</div>
   <p class="mt-3 text-xs text-mist/60">Згода на обробку: ${k.consent_processing ? 'так' : 'ні'} · на пропозиції: ${k.consent_marketing ? 'так' : 'ні'}${k.source ? ' · джерело: ' + esc(k.source) : ''}</p>
   <button id="no2" class="${BTN2} mt-4 w-full">Нове замовлення</button><button id="bn" class="${BTN2} mt-2 w-full">Бонуси та рекомендації</button><h3 class="mt-5 font-bold">Авто</h3><div class="mt-2 space-y-1 text-sm">${cars.data.length ? cars.data.map(a => `<div>${esc([a.brand, a.model, a.car_class, a.color, a.plate].filter(Boolean).join(' · '))}</div>`).join('') : '<span class="text-mist/60">Немає</span>'}</div>
   <form id="cf" class="mt-3 grid grid-cols-2 gap-2"><input name="model" required placeholder="Марка і модель" class="${INP} col-span-2"><select name="cls" class="${INP}"><option value="">Клас</option><option>Седан</option><option>Кросовер</option><option>Позашляховик</option></select><input name="plate" placeholder="Номер" class="${INP}"><button class="${BTN2} col-span-2">Додати авто</button></form>
   <h3 class="mt-5 font-bold">Історія</h3><form id="nf2" class="mt-2 flex gap-2"><input name="t" required placeholder="Нотатка" class="${INP}"><button class="${BTN} px-4">+</button></form>
   <div class="mt-3 space-y-2 text-sm">${tl.data.map(e => `<div class="border-l-2 border-accent pl-3"><span class="text-xs text-mist/60">${fmt(e.created_at)}</span><br>${esc(e.text)}</div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div>`);
-  $('x').onclick = closeModal;
-  $('no2').onclick = () => { closeModal(); newOrder(id); };
-  $('bn').onclick = () => { closeModal(); openBonus(id); };
-  $('cf').onsubmit = async e => { e.preventDefault(); const f = e.target; await sb.from('cars').insert({ client_id: id, model: f.model.value.trim(), car_class: f.cls.value || null, plate: f.plate.value.trim() || null }); openClient(id); };
-  $('nf2').onsubmit = async e => { e.preventDefault(); await sb.from('timeline').insert({ client_id: id, kind: 'note', text: e.target.t.value.trim(), created_by: me.id }); openClient(id); };
-}
+      $('x').onclick = closeModal;
+      $('no2').onclick = () => { closeModal(); newOrder(id); };
+      $('bn').onclick = () => { closeModal(); openBonus(id); };
+      $('cf').onsubmit = async e => { e.preventDefault(); const f = e.target; await sb.from('cars').insert({ client_id: id, model: f.model.value.trim(), car_class: f.cls.value || null, plate: f.plate.value.trim() || null }); openClient(id); };
+      $('nf2').onsubmit = async e => { e.preventDefault(); await sb.from('timeline').insert({ client_id: id, kind: 'note', text: e.target.t.value.trim(), created_by: me.id }); openClient(id); };
+    }
 
-/* ===== Прайс ===== */
-let services = [];
-async function loadServices() { const { data } = await sb.from('services').select('*').order('sort'); services = data || []; return services; }
-async function viewPrice() {
-  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Прайс</h1><button id="ns" class="${BTN} px-4 py-2 text-sm">+ Послуга</button></div><div id="list" class="mt-4 space-y-5"></div>`;
-  $('ns').onclick = () => editService(null); await loadServices();
-  const by = {}; services.forEach(s => (by[s.category] = by[s.category] || []).push(s));
-  $('list').innerHTML = Object.entries(by).map(([c, a]) => `<section><h2 class="mb-2 font-bold text-mist/70">${esc(c)}</h2><div class="space-y-1">${a.map(s => `<button data-s="${s.id}" class="flex w-full justify-between gap-3 rounded-xl bg-card px-4 py-3 text-left text-sm ${s.active ? '' : 'opacity-40'}"><span>${esc(s.name)}</span><span class="shrink-0 text-right text-mist/70">${esc(s.price_text || '')}${s.return_interval_days ? '<br>повернення ' + s.return_interval_days + ' дн.' : ''}</span></button>`).join('')}</div></section>`).join('');
-  document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => editService(services.find(x => x.id == b.dataset.s)));
-}
-function editService(s) {
-  s = s || { active: true, currency: 'UAH' };
-  modal(`<h2 class="mb-3 text-xl font-bold">${s.id ? 'Послуга' : 'Нова послуга'}</h2><form id="sf" class="grid gap-3">
+    /* ===== Прайс ===== */
+    let services = [];
+    async function loadServices() { const { data } = await sb.from('services').select('*').order('sort'); services = data || []; return services; }
+    async function viewPrice() {
+      $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Прайс</h1><button id="ns" class="${BTN} px-4 py-2 text-sm">+ Послуга</button></div><div id="list" class="mt-4 space-y-5"></div>`;
+      $('ns').onclick = () => editService(null); await loadServices();
+      const by = {}; services.forEach(s => (by[s.category] = by[s.category] || []).push(s));
+      $('list').innerHTML = Object.entries(by).map(([c, a]) => `<section><h2 class="mb-2 font-bold text-mist/70">${esc(c)}</h2><div class="space-y-1">${a.map(s => `<button data-s="${s.id}" class="flex w-full justify-between gap-3 rounded-xl bg-card px-4 py-3 text-left text-sm ${s.active ? '' : 'opacity-40'}"><span>${esc(s.name)}</span><span class="shrink-0 text-right text-mist/70">${esc(s.price_text || '')}${s.return_interval_days ? '<br>повернення ' + s.return_interval_days + ' дн.' : ''}</span></button>`).join('')}</div></section>`).join('');
+      document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => editService(services.find(x => x.id == b.dataset.s)));
+    }
+    function editService(s) {
+      s = s || { active: true, currency: 'UAH' };
+      modal(`<h2 class="mb-3 text-xl font-bold">${s.id ? 'Послуга' : 'Нова послуга'}</h2><form id="sf" class="grid gap-3">
   <input name="category" list="cats" required placeholder="Категорія" value="${esc(s.category)}" class="${INP}"><datalist id="cats">${[...new Set(services.map(x => x.category))].map(c => `<option value="${esc(c)}">`).join('')}</datalist>
   <input name="name" required placeholder="Назва" value="${esc(s.name)}" class="${INP}">
   <div class="grid grid-cols-2 gap-2"><input name="price" type="number" step="any" min="0" placeholder="Ціна від" value="${esc(s.price_from)}" class="${INP}"><select name="cur" class="${INP}"><option value="UAH" ${s.currency === 'UAH' ? 'selected' : ''}>грн</option><option value="USD" ${s.currency === 'USD' ? 'selected' : ''}>$</option></select></div>
   <input name="ptext" placeholder="Як показувати ціну (напр. від 700 грн)" value="${esc(s.price_text)}" class="${INP}"><input name="dur" placeholder="Орієнтовний час" value="${esc(s.duration_text)}" class="${INP}"><label class="text-sm text-mist/70">Робочий час майстра, хв (для собівартості)<input name="wm" type="number" min="0" class="${INP} mt-1" value="${esc(s.work_minutes)}"></label>
   <label class="text-sm text-mist/70">Інтервал повернення, днів<input name="ret" type="number" min="1" class="${INP} mt-1" value="${esc(s.return_interval_days)}"></label>
   <label class="flex gap-3 text-sm"><input name="act" type="checkbox" class="h-5 w-5 accent-accent" ${s.active ? 'checked' : ''}>Показувати в замовленнях</label><button class="${BTN}">Зберегти</button>${s.id ? `<button type="button" id="nm2" class="${BTN2}">Норми витрат матеріалів</button>` : ''}<p id="msg" class="text-sm"></p></form>`);
-  if ($('nm2')) $('nm2').onclick = () => openNorms(s);
-  $('sf').onsubmit = async e => {
-    e.preventDefault(); const f = e.target;
-    const row = { category: f.category.value.trim(), name: f.name.value.trim(), price_from: f.price.value || null, currency: f.cur.value, price_text: f.ptext.value || null, duration_text: f.dur.value || null, work_minutes: f.wm.value || null, return_interval_days: f.ret.value || null, active: f.act.checked };
-    const { error } = s.id ? await sb.from('services').update(row).eq('id', s.id) : await sb.from('services').insert({ ...row, sort: 1000 });
-    error ? $('msg').textContent = 'Помилка: ' + error.message : (closeModal(), viewPrice());
-  };
-}
+      if ($('nm2')) $('nm2').onclick = () => openNorms(s);
+      $('sf').onsubmit = async e => {
+        e.preventDefault(); const f = e.target;
+        const row = { category: f.category.value.trim(), name: f.name.value.trim(), price_from: f.price.value || null, currency: f.cur.value, price_text: f.ptext.value || null, duration_text: f.dur.value || null, work_minutes: f.wm.value || null, return_interval_days: f.ret.value || null, active: f.act.checked };
+        const { error } = s.id ? await sb.from('services').update(row).eq('id', s.id) : await sb.from('services').insert({ ...row, sort: 1000 });
+        error ? $('msg').textContent = 'Помилка: ' + error.message : (closeModal(), viewPrice());
+      };
+    }
 
-/* ===== Замовлення ===== */
-const OS = { accepted: 'Прийнято', in_progress: 'У роботі', ready: 'Готово', delivered: 'Видано' }, OSN = Object.keys(OS);
-let ofilter = 'accepted';
-const calc = (items, rate, disc) => { let u = 0, need = false; (items || []).forEach(i => { const v = i.price * i.qty; if (i.currency === 'USD') { rate ? u += v * rate : need = true; } else u += v; }); return { total: Math.max(0, u - (disc || 0)), need }; };
-async function viewOrders() {
-  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Замовлення</h1><button id="no" class="${BTN} px-4 py-2 text-sm">+ Замовлення</button></div>
+    /* ===== Замовлення ===== */
+    const OS = { accepted: 'Прийнято', in_progress: 'У роботі', ready: 'Готово', delivered: 'Видано' }, OSN = Object.keys(OS);
+    let ofilter = 'accepted';
+    const calc = (items, rate, disc) => { let u = 0, need = false; (items || []).forEach(i => { const v = i.price * i.qty; if (i.currency === 'USD') { rate ? u += v * rate : need = true; } else u += v; }); return { total: Math.max(0, u - (disc || 0)), need }; };
+    async function viewOrders() {
+      $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Замовлення</h1><button id="no" class="${BTN} px-4 py-2 text-sm">+ Замовлення</button></div>
   <div class="my-4 flex flex-wrap gap-2">${[...OSN, 'all'].map(k => `<button data-of="${k}" class="rounded-full border px-4 py-2 text-sm ${ofilter === k ? 'border-accent bg-accent font-bold text-canvas' : 'border-card text-mist/80'}">${OS[k] || 'Усі'}</button>`).join('')}</div><div id="list" class="space-y-2"></div>`;
-  $('no').onclick = () => newOrder(); document.querySelectorAll('[data-of]').forEach(b => b.onclick = () => { ofilter = b.dataset.of; viewOrders(); });
-  let r = sb.from('orders').select('*, clients(name), cars(model,plate), order_items(price,currency,qty)').order('created_at', { ascending: false }).limit(100); if (ofilter !== 'all') r = r.eq('status', ofilter);
-  const { data, error } = await r; if (error) return $('list').textContent = 'Помилка: ' + error.message;
-  $('list').innerHTML = data.length ? data.map(o => { const t = calc(o.order_items, o.usd_rate, o.discount_uah); return `<button data-o="${o.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(o.clients && o.clients.name)}</b><span class="text-xs text-mist/60">${fmt(o.created_at)}</span></div>
-    <div class="text-sm text-mist/80">${esc(o.cars ? [o.cars.model, o.cars.plate].filter(Boolean).join(' · ') : 'авто не вказано')}</div><div class="mt-2 text-sm"><span class="text-accent">${OS[o.status]}</span> · ${Math.round(t.total)} грн${t.need ? ' (потрібен курс $)' : ''}</div></button>`; }).join('') : '<p class="text-mist/60">Замовлень немає.</p>';
-  document.querySelectorAll('[data-o]').forEach(b => b.onclick = () => openOrder(b.dataset.o));
-}
-function newOrder(cid) {
-  modal(`<h2 class="mb-3 text-xl font-bold">Нове замовлення</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Пошук клієнта: ім'я або телефон" class="${INP} ${cid ? 'hidden' : ''}"><select id="cl" size="${cid ? 1 : 4}" class="${INP}"></select>
+      $('no').onclick = () => newOrder(); document.querySelectorAll('[data-of]').forEach(b => b.onclick = () => { ofilter = b.dataset.of; viewOrders(); });
+      let r = sb.from('orders').select('*, clients(name), cars(model,plate), order_items(price,currency,qty)').order('created_at', { ascending: false }).limit(100); if (ofilter !== 'all') r = r.eq('status', ofilter);
+      const { data, error } = await r; if (error) return $('list').textContent = 'Помилка: ' + error.message;
+      $('list').innerHTML = data.length ? data.map(o => {
+        const t = calc(o.order_items, o.usd_rate, o.discount_uah); return `<button data-o="${o.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(o.clients && o.clients.name)}</b><span class="text-xs text-mist/60">${fmt(o.created_at)}</span></div>
+    <div class="text-sm text-mist/80">${esc(o.cars ? [o.cars.model, o.cars.plate].filter(Boolean).join(' · ') : 'авто не вказано')}</div><div class="mt-2 text-sm"><span class="text-accent">${OS[o.status]}</span> · ${Math.round(t.total)} грн${t.need ? ' (потрібен курс $)' : ''}</div></button>`;
+      }).join('') : '<p class="text-mist/60">Замовлень немає.</p>';
+      document.querySelectorAll('[data-o]').forEach(b => b.onclick = () => openOrder(b.dataset.o));
+    }
+    function newOrder(cid) {
+      modal(`<h2 class="mb-3 text-xl font-bold">Нове замовлення</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Пошук клієнта: ім'я або телефон" class="${INP} ${cid ? 'hidden' : ''}"><select id="cl" size="${cid ? 1 : 4}" class="${INP}"></select>
   <select id="ca" class="${INP}"><option value="">Авто</option></select><textarea id="in" rows="2" placeholder="Стан авто при отриманні" class="${INP}"></textarea><button id="go" class="${BTN}">Створити</button><p id="msg" class="text-sm"></p></div>`);
-  const pick = async () => { const { data } = await sb.from('cars').select('*').eq('client_id', $('cl').value); $('ca').innerHTML = '<option value="">Авто</option>' + (data || []).map(a => `<option value="${a.id}">${esc([a.model, a.plate].filter(Boolean).join(' · '))}</option>`).join(''); };
-  const fill = async () => {
-    const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20);
-    if (cid) r = r.eq('id', cid); else if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`);
-    const { data } = await r; $('cl').innerHTML = (data || []).map(c => `<option value="${c.id}">${esc(c.name)} ${esc(c.phone || '')}</option>`).join(''); if (cid) pick();
-  };
-  let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; $('cl').onchange = pick; fill();
-  $('go').onclick = async () => {
-    if (!$('cl').value) return $('msg').textContent = 'Оберіть клієнта.';
-    const { data, error } = await sb.from('orders').insert({ client_id: $('cl').value, car_id: $('ca').value || null, intake_notes: $('in').value || null }).select().single();
-    if (error) return $('msg').textContent = 'Помилка: ' + error.message; closeModal(); openOrder(data.id);
-  };
-}
-async function openOrder(id) {
-  if (!services.length) await loadServices();
-  const [o, it, ph] = await Promise.all([sb.from('orders').select('*, clients(id,name,phone), cars(model,plate)').eq('id', id).single(), sb.from('order_items').select('*').eq('order_id', id).order('name'), sb.from('order_photos').select('*').eq('order_id', id).order('created_at')]);
-  if (o.error) return; const od = o.data, items = it.data, hasUsd = items.some(i => i.currency === 'USD');
-  const t = calc(items, od.usd_rate, od.discount_uah), next = OSN[OSN.indexOf(od.status) + 1];
-  if (!LS) await loadLoyalty(); const bal = (await clientBonus(od.client_id)).balance, maxB = Math.floor(Math.max(0, Math.min(bal, t.total * (+LS.max_pay_share_percent) / 100)));
-  modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(od.clients.name)}</h2><p class="text-sm text-mist/70">${esc(od.cars ? [od.cars.model, od.cars.plate].filter(Boolean).join(' · ') : 'авто не вказано')} · ${OS[od.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+      const pick = async () => { const { data } = await sb.from('cars').select('*').eq('client_id', $('cl').value); $('ca').innerHTML = '<option value="">Авто</option>' + (data || []).map(a => `<option value="${a.id}">${esc([a.model, a.plate].filter(Boolean).join(' · '))}</option>`).join(''); };
+      const fill = async () => {
+        const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20);
+        if (cid) r = r.eq('id', cid); else if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`);
+        const { data } = await r; $('cl').innerHTML = (data || []).map(c => `<option value="${c.id}">${esc(c.name)} ${esc(c.phone || '')}</option>`).join(''); if (cid) pick();
+      };
+      let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; $('cl').onchange = pick; fill();
+      $('go').onclick = async () => {
+        if (!$('cl').value) return $('msg').textContent = 'Оберіть клієнта.';
+        const { data, error } = await sb.from('orders').insert({ client_id: $('cl').value, car_id: $('ca').value || null, intake_notes: $('in').value || null }).select().single();
+        if (error) return $('msg').textContent = 'Помилка: ' + error.message; closeModal(); openOrder(data.id);
+      };
+    }
+    async function openOrder(id) {
+      if (!services.length) await loadServices();
+      const [o, it, ph] = await Promise.all([sb.from('orders').select('*, clients(id,name,phone), cars(model,plate)').eq('id', id).single(), sb.from('order_items').select('*').eq('order_id', id).order('name'), sb.from('order_photos').select('*').eq('order_id', id).order('created_at')]);
+      if (o.error) return; const od = o.data, items = it.data, hasUsd = items.some(i => i.currency === 'USD');
+      const t = calc(items, od.usd_rate, od.discount_uah), next = OSN[OSN.indexOf(od.status) + 1];
+      if (!LS) await loadLoyalty(); const bal = (await clientBonus(od.client_id)).balance, maxB = Math.floor(Math.max(0, Math.min(bal, t.total * (+LS.max_pay_share_percent) / 100)));
+      modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(od.clients.name)}</h2><p class="text-sm text-mist/70">${esc(od.cars ? [od.cars.model, od.cars.plate].filter(Boolean).join(' · ') : 'авто не вказано')} · ${OS[od.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <h3 class="mt-4 font-bold">Послуги</h3><div class="mt-2 space-y-1 text-sm">${items.map(i => `<div class="flex items-center justify-between gap-2 rounded-xl bg-canvas px-3 py-2"><span>${esc(i.name)} × ${i.qty}</span><span class="shrink-0">${i.price} ${i.currency === 'USD' ? '$' : 'грн'}<button data-rm="${i.id}" class="ml-2 text-mist/50" aria-label="Видалити">&times;</button></span></div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div>
   <form id="af" class="mt-3 grid grid-cols-[1fr_5rem] gap-2"><select id="sv" class="${INP} col-span-2"><option value="">Додати послугу…</option>${services.filter(s => s.active).map(s => `<option value="${s.id}">${esc(s.category)}: ${esc(s.name)}</option>`).join('')}</select><input id="pr" type="number" step="any" min="0" placeholder="Ціна" class="${INP}"><input id="qt" type="number" step="any" min="0.1" value="1" class="${INP}"><button class="${BTN2} col-span-2">Додати</button></form>
   <h3 class="mt-5 font-bold">Фото</h3><div id="ph" class="mt-2 space-y-3"></div>
@@ -257,351 +378,358 @@ async function openOrder(id) {
   <div class="grid grid-cols-2 gap-2"><select id="pm" class="${INP}"><option value="">Оплата…</option>${[['cash', 'Готівка'], ['card', 'Картка'], ['transfer', 'Переказ']].map(([k, v]) => `<option value="${k}" ${od.payment_method === k ? 'selected' : ''}>${v}</option>`).join('')}</select><input id="pd" type="number" min="0" placeholder="Сплачено, грн" class="${INP}" value="${od.paid_uah ?? ''}"></div>
   <textarea id="in" rows="2" placeholder="Стан авто при отриманні" class="${INP}">${esc(od.intake_notes)}</textarea><textarea id="dn" rows="2" placeholder="Нотатки при видачі" class="${INP}">${esc(od.delivery_notes)}</textarea>
   <button id="sv2" class="${BTN}">Зберегти</button>${next ? `<button id="nx" class="${BTN2}">Статус: ${OS[next]}</button>` : ''}<p id="msg" class="text-sm text-mist/80"></p></div>`);
-  $('x').onclick = closeModal;
-  renderPhotos(id, ph.data || [], $('ph'));
-  $('sh').onchange = async e => { await sb.from('orders').update({ share_status: e.target.checked }).eq('id', id); $('lk').classList.toggle('hidden', !e.target.checked); };
-  $('lk').onclick = async () => { const url = `${SITE_URL}/status.html#${od.public_token}`; try { if (navigator.share) return await navigator.share({ title: 'Статус вашого авто', text: 'Статус вашого авто у Detailing Family IF:', url }); await navigator.clipboard.writeText(url); $('msg').textContent = 'Посилання скопійовано.'; } catch (e) { $('msg').textContent = url; } };
-  const save = async () => {
-    const bu = $('bu') ? Math.max(0, +$('bu').value || 0) : (od.bonus_used_uah || 0);
-    if (bu > maxB && od.status !== 'delivered') { $('msg').textContent = `Бонусами можна оплатити не більше ${maxB} грн.`; return null; }
-    const up = { discount_uah: +$('ds').value || 0, usd_rate: $('rt') ? (+$('rt').value || null) : od.usd_rate, payment_method: $('pm').value || null, paid_uah: $('pd').value === '' ? null : +$('pd').value, intake_notes: $('in').value || null, delivery_notes: $('dn').value || null, material_factor: +$('mf').value || 1, bonus_used_uah: bu };
-    const r = await sb.from('orders').update(up).eq('id', id); if (r.error) { $('msg').textContent = 'Помилка: ' + r.error.message; return null; } return up;
-  };
-  $('sv2').onclick = async () => { if (await save()) openOrder(id); };
-  $('sv').onchange = e => { const s = services.find(x => x.id == e.target.value); $('pr').value = s && s.price_from != null ? s.price_from : ''; };
-  $('af').onsubmit = async e => {
-    e.preventDefault(); const s = services.find(x => x.id == $('sv').value); if (!s || $('pr').value === '') return;
-    await sb.from('order_items').insert({ order_id: id, service_id: s.id, name: s.name, price: +$('pr').value, currency: s.currency, qty: +$('qt').value || 1 }); await save(); openOrder(id);
-  };
-  document.querySelectorAll('[data-rm]').forEach(b => b.onclick = async () => { await sb.from('order_items').delete().eq('id', b.dataset.rm); await save(); openOrder(id); });
-  if ($('nx')) $('nx').onclick = async () => {
-    const up = await save(); if (!up) return; const tt = calc(items, up.usd_rate, up.discount_uah);
-    if (next === 'delivered') {
-      if (tt.need) return $('msg').textContent = 'Вкажіть курс $ перед видачею.';
-      const now = new Date(); await sb.from('orders').update({ status: next, delivered_at: now.toISOString(), paid_at: up.paid_uah ? now.toISOString() : null }).eq('id', id);
-      for (const i of items) { const s = services.find(x => x.id === i.service_id); if (s && s.return_interval_days) await sb.from('order_items').update({ remind_at: new Date(now.getTime() + s.return_interval_days * 864e5).toISOString().slice(0, 10) }).eq('id', i.id); }
-      if (!od.stock_deducted) { await deductStock(od, items, up.material_factor, up.usd_rate, (up.discount_uah || 0) + (up.bonus_used_uah || 0)); await loyaltyOnDelivered(od, up, tt.total); }
-      await sb.from('timeline').insert({ client_id: od.client_id, kind: 'order', text: `Замовлення видано: ${items.map(i => i.name).join(', ')} · ${Math.round(tt.total)} грн`, created_by: me.id });
-    } else await sb.from('orders').update({ status: next }).eq('id', id);
-    openOrder(id);
-  };
-}
-
-/* ===== Фото замовлень ===== */
-const KP = { before: 'До', during: 'Під час', after: 'Після' };
-const shrink = f => new Promise((res, rej) => {
-  const img = new Image(), u = URL.createObjectURL(f);
-  img.onload = () => { const k = Math.min(1, 1600 / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
-    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u); c.toBlob(b => b ? res(b) : rej(new Error('не вдалося стиснути')), 'image/jpeg', 0.8); };
-  img.onerror = () => rej(new Error('не вдалося прочитати файл')); img.src = u;
-});
-async function renderPhotos(id, rows, box) {
-  const urls = rows.length ? ((await sb.storage.from('order-photos').createSignedUrls(rows.map(r => r.path), 3600)).data || []) : [];
-  const url = p => (urls.find(u => u.path === p) || {}).signedUrl || '';
-  box.innerHTML = Object.entries(KP).map(([k, l]) => `<div><div class="mb-1 flex items-center justify-between text-sm"><span class="font-semibold">${l}</span><label class="${BTN2} cursor-pointer px-3 py-1 text-sm">+ Фото<input type="file" accept="image/*" multiple data-up="${k}" class="sr-only"></label></div>
-    <div class="grid grid-cols-3 gap-2">${rows.filter(r => r.kind === k).map(r => `<div class="relative"><a href="${esc(url(r.path))}" target="_blank" rel="noopener"><img src="${esc(url(r.path))}" alt="${l}" loading="lazy" class="aspect-square w-full rounded-xl object-cover"></a><button type="button" data-dp="${r.id}" data-path="${esc(r.path)}" class="absolute right-1 top-1 h-6 w-6 rounded-full bg-black/70 text-sm leading-none" aria-label="Видалити фото">&times;</button></div>`).join('')}</div></div>`).join('') + '<p id="phm" class="text-xs text-mist/70"></p>';
-  const reload = async () => renderPhotos(id, (await sb.from('order_photos').select('*').eq('order_id', id).order('created_at')).data || [], box);
-  box.querySelectorAll('[data-up]').forEach(inp => inp.onchange = async () => {
-    const files = [...inp.files], say = t => { const m = $('phm'); if (m) m.textContent = t; }; let fail = 0;
-    for (let i = 0; i < files.length; i++) {
-      say(`Завантаження ${i + 1} з ${files.length}…`);
-      try {
-        const path = `${id}/${crypto.randomUUID()}.jpg`, up = await sb.storage.from('order-photos').upload(path, await shrink(files[i]), { contentType: 'image/jpeg' });
-        if (up.error) throw up.error; const r = await sb.from('order_photos').insert({ order_id: id, kind: inp.dataset.up, path }); if (r.error) throw r.error;
-      } catch (e) { fail++; console.warn(e); }
+      $('x').onclick = closeModal;
+      renderPhotos(id, ph.data || [], $('ph'));
+      $('sh').onchange = async e => { await sb.from('orders').update({ share_status: e.target.checked }).eq('id', id); $('lk').classList.toggle('hidden', !e.target.checked); };
+      $('lk').onclick = async () => { const url = `${SITE_URL}/status.html#${od.public_token}`; try { if (navigator.share) return await navigator.share({ title: 'Статус вашого авто', text: 'Статус вашого авто у Detailing Family IF:', url }); await navigator.clipboard.writeText(url); $('msg').textContent = 'Посилання скопійовано.'; } catch (e) { $('msg').textContent = url; } };
+      const save = async () => {
+        const bu = $('bu') ? Math.max(0, +$('bu').value || 0) : (od.bonus_used_uah || 0);
+        if (bu > maxB && od.status !== 'delivered') { $('msg').textContent = `Бонусами можна оплатити не більше ${maxB} грн.`; return null; }
+        const up = { discount_uah: +$('ds').value || 0, usd_rate: $('rt') ? (+$('rt').value || null) : od.usd_rate, payment_method: $('pm').value || null, paid_uah: $('pd').value === '' ? null : +$('pd').value, intake_notes: $('in').value || null, delivery_notes: $('dn').value || null, material_factor: +$('mf').value || 1, bonus_used_uah: bu };
+        const r = await sb.from('orders').update(up).eq('id', id); if (r.error) { $('msg').textContent = 'Помилка: ' + r.error.message; return null; } return up;
+      };
+      $('sv2').onclick = async () => { if (await save()) openOrder(id); };
+      $('sv').onchange = e => { const s = services.find(x => x.id == e.target.value); $('pr').value = s && s.price_from != null ? s.price_from : ''; };
+      $('af').onsubmit = async e => {
+        e.preventDefault(); const s = services.find(x => x.id == $('sv').value); if (!s || $('pr').value === '') return;
+        await sb.from('order_items').insert({ order_id: id, service_id: s.id, name: s.name, price: +$('pr').value, currency: s.currency, qty: +$('qt').value || 1 }); await save(); openOrder(id);
+      };
+      document.querySelectorAll('[data-rm]').forEach(b => b.onclick = async () => { await sb.from('order_items').delete().eq('id', b.dataset.rm); await save(); openOrder(id); });
+      if ($('nx')) $('nx').onclick = async () => {
+        const up = await save(); if (!up) return; const tt = calc(items, up.usd_rate, up.discount_uah);
+        if (next === 'delivered') {
+          if (tt.need) return $('msg').textContent = 'Вкажіть курс $ перед видачею.';
+          const now = new Date(); await sb.from('orders').update({ status: next, delivered_at: now.toISOString(), paid_at: up.paid_uah ? now.toISOString() : null }).eq('id', id);
+          for (const i of items) { const s = services.find(x => x.id === i.service_id); if (s && s.return_interval_days) await sb.from('order_items').update({ remind_at: new Date(now.getTime() + s.return_interval_days * 864e5).toISOString().slice(0, 10) }).eq('id', i.id); }
+          if (!od.stock_deducted) { await deductStock(od, items, up.material_factor, up.usd_rate, (up.discount_uah || 0) + (up.bonus_used_uah || 0)); await loyaltyOnDelivered(od, up, tt.total); }
+          await sb.from('timeline').insert({ client_id: od.client_id, kind: 'order', text: `Замовлення видано: ${items.map(i => i.name).join(', ')} · ${Math.round(tt.total)} грн`, created_by: me.id });
+        } else await sb.from('orders').update({ status: next }).eq('id', id);
+        openOrder(id);
+      };
     }
-    await reload(); if (fail) say(`Не вдалося завантажити: ${fail}. Перевірте, що виконано photos.sql.`);
-  });
-  box.querySelectorAll('[data-dp]').forEach(b => b.onclick = async () => {
-    if (!confirm('Видалити це фото?')) return;
-    await sb.storage.from('order-photos').remove([b.dataset.path]); await sb.from('order_photos').delete().eq('id', b.dataset.dp); reload();
-  });
-}
 
-/* ===== Склад ===== */
-const KM = { in: 'Прихід', out: 'Списання', adjust: 'Корекція' }, UNITS = ['мл', 'л', 'г', 'кг', 'шт', 'м', 'м²'];
-async function viewStock() {
-  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Склад</h1><button id="nm" class="${BTN} px-4 py-2 text-sm">+ Матеріал</button></div><div id="list" class="mt-4 space-y-2"></div>`;
-  $('nm').onclick = () => openMaterial(null);
-  const { data, error } = await sb.from('v_stock').select('*').order('name');
-  if (error) return $('list').textContent = 'Помилка: ' + error.message + ' (чи виконано stock.sql?)';
-  $('list').innerHTML = data.length ? data.map(m => { const low = m.balance < 0 ? 'мінус' : (+m.min_stock > 0 && m.balance <= +m.min_stock) ? 'закінчується' : '';
-    return `<button data-m="${m.id}" class="flex w-full items-center justify-between gap-3 rounded-2xl bg-card p-4 text-left ${m.active ? '' : 'opacity-40'}"><span><b>${esc(m.name)}</b><br><span class="text-xs text-mist/60">середня ціна ${Math.round(m.avg_cost * 100) / 100} грн/${esc(m.unit)}</span></span><span class="text-right ${low ? 'text-accent' : ''}"><b>${+(+m.balance).toFixed(2)} ${esc(m.unit)}</b>${low ? '<br><span class="text-xs">' + low + '</span>' : ''}</span></button>`; }).join('') : '<p class="text-mist/60">Матеріалів ще немає. Додайте перший.</p>';
-  document.querySelectorAll('[data-m]').forEach(b => b.onclick = () => openMaterial(data.find(x => x.id == b.dataset.m)));
-}
-async function openMaterial(m) {
-  const mv = m ? (await sb.from('stock_moves').select('*').eq('material_id', m.id).order('created_at', { ascending: false }).limit(15)).data || [] : [];
-  modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${m ? esc(m.name) : 'Новий матеріал'}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+    /* ===== Фото замовлень ===== */
+    const KP = { before: 'До', during: 'Під час', after: 'Після' };
+    const shrink = f => new Promise((res, rej) => {
+      const img = new Image(), u = URL.createObjectURL(f);
+      img.onload = () => {
+        const k = Math.min(1, 1600 / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u); c.toBlob(b => b ? res(b) : rej(new Error('не вдалося стиснути')), 'image/jpeg', 0.8);
+      };
+      img.onerror = () => rej(new Error('не вдалося прочитати файл')); img.src = u;
+    });
+    async function renderPhotos(id, rows, box) {
+      const urls = rows.length ? ((await sb.storage.from('order-photos').createSignedUrls(rows.map(r => r.path), 3600)).data || []) : [];
+      const url = p => (urls.find(u => u.path === p) || {}).signedUrl || '';
+      box.innerHTML = Object.entries(KP).map(([k, l]) => `<div><div class="mb-1 flex items-center justify-between text-sm"><span class="font-semibold">${l}</span><label class="${BTN2} cursor-pointer px-3 py-1 text-sm">+ Фото<input type="file" accept="image/*" multiple data-up="${k}" class="sr-only"></label></div>
+    <div class="grid grid-cols-3 gap-2">${rows.filter(r => r.kind === k).map(r => `<div class="relative"><a href="${esc(url(r.path))}" target="_blank" rel="noopener"><img src="${esc(url(r.path))}" alt="${l}" loading="lazy" class="aspect-square w-full rounded-xl object-cover"></a><button type="button" data-dp="${r.id}" data-path="${esc(r.path)}" class="absolute right-1 top-1 h-6 w-6 rounded-full bg-black/70 text-sm leading-none" aria-label="Видалити фото">&times;</button></div>`).join('')}</div></div>`).join('') + '<p id="phm" class="text-xs text-mist/70"></p>';
+      const reload = async () => renderPhotos(id, (await sb.from('order_photos').select('*').eq('order_id', id).order('created_at')).data || [], box);
+      box.querySelectorAll('[data-up]').forEach(inp => inp.onchange = async () => {
+        const files = [...inp.files], say = t => { const m = $('phm'); if (m) m.textContent = t; }; let fail = 0;
+        for (let i = 0; i < files.length; i++) {
+          say(`Завантаження ${i + 1} з ${files.length}…`);
+          try {
+            const path = `${id}/${crypto.randomUUID()}.jpg`, up = await sb.storage.from('order-photos').upload(path, await shrink(files[i]), { contentType: 'image/jpeg' });
+            if (up.error) throw up.error; const r = await sb.from('order_photos').insert({ order_id: id, kind: inp.dataset.up, path }); if (r.error) throw r.error;
+          } catch (e) { fail++; console.warn(e); }
+        }
+        await reload(); if (fail) say(`Не вдалося завантажити: ${fail}. Перевірте, що виконано photos.sql.`);
+      });
+      box.querySelectorAll('[data-dp]').forEach(b => b.onclick = async () => {
+        if (!confirm('Видалити це фото?')) return;
+        await sb.storage.from('order-photos').remove([b.dataset.path]); await sb.from('order_photos').delete().eq('id', b.dataset.dp); reload();
+      });
+    }
+
+    /* ===== Склад ===== */
+    const KM = { in: 'Прихід', out: 'Списання', adjust: 'Корекція' }, UNITS = ['мл', 'л', 'г', 'кг', 'шт', 'м', 'м²'];
+    async function viewStock() {
+      $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Склад</h1><button id="nm" class="${BTN} px-4 py-2 text-sm">+ Матеріал</button></div><div id="list" class="mt-4 space-y-2"></div>`;
+      $('nm').onclick = () => openMaterial(null);
+      const { data, error } = await sb.from('v_stock').select('*').order('name');
+      if (error) return $('list').textContent = 'Помилка: ' + error.message + ' (чи виконано stock.sql?)';
+      $('list').innerHTML = data.length ? data.map(m => {
+        const low = m.balance < 0 ? 'мінус' : (+m.min_stock > 0 && m.balance <= +m.min_stock) ? 'закінчується' : '';
+        return `<button data-m="${m.id}" class="flex w-full items-center justify-between gap-3 rounded-2xl bg-card p-4 text-left ${m.active ? '' : 'opacity-40'}"><span><b>${esc(m.name)}</b><br><span class="text-xs text-mist/60">середня ціна ${Math.round(m.avg_cost * 100) / 100} грн/${esc(m.unit)}</span></span><span class="text-right ${low ? 'text-accent' : ''}"><b>${+(+m.balance).toFixed(2)} ${esc(m.unit)}</b>${low ? '<br><span class="text-xs">' + low + '</span>' : ''}</span></button>`;
+      }).join('') : '<p class="text-mist/60">Матеріалів ще немає. Додайте перший.</p>';
+      document.querySelectorAll('[data-m]').forEach(b => b.onclick = () => openMaterial(data.find(x => x.id == b.dataset.m)));
+    }
+    async function openMaterial(m) {
+      const mv = m ? (await sb.from('stock_moves').select('*').eq('material_id', m.id).order('created_at', { ascending: false }).limit(15)).data || [] : [];
+      modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">${m ? esc(m.name) : 'Новий матеріал'}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <form id="mf" class="mt-3 grid gap-3"><input name="name" required placeholder="Назва" value="${esc(m && m.name)}" class="${INP}"><div class="grid grid-cols-2 gap-2"><select name="unit" class="${INP}">${UNITS.map(u => `<option ${m && m.unit === u ? 'selected' : ''}>${u}</option>`).join('')}</select><input name="min" type="number" step="any" min="0" placeholder="Мін. залишок" value="${m ? m.min_stock : ''}" class="${INP}"></div>
   ${m ? `<label class="flex gap-3 text-sm"><input name="act" type="checkbox" class="h-5 w-5 accent-accent" ${m.active ? 'checked' : ''}>Активний</label>` : ''}<button class="${BTN}">Зберегти</button><p id="msg" class="text-sm"></p></form>
   ${m ? `<h3 class="mt-5 font-bold">Прихід</h3><form id="inf" class="mt-2 grid grid-cols-2 gap-2"><input name="q" type="number" step="any" min="0.001" required placeholder="Кількість, ${esc(m.unit)}" class="${INP}"><input name="c" type="number" step="any" min="0" required placeholder="Ціна за ${esc(m.unit)}, грн" class="${INP}"><button class="${BTN2} col-span-2">Додати прихід</button></form>
   <h3 class="mt-5 font-bold">Списання або корекція</h3><form id="adf" class="mt-2 grid grid-cols-2 gap-2"><input name="q" type="number" step="any" required placeholder="± кількість (мінус = списати)" class="${INP}"><input name="n" required placeholder="Причина" class="${INP}"><button class="${BTN2} col-span-2">Записати</button></form>
   <h3 class="mt-5 font-bold">Рухи</h3><div class="mt-2 space-y-1 text-sm">${mv.map(x => `<div class="flex justify-between gap-3 border-l-2 border-accent pl-3"><span>${fmt(x.created_at)} · ${esc(x.note || KM[x.kind])}</span><span class="shrink-0">${+x.qty > 0 ? '+' : ''}${+x.qty}</span></div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div>` : ''}`);
-  $('x').onclick = closeModal;
-  $('mf').onsubmit = async e => {
-    e.preventDefault(); const f = e.target, row = { name: f.name.value.trim(), unit: f.unit.value, min_stock: +f.min.value || 0 }; if (m) row.active = f.act.checked;
-    const { error } = m ? await sb.from('materials').update(row).eq('id', m.id) : await sb.from('materials').insert(row);
-    error ? $('msg').textContent = 'Помилка: ' + error.message : (closeModal(), render());
-  };
-  if (m) {
-    const move = async (kind, qty, cost, note) => { const { error } = await sb.from('stock_moves').insert({ material_id: m.id, kind, qty, unit_cost_uah: cost, note, created_by: me.id }); error ? $('msg').textContent = 'Помилка: ' + error.message : (closeModal(), render()); };
-    $('inf').onsubmit = e => { e.preventDefault(); move('in', +e.target.q.value, +e.target.c.value, 'Прихід'); };
-    $('adf').onsubmit = e => { e.preventDefault(); const q = +e.target.q.value; q && move(q < 0 ? 'out' : 'adjust', q, null, e.target.n.value.trim()); };
-  }
-}
-async function openNorms(s) {
-  const [n, m] = await Promise.all([sb.from('service_norms').select('*, materials(name,unit)').eq('service_id', s.id), sb.from('materials').select('*').eq('active', true).order('name')]);
-  modal(`<div class="flex justify-between"><h2 class="text-lg font-bold">Норми: ${esc(s.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+      $('x').onclick = closeModal;
+      $('mf').onsubmit = async e => {
+        e.preventDefault(); const f = e.target, row = { name: f.name.value.trim(), unit: f.unit.value, min_stock: +f.min.value || 0 }; if (m) row.active = f.act.checked;
+        const { error } = m ? await sb.from('materials').update(row).eq('id', m.id) : await sb.from('materials').insert(row);
+        error ? $('msg').textContent = 'Помилка: ' + error.message : (closeModal(), render());
+      };
+      if (m) {
+        const move = async (kind, qty, cost, note) => { const { error } = await sb.from('stock_moves').insert({ material_id: m.id, kind, qty, unit_cost_uah: cost, note, created_by: me.id }); error ? $('msg').textContent = 'Помилка: ' + error.message : (closeModal(), render()); };
+        $('inf').onsubmit = e => { e.preventDefault(); move('in', +e.target.q.value, +e.target.c.value, 'Прихід'); };
+        $('adf').onsubmit = e => { e.preventDefault(); const q = +e.target.q.value; q && move(q < 0 ? 'out' : 'adjust', q, null, e.target.n.value.trim()); };
+      }
+    }
+    async function openNorms(s) {
+      const [n, m] = await Promise.all([sb.from('service_norms').select('*, materials(name,unit)').eq('service_id', s.id), sb.from('materials').select('*').eq('active', true).order('name')]);
+      modal(`<div class="flex justify-between"><h2 class="text-lg font-bold">Норми: ${esc(s.name)}</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <p class="mt-1 text-xs text-mist/60">Скільки матеріалу йде на одну послугу для стандартного авто. Для великих авто є коефіцієнт у замовленні.</p>
   <div class="mt-3 space-y-1 text-sm">${(n.data || []).map(x => `<div class="flex justify-between rounded-xl bg-canvas px-3 py-2"><span>${esc(x.materials.name)}</span><span>${+x.qty} ${esc(x.materials.unit)}<button data-dn="${x.id}" class="ml-2 text-mist/50" aria-label="Видалити">&times;</button></span></div>`).join('') || '<span class="text-mist/60">Норм ще немає</span>'}</div>
   <form id="nf3" class="mt-3 grid grid-cols-[1fr_6rem] gap-2"><select name="m" required class="${INP}"><option value="">Матеріал…</option>${(m.data || []).map(x => `<option value="${x.id}">${esc(x.name)} (${esc(x.unit)})</option>`).join('')}</select><input name="q" type="number" step="any" min="0" required placeholder="К-сть" class="${INP}"><button class="${BTN2} col-span-2">Додати норму</button></form>`);
-  $('x').onclick = closeModal;
-  $('nf3').onsubmit = async e => { e.preventDefault(); const f = e.target; await sb.from('service_norms').upsert({ service_id: s.id, material_id: +f.m.value, qty: +f.q.value }, { onConflict: 'service_id,material_id' }); openNorms(s); };
-  document.querySelectorAll('[data-dn]').forEach(b => b.onclick = async () => { await sb.from('service_norms').delete().eq('id', b.dataset.dn); openNorms(s); });
-}
+      $('x').onclick = closeModal;
+      $('nf3').onsubmit = async e => { e.preventDefault(); const f = e.target; await sb.from('service_norms').upsert({ service_id: s.id, material_id: +f.m.value, qty: +f.q.value }, { onConflict: 'service_id,material_id' }); openNorms(s); };
+      document.querySelectorAll('[data-dn]').forEach(b => b.onclick = async () => { await sb.from('service_norms').delete().eq('id', b.dataset.dn); openNorms(s); });
+    }
 
-/* ===== Аналітика ===== */
-let sper = 'month';
-const money = n => Math.round(n || 0).toLocaleString('uk-UA') + ' грн';
-async function viewStats() {
-  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Аналітика</h1><button id="ss" class="${BTN2} px-4 py-2 text-sm">Налаштування</button></div>
+    /* ===== Аналітика ===== */
+    let sper = 'month';
+    const money = n => Math.round(n || 0).toLocaleString('uk-UA') + ' грн';
+    async function viewStats() {
+      $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Аналітика</h1><button id="ss" class="${BTN2} px-4 py-2 text-sm">Налаштування</button></div>
   <div class="my-4 flex flex-wrap gap-2">${[['month', 'Цей місяць'], ['30', '30 днів'], ['90', '90 днів'], ['all', 'Весь час']].map(([k, l]) => `<button data-p="${k}" class="rounded-full border px-4 py-2 text-sm ${sper === k ? 'border-accent bg-accent font-bold text-canvas' : 'border-card text-mist/80'}">${l}</button>`).join('')}</div><div id="st" class="space-y-6"><p class="text-mist/60">Рахуємо…</p></div>`;
-  $('ss').onclick = openStatSettings; document.querySelectorAll('[data-p]').forEach(b => b.onclick = () => { sper = b.dataset.p; viewStats(); });
-  const now = new Date(), from = sper === 'all' ? '1970-01-01' : sper === 'month' ? iso(new Date(now.getFullYear(), now.getMonth(), 1)) : iso(new Date(Date.now() - +sper * 864e5));
-  const [o, l, ad, al] = await Promise.all([
-    sb.from('orders').select('id,client_id,total_uah,materials_cost_uah,labor_cost_uah,clients(source),order_items(name,revenue_uah,materials_cost_uah,labor_cost_uah,qty)').eq('status', 'delivered').gte('delivered_at', from),
-    sb.from('leads').select('utm_source,status').gte('created_at', from), sb.from('ad_spend').select('*').gte('month', from.slice(0, 7) + '-01'), sb.from('orders').select('client_id').eq('status', 'delivered')]);
-  if (o.error) return $('st').textContent = 'Помилка: ' + o.error.message + ' (чи виконано analytics.sql?)';
-  const ord = o.data, sum = (a, f) => a.reduce((x, y) => x + (+f(y) || 0), 0), key = s => (s || 'direct').toLowerCase();
-  const rev = sum(ord, x => x.total_uah), mat = sum(ord, x => x.materials_cost_uah), lab = sum(ord, x => x.labor_cost_uah), spend = sum(ad.data || [], x => x.amount_uah), gross = rev - mat - lab;
-  const cnt = {}; (al.data || []).forEach(x => cnt[x.client_id] = (cnt[x.client_id] || 0) + 1); const cl = [...new Set(ord.map(x => x.client_id))], rep = cl.filter(c => cnt[c] > 1).length;
-  const svc = {}; ord.forEach(x => (x.order_items || []).forEach(i => { const a = svc[i.name] = svc[i.name] || { n: 0, r: 0, c: 0 }; a.n += +i.qty || 0; a.r += +i.revenue_uah || 0; a.c += (+i.materials_cost_uah || 0) + (+i.labor_cost_uah || 0); }));
-  const ch = {}, C = k => ch[k] = ch[k] || { leads: 0, won: 0, rev: 0, cost: 0, spend: 0 };
-  (l.data || []).forEach(x => { const c = C(key(x.utm_source)); c.leads++; if (x.status === 'client') c.won++; });
-  ord.forEach(x => { const c = C(key(x.clients && x.clients.source)); c.rev += +x.total_uah || 0; c.cost += (+x.materials_cost_uah || 0) + (+x.labor_cost_uah || 0); });
-  (ad.data || []).forEach(x => C(key(x.channel)).spend += +x.amount_uah || 0);
-  const kpi = (t, v, s = '') => `<div class="rounded-2xl bg-card p-4"><div class="text-xs text-mist/60">${t}</div><div class="mt-1 text-lg font-bold">${v}</div>${s ? `<div class="text-xs text-mist/60">${s}</div>` : ''}</div>`;
-  const row = (a, b, c = '') => `<div class="flex justify-between gap-3 rounded-xl bg-card px-4 py-3 text-sm"><span>${a}</span><span class="shrink-0 text-right">${b}${c ? `<br><span class="text-xs text-mist/60">${c}</span>` : ''}</span></div>`;
-  const sv = Object.entries(svc).map(([n, a]) => [n, a, a.r - a.c]).sort((a, b) => b[2] - a[2]);
-  $('st').innerHTML = !ord.length ? '<p class="text-mist/60">У цьому періоді ще немає виданих замовлень.</p>' :
-    `<div class="grid grid-cols-2 gap-2">${kpi('Виручка', money(rev), ord.length + ' замовл., сер. чек ' + money(rev / ord.length))}${kpi('Прибуток (до реклами)', money(gross), 'матеріали ' + money(mat) + ', робота ' + money(lab))}${kpi('Реклама', money(spend))}${kpi('Після реклами', money(gross - spend))}${kpi('Клієнтів', cl.length, 'повторних ' + (cl.length ? Math.round(rep / cl.length * 100) : 0) + '%')}</div>
+      $('ss').onclick = openStatSettings; document.querySelectorAll('[data-p]').forEach(b => b.onclick = () => { sper = b.dataset.p; viewStats(); });
+      const now = new Date(), from = sper === 'all' ? '1970-01-01' : sper === 'month' ? iso(new Date(now.getFullYear(), now.getMonth(), 1)) : iso(new Date(Date.now() - +sper * 864e5));
+      const [o, l, ad, al] = await Promise.all([
+        sb.from('orders').select('id,client_id,total_uah,materials_cost_uah,labor_cost_uah,clients(source),order_items(name,revenue_uah,materials_cost_uah,labor_cost_uah,qty)').eq('status', 'delivered').gte('delivered_at', from),
+        sb.from('leads').select('utm_source,status').gte('created_at', from), sb.from('ad_spend').select('*').gte('month', from.slice(0, 7) + '-01'), sb.from('orders').select('client_id').eq('status', 'delivered')]);
+      if (o.error) return $('st').textContent = 'Помилка: ' + o.error.message + ' (чи виконано analytics.sql?)';
+      const ord = o.data, sum = (a, f) => a.reduce((x, y) => x + (+f(y) || 0), 0), key = s => (s || 'direct').toLowerCase();
+      const rev = sum(ord, x => x.total_uah), mat = sum(ord, x => x.materials_cost_uah), lab = sum(ord, x => x.labor_cost_uah), spend = sum(ad.data || [], x => x.amount_uah), gross = rev - mat - lab;
+      const cnt = {}; (al.data || []).forEach(x => cnt[x.client_id] = (cnt[x.client_id] || 0) + 1); const cl = [...new Set(ord.map(x => x.client_id))], rep = cl.filter(c => cnt[c] > 1).length;
+      const svc = {}; ord.forEach(x => (x.order_items || []).forEach(i => { const a = svc[i.name] = svc[i.name] || { n: 0, r: 0, c: 0 }; a.n += +i.qty || 0; a.r += +i.revenue_uah || 0; a.c += (+i.materials_cost_uah || 0) + (+i.labor_cost_uah || 0); }));
+      const ch = {}, C = k => ch[k] = ch[k] || { leads: 0, won: 0, rev: 0, cost: 0, spend: 0 };
+      (l.data || []).forEach(x => { const c = C(key(x.utm_source)); c.leads++; if (x.status === 'client') c.won++; });
+      ord.forEach(x => { const c = C(key(x.clients && x.clients.source)); c.rev += +x.total_uah || 0; c.cost += (+x.materials_cost_uah || 0) + (+x.labor_cost_uah || 0); });
+      (ad.data || []).forEach(x => C(key(x.channel)).spend += +x.amount_uah || 0);
+      const kpi = (t, v, s = '') => `<div class="rounded-2xl bg-card p-4"><div class="text-xs text-mist/60">${t}</div><div class="mt-1 text-lg font-bold">${v}</div>${s ? `<div class="text-xs text-mist/60">${s}</div>` : ''}</div>`;
+      const row = (a, b, c = '') => `<div class="flex justify-between gap-3 rounded-xl bg-card px-4 py-3 text-sm"><span>${a}</span><span class="shrink-0 text-right">${b}${c ? `<br><span class="text-xs text-mist/60">${c}</span>` : ''}</span></div>`;
+      const sv = Object.entries(svc).map(([n, a]) => [n, a, a.r - a.c]).sort((a, b) => b[2] - a[2]);
+      $('st').innerHTML = !ord.length ? '<p class="text-mist/60">У цьому періоді ще немає виданих замовлень.</p>' :
+        `<div class="grid grid-cols-2 gap-2">${kpi('Виручка', money(rev), ord.length + ' замовл., сер. чек ' + money(rev / ord.length))}${kpi('Прибуток (до реклами)', money(gross), 'матеріали ' + money(mat) + ', робота ' + money(lab))}${kpi('Реклама', money(spend))}${kpi('Після реклами', money(gross - spend))}${kpi('Клієнтів', cl.length, 'повторних ' + (cl.length ? Math.round(rep / cl.length * 100) : 0) + '%')}</div>
     <section><h2 class="mb-2 font-bold">Послуги за прибутком</h2><div class="space-y-1">${sv.map(([n, a, m]) => row(esc(n) + ' <span class="text-xs text-mist/60">×' + a.n + '</span>', money(m), a.r ? Math.round(m / a.r * 100) + '% від ' + money(a.r) : '')).join('')}</div></section>
     <section><h2 class="mb-2 font-bold">Канали</h2><div class="space-y-1">${Object.entries(ch).sort((a, b) => b[1].rev - a[1].rev).map(([k, c]) => { const m = c.rev - c.cost; return row(esc(k) + ' <span class="text-xs text-mist/60">заявок ' + c.leads + ', клієнтів ' + c.won + '</span>', money(m), c.spend ? 'реклама ' + money(c.spend) + ', окупність ' + Math.round((m - c.spend) / c.spend * 100) + '%' : 'виручка ' + money(c.rev)); }).join('')}</div></section>`;
-}
-async function openStatSettings() {
-  const [cfg, ad] = await Promise.all([sb.from('settings').select('*').eq('id', 1).maybeSingle(), sb.from('ad_spend').select('*').order('month', { ascending: false }).limit(12)]);
-  modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">Налаштування аналітики</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+    }
+    async function openStatSettings() {
+      const [cfg, ad] = await Promise.all([sb.from('settings').select('*').eq('id', 1).maybeSingle(), sb.from('ad_spend').select('*').order('month', { ascending: false }).limit(12)]);
+      modal(`<div class="flex justify-between"><h2 class="text-xl font-bold">Налаштування аналітики</h2><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <form id="hf" class="mt-3 grid gap-2"><label class="text-sm text-mist/70">Вартість години майстра, грн<input name="h" type="number" min="0" step="any" class="${INP} mt-1" value="${cfg.data ? cfg.data.hourly_cost_uah : 0}"></label><button class="${BTN2}">Зберегти</button></form>
   <p class="mt-2 text-xs text-mist/60">Береться на момент видачі замовлення й множиться на «робочий час» послуги з прайсу.</p>
   <h3 class="mt-5 font-bold">Витрати на рекламу</h3><form id="af2" class="mt-2 grid grid-cols-2 gap-2"><input name="m" type="month" required class="${INP}"><input name="c" required list="chs" placeholder="Канал (instagram, tiktok…)" class="${INP}"><datalist id="chs"><option value="instagram"><option value="facebook"><option value="tiktok"><option value="google"><option value="youtube"></datalist><input name="a" type="number" min="0" step="any" required placeholder="Сума, грн" class="${INP}"><button class="${BTN2}">Додати</button></form>
   <p class="mt-2 text-xs text-mist/60">Назва каналу має збігатися з utm_source у посиланнях.</p>
   <div class="mt-3 space-y-1 text-sm">${(ad.data || []).map(x => `<div class="flex justify-between rounded-xl bg-canvas px-3 py-2"><span>${esc(String(x.month).slice(0, 7))} · ${esc(x.channel)}</span><span>${Math.round(x.amount_uah)} грн<button data-da="${x.id}" class="ml-2 text-mist/50" aria-label="Видалити">&times;</button></span></div>`).join('')}</div>`);
-  $('x').onclick = closeModal;
-  $('hf').onsubmit = async e => { e.preventDefault(); await sb.from('settings').upsert({ id: 1, hourly_cost_uah: +e.target.h.value || 0 }); closeModal(); viewStats(); };
-  $('af2').onsubmit = async e => { e.preventDefault(); const f = e.target; await sb.from('ad_spend').insert({ month: f.m.value + '-01', channel: f.c.value.trim().toLowerCase(), amount_uah: +f.a.value }); openStatSettings(); };
-  document.querySelectorAll('[data-da]').forEach(b => b.onclick = async () => { await sb.from('ad_spend').delete().eq('id', b.dataset.da); openStatSettings(); });
-}
-/* Списання матеріалів і розрахунок собівартості при видачі замовлення */
-async function deductStock(od, items, factor, rate, disc) {
-  const ids = items.map(i => i.service_id).filter(Boolean);
-  const [n, v, cfg] = await Promise.all([ids.length ? sb.from('service_norms').select('*').in('service_id', ids) : { data: [] }, sb.from('v_stock').select('id,avg_cost'), sb.from('settings').select('hourly_cost_uah').eq('id', 1).maybeSingle()]);
-  const cost = {}, need = {}, hourly = +(cfg.data && cfg.data.hourly_cost_uah) || 0, f = factor || 1; (v.data || []).forEach(x => cost[x.id] = +x.avg_cost || 0);
-  const gross = items.reduce((a, i) => a + i.price * i.qty * (i.currency === 'USD' ? (rate || 0) : 1), 0), k = gross > 0 ? Math.max(0, (gross - (disc || 0)) / gross) : 1;
-  let T = { rev: 0, mat: 0, lab: 0 };
-  for (const i of items) {
-    const norms = (n.data || []).filter(x => x.service_id === i.service_id), s = services.find(x => x.id === i.service_id);
-    const rev = i.price * i.qty * (i.currency === 'USD' ? (rate || 0) : 1) * k, mat = norms.reduce((a, x) => a + x.qty * i.qty * f * (cost[x.material_id] || 0), 0), lab = ((s && s.work_minutes) || 0) / 60 * i.qty * hourly;
-    norms.forEach(x => need[x.material_id] = (need[x.material_id] || 0) + x.qty * i.qty * f); T.rev += rev; T.mat += mat; T.lab += lab;
-    await sb.from('order_items').update({ revenue_uah: rev, materials_cost_uah: mat, labor_cost_uah: lab }).eq('id', i.id);
-  }
-  const rows = Object.entries(need).map(([m, q]) => ({ material_id: +m, kind: 'out', qty: -q, unit_cost_uah: cost[m] || 0, order_id: od.id, note: 'Списання за замовленням', created_by: me.id }));
-  if (rows.length) await sb.from('stock_moves').insert(rows);
-  await sb.from('orders').update({ stock_deducted: true, total_uah: T.rev, materials_cost_uah: T.mat, labor_cost_uah: T.lab }).eq('id', od.id);
-}
+      $('x').onclick = closeModal;
+      $('hf').onsubmit = async e => { e.preventDefault(); await sb.from('settings').upsert({ id: 1, hourly_cost_uah: +e.target.h.value || 0 }); closeModal(); viewStats(); };
+      $('af2').onsubmit = async e => { e.preventDefault(); const f = e.target; await sb.from('ad_spend').insert({ month: f.m.value + '-01', channel: f.c.value.trim().toLowerCase(), amount_uah: +f.a.value }); openStatSettings(); };
+      document.querySelectorAll('[data-da]').forEach(b => b.onclick = async () => { await sb.from('ad_spend').delete().eq('id', b.dataset.da); openStatSettings(); });
+    }
+    /* Списання матеріалів і розрахунок собівартості при видачі замовлення */
+    async function deductStock(od, items, factor, rate, disc) {
+      const ids = items.map(i => i.service_id).filter(Boolean);
+      const [n, v, cfg] = await Promise.all([ids.length ? sb.from('service_norms').select('*').in('service_id', ids) : { data: [] }, sb.from('v_stock').select('id,avg_cost'), sb.from('settings').select('hourly_cost_uah').eq('id', 1).maybeSingle()]);
+      const cost = {}, need = {}, hourly = +(cfg.data && cfg.data.hourly_cost_uah) || 0, f = factor || 1; (v.data || []).forEach(x => cost[x.id] = +x.avg_cost || 0);
+      const gross = items.reduce((a, i) => a + i.price * i.qty * (i.currency === 'USD' ? (rate || 0) : 1), 0), k = gross > 0 ? Math.max(0, (gross - (disc || 0)) / gross) : 1;
+      let T = { rev: 0, mat: 0, lab: 0 };
+      for (const i of items) {
+        const norms = (n.data || []).filter(x => x.service_id === i.service_id), s = services.find(x => x.id === i.service_id);
+        const rev = i.price * i.qty * (i.currency === 'USD' ? (rate || 0) : 1) * k, mat = norms.reduce((a, x) => a + x.qty * i.qty * f * (cost[x.material_id] || 0), 0), lab = ((s && s.work_minutes) || 0) / 60 * i.qty * hourly;
+        norms.forEach(x => need[x.material_id] = (need[x.material_id] || 0) + x.qty * i.qty * f); T.rev += rev; T.mat += mat; T.lab += lab;
+        await sb.from('order_items').update({ revenue_uah: rev, materials_cost_uah: mat, labor_cost_uah: lab }).eq('id', i.id);
+      }
+      const rows = Object.entries(need).map(([m, q]) => ({ material_id: +m, kind: 'out', qty: -q, unit_cost_uah: cost[m] || 0, order_id: od.id, note: 'Списання за замовленням', created_by: me.id }));
+      if (rows.length) await sb.from('stock_moves').insert(rows);
+      await sb.from('orders').update({ stock_deducted: true, total_uah: T.rev, materials_cost_uah: T.mat, labor_cost_uah: T.lab }).eq('id', od.id);
+    }
 
-/* ===== Бонуси, кешбек, рекомендації ===== */
-let LS = null;
-async function loadLoyalty() { const { data } = await sb.from('loyalty_settings').select('*').eq('id', 1).maybeSingle(); LS = data || { cashback_percent: 0, max_pay_share_percent: 100, referral_referrer_uah: 0, referral_referred_uah: 0, referral_min_order_uah: 0 }; return LS; }
-/* Баланс за правилом "найстаріші бонуси спливають першими"; прострочені не враховуються */
-function bonusBalance(moves, at = Date.now()) {
-  const lots = []; moves.slice().sort((a, b) => new Date(a.created_at) - new Date(b.created_at)).forEach(m => {
-    const t = +new Date(m.created_at), a = +m.amount_uah;
-    if (a > 0) lots.push({ r: a, e: m.expires_at ? +new Date(m.expires_at + 'T23:59:59') : Infinity });
-    else { let need = -a; for (const l of lots) { if (need <= 0) break; if (l.e >= t && l.r > 0) { const u = Math.min(l.r, need); l.r -= u; need -= u; } } }
-  });
-  return lots.reduce((s, l) => s + (l.e >= at ? l.r : 0), 0);
-}
-async function clientBonus(id) { const { data } = await sb.from('bonus_moves').select('*').eq('client_id', id).order('created_at'); return { moves: data || [], balance: bonusBalance(data || []) }; }
-async function viewLoyalty() {
-  await loadLoyalty(); const L = LS, fld = (k, t, step = 'any') => `<label class="text-sm text-mist/70">${t}<input name="${k}" type="number" step="${step}" min="0" class="${INP} mt-1" value="${L[k] ?? ''}"></label>`;
-  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Бонуси і рекомендації</h1><p class="mt-2 text-sm text-mist/70">Нуль означає «вимкнено». Усі суми у гривнях. Цифри визначаєте ви, перед запуском порахуйте, скільки програма коштує з маржі.</p>
+    /* ===== Бонуси, кешбек, рекомендації ===== */
+    let LS = null;
+    async function loadLoyalty() { const { data } = await sb.from('loyalty_settings').select('*').eq('id', 1).maybeSingle(); LS = data || { cashback_percent: 0, max_pay_share_percent: 100, referral_referrer_uah: 0, referral_referred_uah: 0, referral_min_order_uah: 0 }; return LS; }
+    /* Баланс за правилом "найстаріші бонуси спливають першими"; прострочені не враховуються */
+    function bonusBalance(moves, at = Date.now()) {
+      const lots = []; moves.slice().sort((a, b) => new Date(a.created_at) - new Date(b.created_at)).forEach(m => {
+        const t = +new Date(m.created_at), a = +m.amount_uah;
+        if (a > 0) lots.push({ r: a, e: m.expires_at ? +new Date(m.expires_at + 'T23:59:59') : Infinity });
+        else { let need = -a; for (const l of lots) { if (need <= 0) break; if (l.e >= t && l.r > 0) { const u = Math.min(l.r, need); l.r -= u; need -= u; } } }
+      });
+      return lots.reduce((s, l) => s + (l.e >= at ? l.r : 0), 0);
+    }
+    async function clientBonus(id) { const { data } = await sb.from('bonus_moves').select('*').eq('client_id', id).order('created_at'); return { moves: data || [], balance: bonusBalance(data || []) }; }
+    async function viewLoyalty() {
+      await loadLoyalty(); const L = LS, fld = (k, t, step = 'any') => `<label class="text-sm text-mist/70">${t}<input name="${k}" type="number" step="${step}" min="0" class="${INP} mt-1" value="${L[k] ?? ''}"></label>`;
+      $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Бонуси і рекомендації</h1><p class="mt-2 text-sm text-mist/70">Нуль означає «вимкнено». Усі суми у гривнях. Цифри визначаєте ви, перед запуском порахуйте, скільки програма коштує з маржі.</p>
   <form id="lf2" class="mt-4 grid gap-3">${fld('cashback_percent', 'Кешбек, % від суми, сплаченої грошима')}${fld('bonus_valid_days', 'Строк дії бонусів, днів (порожньо = безстроково)', '1')}${fld('max_pay_share_percent', 'Максимум чека, який можна оплатити бонусами, %')}
   <h2 class="mt-3 font-bold">Рекомендації</h2>${fld('referral_referrer_uah', 'Бонус тому, хто порекомендував')}${fld('referral_referred_uah', 'Бонус новому клієнту')}${fld('referral_min_order_uah', 'Мінімальна сума першого замовлення')}${fld('referral_max_per_referrer', 'Максимум винагород на одного рекомендатора (порожньо = без ліміту)', '1')}
   <p class="text-xs text-mist/60">Бонус за рекомендацію нараховується обом лише після першого видачі замовлення нового клієнта на потрібну суму.</p><button class="${BTN}">Зберегти</button><p id="msg" class="text-sm"></p></form>`;
-  $('lf2').onsubmit = async e => {
-    e.preventDefault(); const f = e.target, n = k => f[k].value === '' ? null : +f[k].value;
-    const row = { id: 1, cashback_percent: n('cashback_percent') || 0, bonus_valid_days: n('bonus_valid_days'), max_pay_share_percent: n('max_pay_share_percent') ?? 100, referral_referrer_uah: n('referral_referrer_uah') || 0, referral_referred_uah: n('referral_referred_uah') || 0, referral_min_order_uah: n('referral_min_order_uah') || 0, referral_max_per_referrer: n('referral_max_per_referrer') };
-    const { error } = await sb.from('loyalty_settings').upsert(row); $('msg').textContent = error ? 'Помилка: ' + error.message + ' (чи виконано loyalty.sql?)' : 'Збережено.'; if (!error) LS = row;
-  };
-}
-async function openBonus(id) {
-  const [c, b, rf] = await Promise.all([sb.from('clients').select('id,name,referred_by').eq('id', id).single(), clientBonus(id), sb.from('clients').select('id,name').eq('referred_by', id)]);
-  const k = c.data, by = k.referred_by ? (await sb.from('clients').select('name').eq('id', k.referred_by).single()).data : null;
-  modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(k.name)}</h2><p class="text-sm text-mist/70">Бонуси та рекомендації</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+      $('lf2').onsubmit = async e => {
+        e.preventDefault(); const f = e.target, n = k => f[k].value === '' ? null : +f[k].value;
+        const row = { id: 1, cashback_percent: n('cashback_percent') || 0, bonus_valid_days: n('bonus_valid_days'), max_pay_share_percent: n('max_pay_share_percent') ?? 100, referral_referrer_uah: n('referral_referrer_uah') || 0, referral_referred_uah: n('referral_referred_uah') || 0, referral_min_order_uah: n('referral_min_order_uah') || 0, referral_max_per_referrer: n('referral_max_per_referrer') };
+        const { error } = await sb.from('loyalty_settings').upsert(row); $('msg').textContent = error ? 'Помилка: ' + error.message + ' (чи виконано loyalty.sql?)' : 'Збережено.'; if (!error) LS = row;
+      };
+    }
+    async function openBonus(id) {
+      const [c, b, rf] = await Promise.all([sb.from('clients').select('id,name,referred_by').eq('id', id).single(), clientBonus(id), sb.from('clients').select('id,name').eq('referred_by', id)]);
+      const k = c.data, by = k.referred_by ? (await sb.from('clients').select('name').eq('id', k.referred_by).single()).data : null;
+      modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(k.name)}</h2><p class="text-sm text-mist/70">Бонуси та рекомендації</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <p class="mt-4 text-2xl font-extrabold">${Math.floor(b.balance)} грн</p><p class="text-xs text-mist/60">доступні бонуси (прострочені не враховано)</p>
   <form id="bf" class="mt-3 grid grid-cols-2 gap-2"><input name="a" type="number" step="any" required placeholder="± сума, грн" class="${INP}"><input name="n" required placeholder="Причина" class="${INP}"><button class="${BTN2} col-span-2">Скоригувати вручну</button></form>
   <h3 class="mt-5 font-bold">Рекомендація</h3><p class="mt-1 text-sm">${by ? 'Привів: ' + esc(by.name) : 'Не вказано, хто порекомендував'}</p>
   <input id="rs" type="search" placeholder="Знайти того, хто порекомендував" class="${INP} mt-2"><select id="rl" size="3" class="${INP} mt-2"></select><button id="rsv" class="${BTN2} mt-2 w-full">Зберегти, хто привів</button>
   ${(rf.data || []).length ? `<p class="mt-3 text-sm text-mist/70">Привів клієнтів: ${rf.data.map(x => esc(x.name)).join(', ')}</p>` : ''}
   <h3 class="mt-5 font-bold">Історія</h3><div class="mt-2 space-y-1 text-sm">${b.moves.slice().reverse().slice(0, 20).map(x => `<div class="flex justify-between gap-3 border-l-2 border-accent pl-3"><span>${fmt(x.created_at)} · ${esc(x.note || x.kind)}${x.expires_at ? ' · до ' + esc(x.expires_at) : ''}</span><span class="shrink-0">${+x.amount_uah > 0 ? '+' : ''}${+x.amount_uah}</span></div>`).join('') || '<span class="text-mist/60">Поки порожньо</span>'}</div><p id="msg" class="mt-2 text-sm"></p>`);
-  $('x').onclick = closeModal;
-  $('bf').onsubmit = async e => { e.preventDefault(); const a = +e.target.a.value; if (!a) return; if (a < 0 && -a > b.balance) return $('msg').textContent = 'Не можна списати більше, ніж є на балансі.';
-    await sb.from('bonus_moves').insert({ client_id: id, kind: 'adjust', amount_uah: a, note: e.target.n.value.trim(), created_by: me.id }); openBonus(id); };
-  const fill = async () => { const s = $('rs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').neq('id', id).order('created_at', { ascending: false }).limit(15); if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`); const { data } = await r; $('rl').innerHTML = (data || []).map(x => `<option value="${x.id}">${esc(x.name)} ${esc(x.phone || '')}</option>`).join(''); };
-  let t; $('rs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; fill();
-  $('rsv').onclick = async () => { if (!$('rl').value) return; await sb.from('clients').update({ referred_by: $('rl').value }).eq('id', id); openBonus(id); };
-}
-/* Кешбек, списання бонусів і винагороди за рекомендацію при видачі замовлення */
-async function loyaltyOnDelivered(od, up, total) {
-  if (!LS) await loadLoyalty(); const used = +up.bonus_used_uah || 0, paid = Math.max(0, total - used), mv = [];
-  const exp = LS.bonus_valid_days ? iso(new Date(Date.now() + LS.bonus_valid_days * 864e5)) : null;
-  if (used > 0) mv.push({ client_id: od.client_id, kind: 'redeem', amount_uah: -used, order_id: od.id, note: 'Оплата бонусами' });
-  const cb = Math.round(paid * (+LS.cashback_percent || 0) / 100); if (cb > 0) mv.push({ client_id: od.client_id, kind: 'cashback', amount_uah: cb, order_id: od.id, expires_at: exp, note: `Кешбек ${LS.cashback_percent}%` });
-  const { data: c } = await sb.from('clients').select('referred_by').eq('id', od.client_id).single();
-  if (c && c.referred_by && paid >= (+LS.referral_min_order_uah || 0) && (+LS.referral_referrer_uah > 0 || +LS.referral_referred_uah > 0)) {
-    const [prev, cnt] = await Promise.all([sb.from('orders').select('id').eq('client_id', od.client_id).eq('status', 'delivered').neq('id', od.id).limit(1), sb.from('bonus_moves').select('id', { count: 'exact', head: true }).eq('client_id', c.referred_by).eq('kind', 'referral')]);
-    if (!(prev.data || []).length && (!LS.referral_max_per_referrer || (cnt.count || 0) < LS.referral_max_per_referrer)) {
-      if (+LS.referral_referrer_uah > 0) mv.push({ client_id: c.referred_by, kind: 'referral', amount_uah: +LS.referral_referrer_uah, order_id: od.id, expires_at: exp, note: 'Бонус за рекомендацію' });
-      if (+LS.referral_referred_uah > 0) mv.push({ client_id: od.client_id, kind: 'referral', amount_uah: +LS.referral_referred_uah, order_id: od.id, expires_at: exp, note: 'Бонус за першу покупку за рекомендацією' });
+      $('x').onclick = closeModal;
+      $('bf').onsubmit = async e => {
+        e.preventDefault(); const a = +e.target.a.value; if (!a) return; if (a < 0 && -a > b.balance) return $('msg').textContent = 'Не можна списати більше, ніж є на балансі.';
+        await sb.from('bonus_moves').insert({ client_id: id, kind: 'adjust', amount_uah: a, note: e.target.n.value.trim(), created_by: me.id }); openBonus(id);
+      };
+      const fill = async () => { const s = $('rs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').neq('id', id).order('created_at', { ascending: false }).limit(15); if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`); const { data } = await r; $('rl').innerHTML = (data || []).map(x => `<option value="${x.id}">${esc(x.name)} ${esc(x.phone || '')}</option>`).join(''); };
+      let t; $('rs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; fill();
+      $('rsv').onclick = async () => { if (!$('rl').value) return; await sb.from('clients').update({ referred_by: $('rl').value }).eq('id', id); openBonus(id); };
     }
-  }
-  if (mv.length) await sb.from('bonus_moves').insert(mv.map(x => ({ ...x, created_by: me.id })));
-  await sb.from('orders').update({ bonus_accrued_uah: cb }).eq('id', od.id);
-}
+    /* Кешбек, списання бонусів і винагороди за рекомендацію при видачі замовлення */
+    async function loyaltyOnDelivered(od, up, total) {
+      if (!LS) await loadLoyalty(); const used = +up.bonus_used_uah || 0, paid = Math.max(0, total - used), mv = [];
+      const exp = LS.bonus_valid_days ? iso(new Date(Date.now() + LS.bonus_valid_days * 864e5)) : null;
+      if (used > 0) mv.push({ client_id: od.client_id, kind: 'redeem', amount_uah: -used, order_id: od.id, note: 'Оплата бонусами' });
+      const cb = Math.round(paid * (+LS.cashback_percent || 0) / 100); if (cb > 0) mv.push({ client_id: od.client_id, kind: 'cashback', amount_uah: cb, order_id: od.id, expires_at: exp, note: `Кешбек ${LS.cashback_percent}%` });
+      const { data: c } = await sb.from('clients').select('referred_by').eq('id', od.client_id).single();
+      if (c && c.referred_by && paid >= (+LS.referral_min_order_uah || 0) && (+LS.referral_referrer_uah > 0 || +LS.referral_referred_uah > 0)) {
+        const [prev, cnt] = await Promise.all([sb.from('orders').select('id').eq('client_id', od.client_id).eq('status', 'delivered').neq('id', od.id).limit(1), sb.from('bonus_moves').select('id', { count: 'exact', head: true }).eq('client_id', c.referred_by).eq('kind', 'referral')]);
+        if (!(prev.data || []).length && (!LS.referral_max_per_referrer || (cnt.count || 0) < LS.referral_max_per_referrer)) {
+          if (+LS.referral_referrer_uah > 0) mv.push({ client_id: c.referred_by, kind: 'referral', amount_uah: +LS.referral_referrer_uah, order_id: od.id, expires_at: exp, note: 'Бонус за рекомендацію' });
+          if (+LS.referral_referred_uah > 0) mv.push({ client_id: od.client_id, kind: 'referral', amount_uah: +LS.referral_referred_uah, order_id: od.id, expires_at: exp, note: 'Бонус за першу покупку за рекомендацією' });
+        }
+      }
+      if (mv.length) await sb.from('bonus_moves').insert(mv.map(x => ({ ...x, created_by: me.id })));
+      await sb.from('orders').update({ bonus_accrued_uah: cb }).eq('id', od.id);
+    }
 
-/* ===== Мультичат (єдина переписка) ===== */
-const CH = { telegram: 'Telegram', viber: 'Viber', whatsapp: 'WhatsApp', instagram: 'Instagram' };
-async function unreadBadge() {
-  const { data } = await sb.from('conversations').select('unread').gt('unread', 0), n = (data || []).reduce((a, x) => a + x.unread, 0), b = document.querySelector('[data-tab=chat]');
-  if (b && n) b.insertAdjacentHTML('beforeend', `<span class="absolute right-1 top-1.5 rounded-full bg-accent px-1.5 text-[10px] font-bold leading-4 text-canvas">${n}</span>`);
-}
-async function viewChat() {
-  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Мультичат</h1><p class="mt-1 text-xs text-mist/60">Підключені Telegram та Instagram. Viber і WhatsApp додамо пізніше.</p><div id="list" class="mt-4 space-y-2"></div>`;
-  const { data, error } = await sb.from('conversations').select('*').order('last_message_at', { ascending: false }).limit(100);
-  if (error) return $('list').textContent = 'Помилка: ' + error.message + ' (чи виконано inbox.sql?)';
-  $('list').innerHTML = data.length ? data.map(c => `<button data-cv="${c.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(c.display_name || c.username || c.external_id)}</b><span class="text-xs text-mist/60">${fmt(c.last_message_at)}</span></div>
+    /* ===== Мультичат (єдина переписка) ===== */
+    const CH = { telegram: 'Telegram', viber: 'Viber', whatsapp: 'WhatsApp', instagram: 'Instagram' };
+    async function unreadBadge() {
+      const { data } = await sb.from('conversations').select('unread').gt('unread', 0), n = (data || []).reduce((a, x) => a + x.unread, 0), b = document.querySelector('[data-tab=chat]');
+      if (b && n) b.insertAdjacentHTML('beforeend', `<span class="absolute right-1 top-1.5 rounded-full bg-accent px-1.5 text-[10px] font-bold leading-4 text-canvas">${n}</span>`);
+    }
+    async function viewChat() {
+      $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Мультичат</h1><p class="mt-1 text-xs text-mist/60">Підключені Telegram та Instagram. Viber і WhatsApp додамо пізніше.</p><div id="list" class="mt-4 space-y-2"></div>`;
+      const { data, error } = await sb.from('conversations').select('*').order('last_message_at', { ascending: false }).limit(100);
+      if (error) return $('list').textContent = 'Помилка: ' + error.message + ' (чи виконано inbox.sql?)';
+      $('list').innerHTML = data.length ? data.map(c => `<button data-cv="${c.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(c.display_name || c.username || c.external_id)}</b><span class="text-xs text-mist/60">${fmt(c.last_message_at)}</span></div>
     <div class="mt-1 flex justify-between gap-3 text-sm text-mist/80"><span class="truncate">${esc(c.last_text)}</span>${c.unread ? `<span class="shrink-0 rounded-full bg-accent px-2 text-xs font-bold text-canvas">${c.unread}</span>` : ''}</div>
     <div class="mt-1 text-xs text-mist/50">${CH[c.channel]}${c.client_id ? '' : ' · не прив\'язано до клієнта'}</div></button>`).join('') : '<p class="text-mist/60">Розмов ще немає. Вони з\'являться, коли клієнт напише на ваш Telegram після підключення бота.</p>';
-  document.querySelectorAll('[data-cv]').forEach(b => b.onclick = () => openChat(data.find(x => x.id === b.dataset.cv)));
-}
-async function openChat(c) {
-  modal(`<div class="flex items-start justify-between gap-3"><div><h2 class="text-xl font-bold">${esc(c.display_name || c.username || c.external_id)}</h2><p class="text-xs text-mist/60">${CH[c.channel]}${c.username ? ' · @' + esc(c.username) : ''}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+      document.querySelectorAll('[data-cv]').forEach(b => b.onclick = () => openChat(data.find(x => x.id === b.dataset.cv)));
+    }
+    async function openChat(c) {
+      modal(`<div class="flex items-start justify-between gap-3"><div><h2 class="text-xl font-bold">${esc(c.display_name || c.username || c.external_id)}</h2><p class="text-xs text-mist/60">${CH[c.channel]}${c.username ? ' · @' + esc(c.username) : ''}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <div class="mt-3 flex flex-wrap gap-2">${c.client_id ? '<button id="oc" class="' + BTN2 + ' px-3 py-2 text-sm">Картка клієнта</button>' : '<button id="lk" class="' + BTN2 + ' px-3 py-2 text-sm">Прив\'язати до клієнта</button><button id="mk" class="' + BTN2 + ' px-3 py-2 text-sm">Створити клієнта</button>'}</div>
   <div id="thr" class="mt-3 max-h-[45vh] space-y-2 overflow-y-auto rounded-xl bg-canvas p-3 text-sm"></div>
   <form id="sf2" class="mt-3 flex gap-2"><textarea name="t" rows="2" required placeholder="Повідомлення…" class="${INP}"></textarea><button class="${BTN} px-4">Надіслати</button></form><p id="win" class="mt-1 text-xs text-mist/60"></p><p id="msg" class="mt-2 text-sm text-mist/80"></p>`);
-  $('x').onclick = closeModal;
-  const load = async () => {
-    if (!$('thr')) return; const { data } = await sb.from('messages').select('*').eq('conversation_id', c.id).order('created_at').limit(200), box = $('thr'), end = box.scrollTop + box.clientHeight >= box.scrollHeight - 40;
-    box.innerHTML = (data || []).map(m => `<div class="flex ${m.direction === 'out' ? 'justify-end' : ''}"><div class="max-w-[85%] rounded-2xl px-3 py-2 ${m.direction === 'out' ? 'bg-accent text-canvas' : 'bg-card'}"><div class="whitespace-pre-wrap break-words">${esc(m.text)}</div><div class="mt-1 text-[10px] opacity-60">${fmt(m.created_at)}</div></div></div>`).join('') || '<span class="text-mist/60">Повідомлень немає</span>';
-    if (c.channel === 'instagram') { const li = (data || []).filter(m => m.direction === 'in').pop(), left = li ? 864e5 - (Date.now() - new Date(li.created_at)) : 0; $('win').textContent = left > 0 ? `Відповісти в Instagram можна ще ${Math.floor(left / 36e5)} год ${Math.floor(left % 36e5 / 6e4)} хв` : 'Минуло понад 24 години від останнього повідомлення клієнта: Instagram не дозволяє відповісти з CRM. Відповідайте в застосунку Instagram.'; $('sf2').querySelector('button').disabled = left <= 0; }
-    if (end) box.scrollTop = box.scrollHeight; await sb.from('conversations').update({ unread: 0 }).eq('id', c.id).gt('unread', 0);
-  };
-  await load(); $('thr').scrollTop = $('thr').scrollHeight; const timer = setInterval(() => { $('thr') ? load() : clearInterval(timer); }, 10000);
-  $('sf2').onsubmit = async e => {
-    e.preventDefault(); const f = e.target, text = f.t.value.trim(); if (!text) return; $('msg').textContent = 'Надсилаємо…';
-    try {
-      const tok = (await sb.auth.getSession()).data.session.access_token;
-      const r = await fetch(WORKER_URL + '/chat-send', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + tok }, body: JSON.stringify({ conversation_id: c.id, text }) });
-      if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || r.status);
-      f.t.value = ''; $('msg').textContent = ''; load();
-    } catch (err) { $('msg').textContent = 'Не вдалося надіслати: ' + (err.message === 'window_closed' ? 'минуло понад 24 години, Instagram не дозволяє відповісти з CRM' : err.message) + (WORKER_URL ? '' : ' (вкажіть WORKER_URL у файлі CRM)'); }
-  };
-  if ($('oc')) $('oc').onclick = () => { closeModal(); openClient(c.client_id); };
-  if ($('mk')) $('mk').onclick = async () => {
-    const { data, error } = await sb.from('clients').insert({ name: c.display_name || c.username || 'Клієнт', telegram: c.username ? '@' + c.username : null, source: 'telegram' }).select().single();
-    if (error) return $('msg').textContent = 'Помилка: ' + error.message; await sb.from('conversations').update({ client_id: data.id }).eq('id', c.id); closeModal(); openClient(data.id);
-  };
-  if ($('lk')) $('lk').onclick = () => {
-    modal(`<h2 class="mb-3 text-xl font-bold">Прив'язати до клієнта</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Ім'я або телефон" class="${INP}"><select id="cl" size="5" class="${INP}"></select><button id="go" class="${BTN}">Прив'язати</button></div>`);
-    const fill = async () => { const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20); if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`); const { data } = await r; $('cl').innerHTML = (data || []).map(x => `<option value="${x.id}">${esc(x.name)} ${esc(x.phone || '')}</option>`).join(''); };
-    let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; fill();
-    $('go').onclick = async () => { if (!$('cl').value) return; await sb.from('conversations').update({ client_id: $('cl').value }).eq('id', c.id); closeModal(); openClient($('cl').value); };
-  };
-}
+      $('x').onclick = closeModal;
+      const load = async () => {
+        if (!$('thr')) return; const { data } = await sb.from('messages').select('*').eq('conversation_id', c.id).order('created_at').limit(200), box = $('thr'), end = box.scrollTop + box.clientHeight >= box.scrollHeight - 40;
+        box.innerHTML = (data || []).map(m => `<div class="flex ${m.direction === 'out' ? 'justify-end' : ''}"><div class="max-w-[85%] rounded-2xl px-3 py-2 ${m.direction === 'out' ? 'bg-accent text-canvas' : 'bg-card'}"><div class="whitespace-pre-wrap break-words">${esc(m.text)}</div><div class="mt-1 text-[10px] opacity-60">${fmt(m.created_at)}</div></div></div>`).join('') || '<span class="text-mist/60">Повідомлень немає</span>';
+        if (c.channel === 'instagram') { const li = (data || []).filter(m => m.direction === 'in').pop(), left = li ? 864e5 - (Date.now() - new Date(li.created_at)) : 0; $('win').textContent = left > 0 ? `Відповісти в Instagram можна ще ${Math.floor(left / 36e5)} год ${Math.floor(left % 36e5 / 6e4)} хв` : 'Минуло понад 24 години від останнього повідомлення клієнта: Instagram не дозволяє відповісти з CRM. Відповідайте в застосунку Instagram.'; $('sf2').querySelector('button').disabled = left <= 0; }
+        if (end) box.scrollTop = box.scrollHeight; await sb.from('conversations').update({ unread: 0 }).eq('id', c.id).gt('unread', 0);
+      };
+      await load(); $('thr').scrollTop = $('thr').scrollHeight; const timer = setInterval(() => { $('thr') ? load() : clearInterval(timer); }, 10000);
+      $('sf2').onsubmit = async e => {
+        e.preventDefault(); const f = e.target, text = f.t.value.trim(); if (!text) return; $('msg').textContent = 'Надсилаємо…';
+        try {
+          const tok = (await sb.auth.getSession()).data.session.access_token;
+          const r = await fetch(WORKER_URL + '/chat-send', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + tok }, body: JSON.stringify({ conversation_id: c.id, text }) });
+          if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || r.status);
+          f.t.value = ''; $('msg').textContent = ''; load();
+        } catch (err) { $('msg').textContent = 'Не вдалося надіслати: ' + (err.message === 'window_closed' ? 'минуло понад 24 години, Instagram не дозволяє відповісти з CRM' : err.message) + (WORKER_URL ? '' : ' (вкажіть WORKER_URL у файлі CRM)'); }
+      };
+      if ($('oc')) $('oc').onclick = () => { closeModal(); openClient(c.client_id); };
+      if ($('mk')) $('mk').onclick = async () => {
+        const { data, error } = await sb.from('clients').insert({ name: c.display_name || c.username || 'Клієнт', telegram: c.username ? '@' + c.username : null, source: 'telegram' }).select().single();
+        if (error) return $('msg').textContent = 'Помилка: ' + error.message; await sb.from('conversations').update({ client_id: data.id }).eq('id', c.id); closeModal(); openClient(data.id);
+      };
+      if ($('lk')) $('lk').onclick = () => {
+        modal(`<h2 class="mb-3 text-xl font-bold">Прив'язати до клієнта</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Ім'я або телефон" class="${INP}"><select id="cl" size="5" class="${INP}"></select><button id="go" class="${BTN}">Прив'язати</button></div>`);
+        const fill = async () => { const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20); if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`); const { data } = await r; $('cl').innerHTML = (data || []).map(x => `<option value="${x.id}">${esc(x.name)} ${esc(x.phone || '')}</option>`).join(''); };
+        let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; fill();
+        $('go').onclick = async () => { if (!$('cl').value) return; await sb.from('conversations').update({ client_id: $('cl').value }).eq('id', c.id); closeModal(); openClient($('cl').value); };
+      };
+    }
 
-/* ===== Сьогодні ===== */
-const dayRange = d => { const a = new Date(d); a.setHours(0, 0, 0, 0); const b = new Date(a); b.setDate(b.getDate() + 1); return [a.toISOString(), b.toISOString()]; };
-const hm = d => new Date(d).toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
-const iso = d => { const x = new Date(d); return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0'); };
-const KIND = { inspection: 'Огляд', work: 'Робота' }, AS = { planned: 'Запланований', done: 'Був', cancelled: 'Скасований', no_show: 'Не прийшов' };
-const wait = l => { const m = Math.round((Date.now() - new Date(l.created_at)) / 60000); return m < 60 ? m + ' хв' : m < 1440 ? Math.floor(m / 60) + ' год' : Math.floor(m / 1440) + ' дн'; };
-async function viewToday() {
-  $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Сьогодні</h1><div id="tb" class="mt-4 space-y-6"><p class="text-mist/60">Завантаження…</p></div>`;
-  const [a, b] = dayRange(new Date()), today = iso(new Date()), soon = iso(new Date(Date.now() + 7 * 864e5));
-  const [nl, fu, ap, rm, st] = await Promise.all([
-    sb.from('leads').select('*').eq('status', 'new').order('created_at'),
-    sb.from('leads').select('*').in('status', ['in_progress', 'booked']).lte('next_contact_at', today).order('next_contact_at'),
-    sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').eq('status', 'planned').gte('starts_at', a).lt('starts_at', b).order('starts_at'),
-    sb.from('order_items').select('id,name,remind_at,orders(client_id,clients(id,name,phone,telegram,viber,consent_marketing))').not('remind_at', 'is', null).lte('remind_at', soon).order('remind_at'), sb.from('v_stock').select('*').eq('active', true)]);
-  if (nl.error || ap.error || rm.error) return $('tb').textContent = 'Помилка завантаження.';
-  const sec = (t, n, body) => `<section><h2 class="mb-2 font-bold">${t} <span class="text-mist/60">${n}</span></h2><div class="space-y-2">${body || '<p class="text-sm text-mist/60">Немає</p>'}</div></section>`;
-  const lead = (l, note) => `<button data-l="${l.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${esc(l.name)}</b> <span class="text-sm text-accent">${note}</span><div class="text-sm text-mist/80">${esc(l.contact)} · ${esc(l.service_interest || '')}</div></button>`;
-  const all = [...nl.data, ...fu.data], low = (st.data || []).filter(m => +m.min_stock > 0 && m.balance <= +m.min_stock);
-  $('tb').innerHTML =
-    sec('Нові заявки', nl.data.length, nl.data.map(l => lead(l, 'чекає ' + wait(l))).join('')) +
-    sec('Передзвонити', fu.data.length, fu.data.map(l => lead(l, 'контакт ' + l.next_contact_at)).join('')) +
-    sec('Записи на сьогодні', ap.data.length, ap.data.map(x => `<button data-a="${x.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${hm(x.starts_at)}</b> · ${esc(x.clients && x.clients.name)} <span class="text-sm text-mist/70">${KIND[x.kind]}${x.cars ? ' · ' + esc(x.cars.model) : ''}</span></button>`).join('')) +
-    sec('Кому нагадати (7 днів)', rm.data.length, rm.data.map(r => { const c = r.orders.clients; return `<div class="rounded-2xl bg-card p-4"><b>${esc(c.name)}</b> <span class="text-sm text-mist/70">· ${esc(r.name)} · до ${esc(r.remind_at)}</span>${c.consent_marketing ? '' : '<div class="text-xs text-accent">Немає згоди на пропозиції: краще подзвонити</div>'}<div class="mt-2 flex flex-wrap gap-2">${links(c, '')}<button data-done="${r.id}" data-c="${c.id}" data-n="${esc(r.name)}" class="${BTN2} text-sm">Зроблено</button></div></div>`; }).join('')) +
-    (low.length ? sec('Матеріали закінчуються', low.length, low.map(m => `<button data-sk class="flex w-full justify-between rounded-2xl bg-card p-4 text-left"><b>${esc(m.name)}</b><span class="text-accent">${+(+m.balance).toFixed(2)} ${esc(m.unit)}</span></button>`).join('')) : '');
-  document.querySelectorAll('[data-sk]').forEach(b => b.onclick = () => { tab = 'stock'; render(); });
-  document.querySelectorAll('[data-l]').forEach(b => b.onclick = () => openLead(all.find(x => x.id === b.dataset.l)));
-  document.querySelectorAll('[data-a]').forEach(b => b.onclick = () => openAppt(ap.data.find(x => x.id === b.dataset.a)));
-  document.querySelectorAll('[data-done]').forEach(b => b.onclick = async () => {
-    await sb.from('order_items').update({ remind_at: null }).eq('id', b.dataset.done);
-    await sb.from('timeline').insert({ client_id: b.dataset.c, kind: 'note', text: 'Нагадування про повторний візит: ' + b.dataset.n, created_by: me.id }); viewToday();
-  });
-}
+    /* ===== Сьогодні ===== */
+    const dayRange = d => { const a = new Date(d); a.setHours(0, 0, 0, 0); const b = new Date(a); b.setDate(b.getDate() + 1); return [a.toISOString(), b.toISOString()]; };
+    const hm = d => new Date(d).toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+    const iso = d => { const x = new Date(d); return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0'); };
+    const KIND = { inspection: 'Огляд', work: 'Робота' }, AS = { planned: 'Запланований', done: 'Був', cancelled: 'Скасований', no_show: 'Не прийшов' };
+    const wait = l => { const m = Math.round((Date.now() - new Date(l.created_at)) / 60000); return m < 60 ? m + ' хв' : m < 1440 ? Math.floor(m / 60) + ' год' : Math.floor(m / 1440) + ' дн'; };
+    async function viewToday() {
+      $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Сьогодні</h1><div id="tb" class="mt-4 space-y-6"><p class="text-mist/60">Завантаження…</p></div>`;
+      const [a, b] = dayRange(new Date()), today = iso(new Date()), soon = iso(new Date(Date.now() + 7 * 864e5));
+      const [nl, fu, ap, rm, st] = await Promise.all([
+        sb.from('leads').select('*').eq('status', 'new').order('created_at'),
+        sb.from('leads').select('*').in('status', ['in_progress', 'booked']).lte('next_contact_at', today).order('next_contact_at'),
+        sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').eq('status', 'planned').gte('starts_at', a).lt('starts_at', b).order('starts_at'),
+        sb.from('order_items').select('id,name,remind_at,orders(client_id,clients(id,name,phone,telegram,viber,consent_marketing))').not('remind_at', 'is', null).lte('remind_at', soon).order('remind_at'), sb.from('v_stock').select('*').eq('active', true)]);
+      if (nl.error || ap.error || rm.error) return $('tb').textContent = 'Помилка завантаження.';
+      const sec = (t, n, body) => `<section><h2 class="mb-2 font-bold">${t} <span class="text-mist/60">${n}</span></h2><div class="space-y-2">${body || '<p class="text-sm text-mist/60">Немає</p>'}</div></section>`;
+      const lead = (l, note) => `<button data-l="${l.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${esc(l.name)}</b> <span class="text-sm text-accent">${note}</span><div class="text-sm text-mist/80">${esc(l.contact)} · ${esc(l.service_interest || '')}</div></button>`;
+      const all = [...nl.data, ...fu.data], low = (st.data || []).filter(m => +m.min_stock > 0 && m.balance <= +m.min_stock);
+      $('tb').innerHTML =
+        sec('Нові заявки', nl.data.length, nl.data.map(l => lead(l, 'чекає ' + wait(l))).join('')) +
+        sec('Передзвонити', fu.data.length, fu.data.map(l => lead(l, 'контакт ' + l.next_contact_at)).join('')) +
+        sec('Записи на сьогодні', ap.data.length, ap.data.map(x => `<button data-a="${x.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><b>${hm(x.starts_at)}</b> · ${esc(x.clients && x.clients.name)} <span class="text-sm text-mist/70">${KIND[x.kind]}${x.cars ? ' · ' + esc(x.cars.model) : ''}</span></button>`).join('')) +
+        sec('Кому нагадати (7 днів)', rm.data.length, rm.data.map(r => { const c = r.orders.clients; return `<div class="rounded-2xl bg-card p-4"><b>${esc(c.name)}</b> <span class="text-sm text-mist/70">· ${esc(r.name)} · до ${esc(r.remind_at)}</span>${c.consent_marketing ? '' : '<div class="text-xs text-accent">Немає згоди на пропозиції: краще подзвонити</div>'}<div class="mt-2 flex flex-wrap gap-2">${links(c, '')}<button data-done="${r.id}" data-c="${c.id}" data-n="${esc(r.name)}" class="${BTN2} text-sm">Зроблено</button></div></div>`; }).join('')) +
+        (low.length ? sec('Матеріали закінчуються', low.length, low.map(m => `<button data-sk class="flex w-full justify-between rounded-2xl bg-card p-4 text-left"><b>${esc(m.name)}</b><span class="text-accent">${+(+m.balance).toFixed(2)} ${esc(m.unit)}</span></button>`).join('')) : '');
+      document.querySelectorAll('[data-sk]').forEach(b => b.onclick = () => { tab = 'stock'; render(); });
+      document.querySelectorAll('[data-l]').forEach(b => b.onclick = () => openLead(all.find(x => x.id === b.dataset.l)));
+      document.querySelectorAll('[data-a]').forEach(b => b.onclick = () => openAppt(ap.data.find(x => x.id === b.dataset.a)));
+      document.querySelectorAll('[data-done]').forEach(b => b.onclick = async () => {
+        await sb.from('order_items').update({ remind_at: null }).eq('id', b.dataset.done);
+        await sb.from('timeline').insert({ client_id: b.dataset.c, kind: 'note', text: 'Нагадування про повторний візит: ' + b.dataset.n, created_by: me.id }); viewToday();
+      });
+    }
 
-/* ===== Календар ===== */
-let cdate = new Date();
-async function viewCal() {
-  $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Календар</h1><button id="na" class="${BTN} px-4 py-2 text-sm">+ Запис</button></div>
+    /* ===== Календар ===== */
+    let cdate = new Date();
+    async function viewCal() {
+      $('view').innerHTML = `<div class="flex items-center justify-between"><h1 class="text-2xl font-extrabold">Календар</h1><button id="na" class="${BTN} px-4 py-2 text-sm">+ Запис</button></div>
   <div class="my-4 flex gap-2"><button id="pv" class="${BTN2} px-4" aria-label="Попередній день">&lsaquo;</button><input id="dt" type="date" value="${iso(cdate)}" class="${INP}"><button id="nx" class="${BTN2} px-4" aria-label="Наступний день">&rsaquo;</button></div><div id="list" class="space-y-2"></div>`;
-  const go = d => { cdate = d; viewCal(); };
-  $('pv').onclick = () => go(new Date(cdate.getTime() - 864e5)); $('nx').onclick = () => go(new Date(cdate.getTime() + 864e5));
-  $('dt').onchange = e => e.target.value && go(new Date(e.target.value + 'T12:00')); $('na').onclick = () => newAppt();
-  const [a, b] = dayRange(cdate); const { data, error } = await sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').gte('starts_at', a).lt('starts_at', b).order('starts_at');
-  if (error) return $('list').textContent = 'Помилка: ' + error.message;
-  $('list').innerHTML = data.length ? data.map(x => `<button data-a="${x.id}" class="block w-full rounded-2xl bg-card p-4 text-left ${x.status === 'planned' ? '' : 'opacity-60'}"><b>${hm(x.starts_at)}${x.duration_min ? ' · ' + x.duration_min + ' хв' : ''}</b> · ${esc(x.clients && x.clients.name)}<div class="text-sm text-mist/70">${KIND[x.kind]}${x.cars ? ' · ' + esc(x.cars.model) : ''} · ${AS[x.status]}</div></button>`).join('') : '<p class="text-mist/60">На цей день записів немає.</p>';
-  document.querySelectorAll('[data-a]').forEach(btn => btn.onclick = () => openAppt(data.find(x => x.id === btn.dataset.a)));
-}
-function openAppt(x) {
-  modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(x.clients && x.clients.name)}</h2><p class="text-sm text-mist/70">${KIND[x.kind]} · ${fmt(x.starts_at)}${x.cars ? ' · ' + esc(x.cars.model) : ''} · ${AS[x.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
+      const go = d => { cdate = d; viewCal(); };
+      $('pv').onclick = () => go(new Date(cdate.getTime() - 864e5)); $('nx').onclick = () => go(new Date(cdate.getTime() + 864e5));
+      $('dt').onchange = e => e.target.value && go(new Date(e.target.value + 'T12:00')); $('na').onclick = () => newAppt();
+      const [a, b] = dayRange(cdate); const { data, error } = await sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').gte('starts_at', a).lt('starts_at', b).order('starts_at');
+      if (error) return $('list').textContent = 'Помилка: ' + error.message;
+      $('list').innerHTML = data.length ? data.map(x => `<button data-a="${x.id}" class="block w-full rounded-2xl bg-card p-4 text-left ${x.status === 'planned' ? '' : 'opacity-60'}"><b>${hm(x.starts_at)}${x.duration_min ? ' · ' + x.duration_min + ' хв' : ''}</b> · ${esc(x.clients && x.clients.name)}<div class="text-sm text-mist/70">${KIND[x.kind]}${x.cars ? ' · ' + esc(x.cars.model) : ''} · ${AS[x.status]}</div></button>`).join('') : '<p class="text-mist/60">На цей день записів немає.</p>';
+      document.querySelectorAll('[data-a]').forEach(btn => btn.onclick = () => openAppt(data.find(x => x.id === btn.dataset.a)));
+    }
+    function openAppt(x) {
+      modal(`<div class="flex justify-between"><div><h2 class="text-xl font-bold">${esc(x.clients && x.clients.name)}</h2><p class="text-sm text-mist/70">${KIND[x.kind]} · ${fmt(x.starts_at)}${x.cars ? ' · ' + esc(x.cars.model) : ''} · ${AS[x.status]}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <div class="mt-3 flex flex-wrap gap-2">${links(x.clients || {}, '')}</div>${x.notes ? `<p class="mt-3 text-sm">${esc(x.notes)}</p>` : ''}
   <div class="mt-4 grid gap-2">${['done', 'cancelled', 'no_show'].map(k => `<button data-s="${k}" class="${BTN2}">${AS[k]}</button>`).join('')}<button id="mo" class="${BTN}">Створити замовлення</button></div>`);
-  $('x').onclick = closeModal; $('mo').onclick = () => { closeModal(); newOrder(x.client_id); };
-  document.querySelectorAll('[data-s]').forEach(b => b.onclick = async () => {
-    await sb.from('appointments').update({ status: b.dataset.s }).eq('id', x.id);
-    await sb.from('timeline').insert({ client_id: x.client_id, kind: 'visit', text: `${KIND[x.kind]} ${fmt(x.starts_at)}: ${AS[b.dataset.s]}`, created_by: me.id }); closeModal(); render();
-  });
-}
-function newAppt() {
-  const d0 = new Date(cdate); d0.setHours(10, 0, 0, 0); const loc = new Date(d0 - d0.getTimezoneOffset() * 6e4).toISOString().slice(0, 16);
-  modal(`<h2 class="mb-3 text-xl font-bold">Новий запис</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Пошук клієнта: ім'я або телефон" class="${INP}"><select id="cl" size="4" class="${INP}"></select><select id="ca" class="${INP}"><option value="">Авто</option></select>
+      $('x').onclick = closeModal; $('mo').onclick = () => { closeModal(); newOrder(x.client_id); };
+      document.querySelectorAll('[data-s]').forEach(b => b.onclick = async () => {
+        await sb.from('appointments').update({ status: b.dataset.s }).eq('id', x.id);
+        await sb.from('timeline').insert({ client_id: x.client_id, kind: 'visit', text: `${KIND[x.kind]} ${fmt(x.starts_at)}: ${AS[b.dataset.s]}`, created_by: me.id }); closeModal(); render();
+      });
+    }
+    function newAppt() {
+      const d0 = new Date(cdate); d0.setHours(10, 0, 0, 0); const loc = new Date(d0 - d0.getTimezoneOffset() * 6e4).toISOString().slice(0, 16);
+      modal(`<h2 class="mb-3 text-xl font-bold">Новий запис</h2><div class="grid gap-3"><input id="cs" type="search" placeholder="Пошук клієнта: ім'я або телефон" class="${INP}"><select id="cl" size="4" class="${INP}"></select><select id="ca" class="${INP}"><option value="">Авто</option></select>
   <select id="kd" class="${INP}"><option value="inspection">Огляд</option><option value="work">Робота</option></select><input id="st" type="datetime-local" value="${loc}" class="${INP}"><input id="du" type="number" min="5" step="5" placeholder="Тривалість, хв" class="${INP}">
   <select id="as" class="${INP}"><option value="">Хто веде</option>${staff.map(s => `<option value="${s.user_id}">${esc(s.name)}</option>`).join('')}</select><textarea id="nt" rows="2" placeholder="Нотатки" class="${INP}"></textarea><button id="go" class="${BTN}">Створити</button><p id="msg" class="text-sm"></p></div>`);
-  const pick = async () => { const { data } = await sb.from('cars').select('*').eq('client_id', $('cl').value); $('ca').innerHTML = '<option value="">Авто</option>' + (data || []).map(a => `<option value="${a.id}">${esc([a.model, a.plate].filter(Boolean).join(' · '))}</option>`).join(''); };
-  const fill = async () => { const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20); if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`); const { data } = await r; $('cl').innerHTML = (data || []).map(c => `<option value="${c.id}">${esc(c.name)} ${esc(c.phone || '')}</option>`).join(''); };
-  let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; $('cl').onchange = pick; fill();
-  $('go').onclick = async () => {
-    if (!$('cl').value || !$('st').value) return $('msg').textContent = 'Оберіть клієнта й час.';
-    const { error } = await sb.from('appointments').insert({ client_id: $('cl').value, car_id: $('ca').value || null, kind: $('kd').value, starts_at: new Date($('st').value).toISOString(), duration_min: +$('du').value || null, assignee: $('as').value || null, notes: $('nt').value || null });
-    if (error) return $('msg').textContent = 'Помилка: ' + error.message;
-    await sb.from('timeline').insert({ client_id: $('cl').value, kind: 'visit', text: `Запис: ${KIND[$('kd').value]} ${fmt(new Date($('st').value))}`, created_by: me.id }); closeModal(); render();
-  };
-}
+      const pick = async () => { const { data } = await sb.from('cars').select('*').eq('client_id', $('cl').value); $('ca').innerHTML = '<option value="">Авто</option>' + (data || []).map(a => `<option value="${a.id}">${esc([a.model, a.plate].filter(Boolean).join(' · '))}</option>`).join(''); };
+      const fill = async () => { const s = $('cs').value.trim().replace(/[,()%]/g, ' '); let r = sb.from('clients').select('id,name,phone').order('created_at', { ascending: false }).limit(20); if (s) r = r.or(`name.ilike.%${s}%,phone.ilike.%${s}%`); const { data } = await r; $('cl').innerHTML = (data || []).map(c => `<option value="${c.id}">${esc(c.name)} ${esc(c.phone || '')}</option>`).join(''); };
+      let t; $('cs').oninput = () => { clearTimeout(t); t = setTimeout(fill, 250); }; $('cl').onchange = pick; fill();
+      $('go').onclick = async () => {
+        if (!$('cl').value || !$('st').value) return $('msg').textContent = 'Оберіть клієнта й час.';
+        const { error } = await sb.from('appointments').insert({ client_id: $('cl').value, car_id: $('ca').value || null, kind: $('kd').value, starts_at: new Date($('st').value).toISOString(), duration_min: +$('du').value || null, assignee: $('as').value || null, notes: $('nt').value || null });
+        if (error) return $('msg').textContent = 'Помилка: ' + error.message;
+        await sb.from('timeline').insert({ client_id: $('cl').value, kind: 'visit', text: `Запис: ${KIND[$('kd').value]} ${fmt(new Date($('st').value))}`, created_by: me.id }); closeModal(); render();
+      };
+    }
 
-if (!SUPABASE_URL) app.innerHTML = '<p class="p-6">Вкажіть SUPABASE_URL і SUPABASE_ANON_KEY на початку скрипта в crm/index.html.</p>'; else start();
-</script>
+    if (!SUPABASE_URL) app.innerHTML = '<p class="p-6">Вкажіть SUPABASE_URL і SUPABASE_ANON_KEY на початку скрипта в crm/index.html.</p>'; else start();
+  </script>
 </body>
+
 </html>
