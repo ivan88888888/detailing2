@@ -654,14 +654,14 @@
       if (b && n) b.insertAdjacentHTML('beforeend', `<span class="absolute right-1 top-1.5 rounded-full bg-accent px-1.5 text-[10px] font-bold leading-4 text-canvas">${n}</span>`);
     }
     async function viewChat() {
-      $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Мультичат</h1><p class="mt-1 text-xs text-mist/60">Підключені Telegram та Instagram. Viber і WhatsApp додамо пізніше.</p><div id="list" class="mt-4 space-y-2"></div>`;
-      const { data, error } = await sb.from('conversations').select('*').order('last_message_at', { ascending: false }).limit(100);
-      if (error) return $('list').textContent = 'Помилка: ' + error.message + ' (чи виконано inbox.sql?)';
-      $('list').innerHTML = data.length ? data.map(c => `<button data-cv="${c.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(c.display_name || c.username || c.external_id)}</b><span class="text-xs text-mist/60">${fmt(c.last_message_at)}</span></div>
-    <div class="mt-1 flex justify-between gap-3 text-sm text-mist/80"><span class="truncate">${esc(c.last_text)}</span>${c.unread ? `<span class="shrink-0 rounded-full bg-accent px-2 text-xs font-bold text-canvas">${c.unread}</span>` : ''}</div>
+        $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Мультичат</h1><p class="mt-1 text-xs text-mist/60">Підключені Telegram та Instagram. Viber і WhatsApp додамо пізніше.</p><div id="list" class="mt-4 space-y-2"></div>`;
+        const { data, error } = await sb.from('conversations').select('*').order('last_message_at', { ascending: false }).limit(100);
+        if (error) return $('list').textContent = 'Помилка: ' + error.message + ' (чи виконано inbox.sql?)';
+        $('list').innerHTML = data.length ? data.map(c => `<button data-cv="${c.id}" class="block w-full rounded-2xl bg-card p-4 text-left"><div class="flex justify-between gap-3"><b>${esc(c.display_name || c.username || c.external_id)}</b><span class="text-xs text-mist/60">${fmt(c.last_message_at)}</span></div>
+    <div class="mt-1 flex items-center justify-between gap-3 text-sm text-mist/80"><span class="truncate">${esc(c.last_text)}</span>${c.unread ? `<span class="inline-flex h-5 min-w-[1.25rem] shrink-0 items-center justify-center rounded-full bg-accent px-1.5 text-xs font-bold leading-none text-canvas">${c.unread}</span>` : ''}</div>
     <div class="mt-1 text-xs text-mist/50">${CH[c.channel]}${c.client_id ? '' : ' · не прив\'язано до клієнта'}</div></button>`).join('') : '<p class="text-mist/60">Розмов ще немає. Вони з\'являться, коли клієнт напише на ваш Telegram після підключення бота.</p>';
-      document.querySelectorAll('[data-cv]').forEach(b => b.onclick = () => openChat(data.find(x => x.id === b.dataset.cv)));
-    }
+        document.querySelectorAll('[data-cv]').forEach(b => b.onclick = () => openChat(data.find(x => x.id === b.dataset.cv)));
+      }
     async function openChat(c) {
       modal(`<div class="flex items-start justify-between gap-3"><div><h2 class="text-xl font-bold">${esc(c.display_name || c.username || c.external_id)}</h2><p class="text-xs text-mist/60">${CH[c.channel]}${c.username ? ' · @' + esc(c.username) : ''}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
   <div class="mt-3 flex flex-wrap gap-2">${c.client_id ? '<button id="oc" class="' + BTN2 + ' px-3 py-2 text-sm">Картка клієнта</button>' : '<button id="lk" class="' + BTN2 + ' px-3 py-2 text-sm">Прив\'язати до клієнта</button><button id="mk" class="' + BTN2 + ' px-3 py-2 text-sm">Створити клієнта</button>'}</div>
