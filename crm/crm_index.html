@@ -228,9 +228,16 @@
 
     /* ===== Каркас ===== */
     function render() {
+      const prevNav = document.querySelector('.app-nav');
+      const navScrollLeft = prevNav ? prevNav.scrollLeft : 0;
+
       app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div class="mb-2 flex justify-end gap-4 text-xs text-mist/60"><button id="ly">Бонуси</button><button id="an">Аналітика</button><button id="sk">Склад</button><button id="pr">Прайс</button><button id="out">Вийти</button></div><div id="view"></div></main>
   <nav class="app-nav fixed inset-x-0 bottom-0 z-20" style="padding-bottom:env(safe-area-inset-bottom)">
   ${[['today', 'Сьогодні'], ['leads', 'Ліди'], ['chat', 'Мультичат'], ['clients', 'Клієнти'], ['cal', 'Календар'], ['orders', 'Замовлення']].map(([k, l]) => `<button data-tab="${k}" class="font-semibold ${tab === k ? 'is-active text-accent' : 'text-mist/70'}">${l}</button>`).join('')}</nav>`;
+
+      const nextNav = document.querySelector('.app-nav');
+      if (nextNav && navScrollLeft) nextNav.scrollLeft = navScrollLeft;
+
       document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
       $('pr').onclick = () => { tab = 'price'; render(); };
       $('sk').onclick = () => { tab = 'stock'; render(); };
