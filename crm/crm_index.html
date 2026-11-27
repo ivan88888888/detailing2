@@ -12,11 +12,14 @@
   <script>tailwind.config = { theme: { extend: { colors: { accent: '#FF5500', canvas: '#17181B', card: '#2E3035', ink: '#F4F1EA', mist: '#E3E4E6' }, fontFamily: { sans: ['Montserrat', 'system-ui', 'sans-serif'] } } } }</script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
   <style>
+    html,
     body {
       margin: 0;
-      background: #121316
+      background: #121316;
+      overflow-x: clip;
     }
 
+    /* Вхід: суцільний фон на весь екран без заокруглень і рамок */
     .login {
       min-height: 100vh;
       min-height: 100dvh;
@@ -27,80 +30,81 @@
       background: #1a1b1e;
     }
 
-    .login-hero {
-      position: relative;
-      height: 17vh;
-      height: 17dvh;
-      min-height: 110px;
-      background: #121316
-    }
-
-    .login-sheet {
-      flex: 1;
-      margin-top: -1px;
-      padding: 1.75rem 1.5rem calc(2rem + env(safe-area-inset-bottom));
-      background: #1a1b1e;
-      border: 0;
-      border-radius: 18px 18px 0 0;
-    }
-
     .login-form {
       width: 100%;
-      max-width: 22rem;
+      max-width: 24rem;
       margin: 0 auto;
       display: grid;
-      gap: .75rem;
+      gap: .6rem;
     }
 
     .lg-title {
-      margin: 0 0 .5rem;
-      font-size: 1.5rem;
+      margin: 0 0 .35rem;
+      font-size: 1.2rem;
       font-weight: 800;
-      line-height: 1.2;
-      color: #F4F1EA
+      color: #F4F1EA;
+      white-space: nowrap;
     }
 
     .lg-title span {
-      color: #ff5500
+      color: #ff5500;
     }
 
     .lg-in {
       width: 100%;
       box-sizing: border-box;
-      border: 1px solid rgba(244, 241, 234, .2);
-      background: #17181b;
-      border-radius: .75rem;
-      padding: .85rem 1rem;
+      border: 1px solid rgba(244, 241, 234, .18);
+      background: #F2F2F2;
+      border-radius: .65rem;
+      padding: .62rem .85rem;
       font: inherit;
-      font-size: 1rem;
-      color: #F4F1EA
+      font-size: .95rem;
+      line-height: 1.25;
+      color: #17181b;
+    }
+
+    .lg-in[type="password"] {
+      font-size: .68rem;
+      letter-spacing: .12em;
+      -webkit-text-security: disc;
     }
 
     .lg-in::placeholder {
-      color: rgba(227, 228, 230, .4)
+      color: rgba(23, 24, 27, .45);
+      font-size: .95rem;
+      letter-spacing: normal;
+    }
+
+    .lg-in:-webkit-autofill,
+    .lg-in:-webkit-autofill:hover,
+    .lg-in:-webkit-autofill:focus {
+      -webkit-text-fill-color: #17181b;
+      -webkit-box-shadow: 0 0 0 1000px #F2F2F2 inset;
+      transition: background-color 5000s ease-in-out 0s;
     }
 
     .lg-in:focus {
       outline: none;
-      border-color: #ff5500
+      border-color: #ff5500;
     }
 
     .lg-btn {
       border: 0;
-      border-radius: .75rem;
+      border-radius: .65rem;
       background: #ff5500;
       color: #17181b;
       font: inherit;
+      font-size: .95rem;
       font-weight: 700;
-      padding: .9rem 1rem;
-      cursor: pointer
+      padding: .68rem 1rem;
+      cursor: pointer;
     }
 
     .lg-msg {
       min-height: 1.25rem;
       margin: 0;
       font-size: .875rem;
-      color: rgba(227, 228, 230, .7)
+      color: rgba(227, 228, 230, .7);
     }
 
     /* Головне меню: скляна панель зі світінням над нею */
@@ -111,6 +115,7 @@
       gap: 2px;
       overflow-x: auto;
       overflow-y: hidden;
+      overscroll-behavior-x: contain;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       padding-left: 6px;
@@ -120,11 +125,11 @@
       background: rgba(23, 24, 27, .82);
       -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(244, 241, 234, .14)
+      border-top: 1px solid rgba(244, 241, 234, .14);
     }
 
     .app-nav::-webkit-scrollbar {
-      display: none
+      display: none;
     }
 
     .app-nav::before {
@@ -135,7 +140,7 @@
       bottom: 100%;
       height: 28px;
       pointer-events: none;
-      background: linear-gradient(to top, rgba(255, 85, 0, .16), transparent)
+      background: linear-gradient(to top, rgba(255, 85, 0, .16), transparent);
     }
 
     .app-nav button {
@@ -144,7 +149,7 @@
       white-space: nowrap;
       padding: 1rem .75rem;
       font-size: .75rem;
-      line-height: 1.2
+      line-height: 1.2;
     }
 
     @media (min-width: 640px) {
@@ -152,11 +157,11 @@
         justify-content: center;
         gap: 6px;
         -webkit-mask-image: none;
-        mask-image: none
+        mask-image: none;
       }
 
       .app-nav button {
-        padding: 1rem 1.15rem
+        padding: 1rem 1.15rem;
       }
     }
 
@@ -169,7 +174,7 @@
       height: 2px;
       border-radius: 2px;
       background: #ff5500;
-      box-shadow: 0 0 12px 2px rgba(255, 85, 0, .65)
+      box-shadow: 0 0 12px 2px rgba(255, 85, 0, .65);
     }
   </style>
 </head>
@@ -200,10 +205,10 @@
 
     /* ===== Вхід ===== */
     function login(msg = '') {
-      app.innerHTML = `<div class="login"><div class="login-hero" aria-hidden="true"></div><div class="login-sheet"><form id="lf" class="login-form"><h1 class="lg-title">CRM<br>Detailing Family <span>IF</span></h1>
+      app.innerHTML = `<div class="login"><form id="lf" class="login-form"><h1 class="lg-title">CRM Detailing Family <span>IF</span></h1>
   <input class="lg-in" name="email" type="email" autocomplete="username" required placeholder="Email">
   <input class="lg-in" name="password" type="password" autocomplete="current-password" required placeholder="Пароль">
-  <button class="lg-btn">Увійти</button><p class="lg-msg" role="alert">${esc(msg)}</p></form></div></div>`;
+  <button class="lg-btn">Увійти</button><p class="lg-msg" role="alert">${esc(msg)}</p></form></div>`;
       $('lf').onsubmit = async e => {
         e.preventDefault(); const f = e.target;
         const { error } = await sb.auth.signInWithPassword({ email: f.email.value, password: f.password.value });
@@ -223,20 +228,61 @@
       const prevNav = document.querySelector('.app-nav');
       const navScrollLeft = prevNav ? prevNav.scrollLeft : 0;
 
-      app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div class="mb-2 flex justify-end gap-4 text-xs text-mist/60"><button id="ly">Бонуси</button><button id="an">Аналітика</button><button id="sk">Склад</button><button id="pr">Прайс</button><button id="out">Вийти</button></div><div id="view"></div></main>
+      const mainTabs = [
+        ['today', 'Сьогодні'],
+        ['leads', 'Ліди'],
+        ['chat', 'Мультичат'],
+        ['clients', 'Клієнти'],
+        ['cal', 'Календар'],
+        ['orders', 'Замовлення']
+      ];
+      const extraTabs = [
+        ['loyalty', 'Бонуси'],
+        ['stats', 'Аналітика'],
+        ['stock', 'Склад'],
+        ['price', 'Прайс']
+      ];
+      const isExtraActive = extraTabs.some(([k]) => k === tab);
+
+      app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div id="view"></div></main>
+  <div id="more-backdrop" class="fixed inset-0 z-20 hidden bg-black/40"></div>
+  <div id="more-menu" class="fixed right-3 z-30 hidden min-w-[12rem] rounded-2xl border border-ink/15 bg-card/95 p-1.5 shadow-2xl backdrop-blur-xl" style="bottom:calc(4rem + env(safe-area-inset-bottom))">
+    ${extraTabs.map(([k, l]) => `<button data-tab="${k}" class="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-sm font-semibold ${tab === k ? 'bg-accent/15 text-accent' : 'text-ink hover:bg-white/5'}">${l}</button>`).join('')}
+    <div class="my-1 border-t border-ink/10"></div>
+    <button id="out" class="flex w-full items-center rounded-xl px-4 py-3 text-left text-sm font-semibold text-mist/70 hover:bg-white/5">Вийти</button>
+  </div>
   <nav class="app-nav fixed inset-x-0 bottom-0 z-20" style="padding-bottom:env(safe-area-inset-bottom)">
-  ${[['today', 'Сьогодні'], ['leads', 'Ліди'], ['chat', 'Мультичат'], ['clients', 'Клієнти'], ['cal', 'Календар'], ['orders', 'Замовлення']].map(([k, l]) => `<button data-tab="${k}" class="font-semibold ${tab === k ? 'is-active text-accent' : 'text-mist/70'}">${l}</button>`).join('')}</nav>`;
+  ${mainTabs.map(([k, l]) => `<button data-tab="${k}" class="font-semibold ${tab === k ? 'is-active text-accent' : 'text-mist/70'}">${l}</button>`).join('')}
+  <button id="more-btn" type="button" aria-expanded="false" class="inline-flex items-center gap-1.5 font-semibold ${isExtraActive ? 'is-active text-accent' : 'text-mist/70'}">
+    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <path d="M3 6h14M3 10h14M3 14h14"/>
+    </svg>
+    <span>Ще</span>
+  </button></nav>`;
 
       const nextNav = document.querySelector('.app-nav');
       if (nextNav && navScrollLeft) nextNav.scrollLeft = navScrollLeft;
 
-      document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
-      $('pr').onclick = () => { tab = 'price'; render(); };
-      $('sk').onclick = () => { tab = 'stock'; render(); };
-      $('an').onclick = () => { tab = 'stats'; render(); };
-      $('ly').onclick = () => { tab = 'loyalty'; render(); };
+      const moreMenu = $('more-menu');
+      const moreBackdrop = $('more-backdrop');
+      const moreBtn = $('more-btn');
+      const closeMore = () => {
+        moreMenu.classList.add('hidden');
+        moreBackdrop.classList.add('hidden');
+        moreBtn.setAttribute('aria-expanded', 'false');
+      };
+      moreBtn.onclick = e => {
+        e.stopPropagation();
+        const isHidden = moreMenu.classList.contains('hidden');
+        moreMenu.classList.toggle('hidden', !isHidden);
+        moreBackdrop.classList.toggle('hidden', !isHidden);
+        moreBtn.setAttribute('aria-expanded', String(isHidden));
+      };
+      moreBackdrop.onclick = closeMore;
+
+      document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { closeMore(); tab = b.dataset.tab; render(); });
       unreadBadge();
-      $('out').onclick = async () => { await sb.auth.signOut(); login(); };
+      $('out').onclick = async () => { closeMore(); await sb.auth.signOut(); login(); };
       ({ today: viewToday, leads: viewLeads, chat: viewChat, clients: viewClients, cal: viewCal, orders: viewOrders, price: viewPrice, stock: viewStock, stats: viewStats, loyalty: viewLoyalty })[tab]();
     }
     function modal(html) {
@@ -246,7 +292,17 @@
       d.addEventListener('click', e => { if (e.target === d) closeModal(); }); document.body.appendChild(d); return d;
     }
     const closeModal = () => { const m = $('mod'); if (m) m.remove(); };
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeModal();
+        const mm = $('more-menu'), mb = $('more-backdrop'), btn = $('more-btn');
+        if (mm && !mm.classList.contains('hidden')) {
+          mm.classList.add('hidden');
+          if (mb) mb.classList.add('hidden');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        }
+      }
+    });
 
     /* ===== Ліди ===== */
     async function viewLeads() {
@@ -470,7 +526,7 @@
       });
       box.querySelectorAll('[data-dp]').forEach(b => b.onclick = async () => {
         if (!confirm('Видалити це фото?')) return;
-        await sb.storage.from('order-photos').remove([b.dataset.path]); await sb.from('order-photos').delete().eq('id', b.dataset.dp); reload();
+        await sb.storage.from('order-photos').remove([b.dataset.path]); await sb.from('order_photos').delete().eq('id', b.dataset.dp); reload();
       });
     }
 
@@ -643,7 +699,7 @@
     const CH = { telegram: 'Telegram', viber: 'Viber', whatsapp: 'WhatsApp', instagram: 'Instagram' };
     async function unreadBadge() {
       const { data } = await sb.from('conversations').select('unread').gt('unread', 0), n = (data || []).reduce((a, x) => a + x.unread, 0), b = document.querySelector('[data-tab=chat]');
-      if (b && n) b.insertAdjacentHTML('beforeend', `<span class="absolute right-1 top-1.5 rounded-full bg-accent px-1.5 text-[10px] font-bold leading-4 text-canvas">${n}</span>`);
+      if (b && n) b.insertAdjacentHTML('beforeend', `<span class="absolute right-1 top-1.5 inline-flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold leading-none text-canvas">${n}</span>`);
     }
     async function viewChat() {
       $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Мультичат</h1><p class="mt-1 text-xs text-mist/60">Підключені Telegram та Instagram. Viber і WhatsApp додамо пізніше.</p><div id="list" class="mt-4 space-y-2"></div>`;
