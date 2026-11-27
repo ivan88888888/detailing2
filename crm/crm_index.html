@@ -56,6 +56,7 @@
       margin: 0 0 .5rem;
       font-size: 1.5rem;
       font-weight: 800;
+      line-height: 1.2;
       color: #F4F1EA
     }
 
@@ -199,7 +200,7 @@
 
     /* ===== Вхід ===== */
     function login(msg = '') {
-      app.innerHTML = `<div class="login"><div class="login-hero" aria-hidden="true"></div><div class="login-sheet"><form id="lf" class="login-form"><h1 class="lg-title">CRM Detailing Family <span>IF</span></h1>
+      app.innerHTML = `<div class="login"><div class="login-hero" aria-hidden="true"></div><div class="login-sheet"><form id="lf" class="login-form"><h1 class="lg-title">CRM<br>Detailing Family <span>IF</span></h1>
   <input class="lg-in" name="email" type="email" autocomplete="username" required placeholder="Email">
   <input class="lg-in" name="password" type="password" autocomplete="current-password" required placeholder="Пароль">
   <button class="lg-btn">Увійти</button><p class="lg-msg" role="alert">${esc(msg)}</p></form></div></div>`;
@@ -469,7 +470,7 @@
       });
       box.querySelectorAll('[data-dp]').forEach(b => b.onclick = async () => {
         if (!confirm('Видалити це фото?')) return;
-        await sb.storage.from('order-photos').remove([b.dataset.path]); await sb.from('order_photos').delete().eq('id', b.dataset.dp); reload();
+        await sb.storage.from('order-photos').remove([b.dataset.path]); await sb.from('order-photos').delete().eq('id', b.dataset.dp); reload();
       });
     }
 
