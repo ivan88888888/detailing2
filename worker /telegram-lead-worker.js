@@ -292,4 +292,146 @@ async function handleSend(request, env, cors) {
   });
   if (!rpcRes.ok) {
     const rpcErr = await rpcRes.text().catch(() => '');
-    return json({ ok: false, error: 'rpc_out', detail: clip(rpcErr, 200) }, 500
+    return json({ ok: false, error: 'rpc_out', detail: clip(rpcErr, 200) }, 500, cors);
+  }
+  return json({ ok: true }, 200, cors);
+}
+
+// ===== Єдина переписка: Instagram (Instagram API with Instagram Login) =====
+const IG_API = 'https://graph.instagram.com/v25.0';
+async function hmacHex(secret, body) {
+  const k = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  return [...new Uint8Array(await crypto.subtle.sign('HMAC', k, new TextEncoder().encode(body)))].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+const safeEq = (a, b) => a.length === b.length && [...a].reduce((x, c, i) => x | (c.charCodeAt(0) ^ b.charCodeAt(i)), 0) === 0;
+async function igToken(env) { const r = await (await fetch(sbU(env, '/rest/v1/integration_tokens?channel=eq.instagram&select=token,account_id,updated_at'), { headers: sbH(env) })).json(); return Array.isArray(r) && r[0] ? r[0] : null; }
+async function handleInstagram(request, env) {
+  const u = new URL(request.url);
+  if (request.method === 'GET') {
+    return u.searchParams.get('hub.mode') === 'subscribe' && env.IG_VERIFY_TOKEN && u.searchParams.get('hub.verify_token') === env.IG_VERIFY_TOKEN ? new Response(u.searchParams.get('hub.challenge')) : new Response('forbidden', { status: 403 });
+  }
+  if (request.method !== 'POST' || !env.IG_APP_SECRET || !env.SUPABASE_URL) return new Response('forbidden', { status: 403 });
+  const raw = await request.text(), sig = (request.headers.get('X-Hub-Signature-256') || '').replace('sha256=', '');
+  if (!safeEq(sig, await hmacHex(env.IG_APP_SECRET, raw))) return new Response('forbidden', { status: 403 });
+  let d; try { d = JSON.parse(raw); } catch (e) { return new Response('ok'); }
+  try {
+    const tok = await igToken(env);
+    for (const en of d.entry || []) for (const ev of en.messaging || []) {
+      const m = ev.message; if (!m || m.is_deleted || !ev.sender || !ev.recipient) continue;
+      const echo = !!m.is_echo || String(ev.sender.id) === String(en.id), peer = String(echo ? ev.recipient.id : ev.sender.id);
+      let name = null, username = null;
+      if (!echo && tok) { const p = await fetch(IG_API + '/' + peer + '?fields=name,username', { headers: { Authorization: 'Bearer ' + tok.token } }); if (p.ok) { const j = await p.json(); name = j.name || null; username = j.username || null; } }
+      const a = m.attachments && m.attachments[0], kinds = { image: 'фото', audio: 'голосове', video: 'відео' };
+      const text = m.text || (a ? '[' + (kinds[a.type] || 'вкладення') + ']' : '[повідомлення]');
+      const res = await rpc(env, 'inbox_add_message', { p_channel: 'instagram', p_external_id: peer, p_name: name, p_username: username, p_direction: echo ? 'out' : 'in',
+        p_text: clip(text, 4000), p_ext_msg_id: String(m.mid), p_conn: null, p_at: new Date(+ev.timestamp || Date.now()).toISOString() });
+      if (!res.ok) throw new Error('rpc');
+    }
+  } catch (e) { return new Response('error', { status: 500 }); }
+  return new Response('ok');
+}
+// Токен Instagram живе 60 днів: раз на тиждень подовжуємо його автоматично
+async function refreshIgToken(env) {
+  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_KEY) return false;
+  const t = await igToken(env); if (!t || Date.now() - new Date(t.updated_at) < 7 * 864e5) return false;
+  const r = await fetch('https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=' + encodeURIComponent(t.token)); if (!r.ok) return false;
+  const j = await r.json(); if (!j.access_token) return false;
+  await fetch(sbU(env, '/rest/v1/integration_tokens?channel=eq.instagram'), { method: 'PATCH', headers: sbH(env), body: JSON.stringify({ token: j.access_token, expires_at: new Date(Date.now() + (j.expires_in || 0) * 1000).toISOString(), updated_at: new Date().toISOString() }) });
+  return true;
+}
+
+// ===== Нагадування про заявки без відповіді =====
+// Працює лише в робочий час студії (Пн-Сб, 9:00-19:00 за Києвом), щоб не будити вночі.
+const WORK_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], WORK_FROM = 9, WORK_TO = 19;
+function kyivNow(now) {
+  for (const tz of ['Europe/Kyiv', 'Europe/Kiev']) {
+    try {
+      const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: tz, weekday: 'short', hour: '2-digit', hour12: false }).formatToParts(now).map((x) => [x.type, x.value]));
+      return { day: p.weekday, hour: parseInt(p.hour, 10) % 24 };
+    } catch (e) { /* пробуємо наступну назву зони */ }
+  }
+  return null;
+}
+async function checkStaleLeads(env, now = new Date()) {
+  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_KEY || !env.BOT_TOKEN || !env.CHAT_ID) return 0;
+  const k = kyivNow(now);
+  if (!k || WORK_DAYS.indexOf(k.day) === -1 || k.hour < WORK_FROM || k.hour >= WORK_TO) return 0;
+  const stale = +env.STALE_MINUTES || 15, esc2 = +env.ESCALATE_MINUTES || 120;
+  const base = env.SUPABASE_URL.replace(/\/$/, '') + '/rest/v1/leads', h = { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY, 'Content-Type': 'application/json' };
+  const r = await fetch(base + '?status=eq.new&alert_level=lt.2&order=created_at.asc&limit=10&select=id,name,contact,contact_method,service_interest,created_at,alert_level,tg_message_id', { headers: h });
+  const rows = r.ok ? await r.json() : []; let sent = 0;
+  for (const l of rows) {
+    const age = Math.round((now - new Date(l.created_at)) / 60000), lvl = age >= esc2 ? 2 : age >= stale ? 1 : 0;
+    if (lvl <= l.alert_level) continue;
+    const when = age < 60 ? age + ' хв' : Math.floor(age / 60) + ' год';
+    const text = [(lvl === 2 ? '🚨 <b>Заявка досі без відповіді</b> ' : '🚨 <b>Нова заявка чекає</b> ') + when, line("Ім'я", l.name), line('Зв\'язок (' + l.contact_method + ')', l.contact), line('Послуга', l.service_interest), env.CRM_URL ? 'CRM: ' + esc(env.CRM_URL) : ''].filter(Boolean).join('\n');
+    const body = { chat_id: env.CHAT_ID, text, parse_mode: 'HTML', disable_web_page_preview: true };
+    if (l.tg_message_id) body.reply_to_message_id = Number(l.tg_message_id);
+    const t = await fetch('https://api.telegram.org/bot' + env.BOT_TOKEN + '/sendMessage', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body) });
+    if (t.ok) { await fetch(base + '?id=eq.' + l.id, { method: 'PATCH', headers: h, body: JSON.stringify({ alert_level: lvl }) }); sent++; }
+  }
+  return sent;
+}
+
+export { checkStaleLeads, handleTelegram, handleSend, handleInstagram, refreshIgToken };
+export default {
+  async scheduled(event, env, ctx) { ctx.waitUntil(Promise.all([checkStaleLeads(env), refreshIgToken(env)])); },
+
+  async fetch(request, env, ctx) {
+    const path = new URL(request.url).pathname;
+    if (path === '/tg-webhook') return handleTelegram(request, env);
+    if (path === '/ig-webhook') return handleInstagram(request, env);
+    if (path === '/tg-send' || path === '/chat-send') {
+      const sCors = sendCorsHeaders(request.headers.get('Origin'));
+      if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: sCors });
+      if (request.method !== 'POST') return json({ ok: false, error: 'method' }, 405, sCors);
+      return handleSend(request, env, sCors);
+    }
+
+    const cors = corsHeaders(request.headers.get('Origin'), env);
+    if (!cors) return json({ ok: false, error: 'forbidden' }, 403);
+    if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
+    if (request.method === 'GET') {
+      const u = new URL(request.url);
+      return u.pathname === '/status' ? handleStatus(u.searchParams.get('t'), env, cors) : json({ ok: false, error: 'not_found' }, 404, cors);
+    }
+    if (request.method !== 'POST') return json({ ok: false, error: 'method' }, 405, cors);
+
+    let form;
+    try { form = await request.formData(); } catch (e) { return json({ ok: false, error: 'bad_body' }, 400, cors); }
+
+    const d = {};
+    form.forEach((v, k) => { if (typeof v === 'string') d[k] = clip(v, k === 'comment' ? 1000 : 300); });
+
+    if (d.stage !== 'lead' && d.stage !== 'details') return json({ ok: false, error: 'stage' }, 400, cors);
+    if (!/^[\w-]{8,64}$/.test(d.lead_id || '')) return json({ ok: false, error: 'lead_id' }, 400, cors);
+    if (d.stage === 'lead' && (!d.name || !d.contact || d.consent_processing !== 'true')) {
+      return json({ ok: false, error: 'fields' }, 400, cors);
+    }
+
+    const msgText = buildMessage(d);
+    let replyToId = null;
+    if (d.stage === 'details') {
+      replyToId = await getLeadTgMessageId(d.lead_id, env);
+    }
+
+    if (d.stage === 'lead') {
+      const tgRes = await sendTelegramMessage(env, msgText, null).catch(() => ({ ok: false, messageId: null }));
+      const crmOk = await saveToCrm(d, env, tgRes.messageId).catch(() => false);
+      if (!tgRes.ok && !crmOk) return json({ ok: false, error: 'delivery' }, 502, cors);
+    } else {
+      const tgP = sendTelegramMessage(env, msgText, replyToId).then((x) => x.ok).catch(() => false);
+      const crmP = saveToCrm(d, env, null).catch(() => false);
+      const [tgOk, crmOk] = await Promise.all([tgP, crmP]);
+      if (!tgOk && !crmOk) return json({ ok: false, error: 'delivery' }, 502, cors);
+    }
+
+    if (env.CRM_WEBHOOK_URL && ctx && ctx.waitUntil) {
+      ctx.waitUntil(fetch(env.CRM_WEBHOOK_URL, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d),
+      }).catch(() => {}));
+    }
+    return json({ ok: true }, 200, cors);
+  },
+};
