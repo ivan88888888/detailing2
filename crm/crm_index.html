@@ -13,9 +13,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
   <style>
     html,
-    body {
+    body,
+    #app {
+      min-height: 100vh;
+      min-height: 100dvh;
       margin: 0;
-      background: #121316;
+      background: #17181B;
       overflow-x: clip;
     }
 
@@ -237,14 +240,14 @@
         ['orders', 'Замовлення']
       ];
       const extraTabs = [
-        ['loyalty', 'Бонуси'],
-        ['stats', 'Аналітика'],
         ['stock', 'Склад'],
-        ['price', 'Прайс']
+        ['price', 'Прайс'],
+        ['stats', 'Аналітика'],
+        ['loyalty', 'Бонуси']
       ];
       const isExtraActive = extraTabs.some(([k]) => k === tab);
 
-      app.innerHTML = `<main class="mx-auto max-w-3xl px-4 pb-28 pt-4"><div id="view"></div></main>
+      app.innerHTML = `<main class="mx-auto min-h-dvh max-w-3xl bg-canvas px-4 pb-28 pt-4"><div id="view"></div></main>
   <div id="more-backdrop" class="fixed inset-0 z-20 hidden bg-black/40"></div>
   <div id="more-menu" class="fixed right-3 z-30 hidden min-w-[12rem] rounded-2xl border border-ink/15 bg-card/95 p-1.5 shadow-2xl backdrop-blur-xl" style="bottom:calc(4rem + env(safe-area-inset-bottom))">
     ${extraTabs.map(([k, l]) => `<button data-tab="${k}" class="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-sm font-semibold ${tab === k ? 'bg-accent/15 text-accent' : 'text-ink hover:bg-white/5'}">${l}</button>`).join('')}
@@ -253,12 +256,7 @@
   </div>
   <nav class="app-nav fixed inset-x-0 bottom-0 z-20" style="padding-bottom:env(safe-area-inset-bottom)">
   ${mainTabs.map(([k, l]) => `<button data-tab="${k}" class="font-semibold ${tab === k ? 'is-active text-accent' : 'text-mist/70'}">${l}</button>`).join('')}
-  <button id="more-btn" type="button" aria-expanded="false" class="inline-flex items-center gap-1.5 font-semibold ${isExtraActive ? 'is-active text-accent' : 'text-mist/70'}">
-    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-      <path d="M3 6h14M3 10h14M3 14h14"/>
-    </svg>
-    <span>Ще</span>
-  </button></nav>`;
+  <button id="more-btn" type="button" aria-expanded="false" class="font-semibold ${isExtraActive ? 'is-active text-accent' : 'text-mist/70'}">Ще..</button></nav>`;
 
       const nextNav = document.querySelector('.app-nav');
       if (nextNav && navScrollLeft) nextNav.scrollLeft = navScrollLeft;
@@ -285,10 +283,10 @@
       $('out').onclick = async () => { closeMore(); await sb.auth.signOut(); login(); };
       ({ today: viewToday, leads: viewLeads, chat: viewChat, clients: viewClients, cal: viewCal, orders: viewOrders, price: viewPrice, stock: viewStock, stats: viewStats, loyalty: viewLoyalty })[tab]();
     }
-    function modal(html) {
+    function modal(html, opts = {}) {
       closeModal(); const d = document.createElement('div'); d.id = 'mod';
-      d.className = 'fixed inset-0 z-30 overflow-y-auto bg-black/70 p-3';
-      d.innerHTML = `<div class="mx-auto my-4 max-w-xl rounded-2xl bg-card p-5">${html}</div>`;
+      d.className = opts.wrapClass || 'fixed inset-0 z-30 overflow-y-auto bg-black/70 p-3';
+      d.innerHTML = `<div class="${opts.boxClass || 'mx-auto my-4 max-w-xl rounded-2xl bg-card p-5'}">${html}</div>`;
       d.addEventListener('click', e => { if (e.target === d) closeModal(); }); document.body.appendChild(d); return d;
     }
     const closeModal = () => { const m = $('mod'); if (m) m.remove(); };
@@ -712,9 +710,12 @@
     }
     async function openChat(c) {
       modal(`<div class="flex items-start justify-between gap-3"><div><h2 class="text-xl font-bold">${esc(c.display_name || c.username || c.external_id)}</h2><p class="text-xs text-mist/60">${CH[c.channel]}${c.username ? ' · @' + esc(c.username) : ''}</p></div><button id="x" class="text-2xl leading-none text-mist/60" aria-label="Закрити">&times;</button></div>
-  <div class="mt-3 flex flex-wrap gap-2">${c.client_id ? '<button id="oc" class="' + BTN2 + ' px-3 py-2 text-sm">Картка клієнта</button>' : '<button id="lk" class="' + BTN2 + ' px-3 py-2 text-sm">Прив\'язати до клієнта</button><button id="mk" class="' + BTN2 + ' px-3 py-2 text-sm">Створити клієнта</button>'}</div>
-  <div id="thr" class="mt-3 max-h-[45vh] space-y-2 overflow-y-auto rounded-xl bg-canvas p-3 text-sm"></div>
-  <form id="sf2" class="mt-3 flex gap-2"><textarea name="t" rows="2" required placeholder="Повідомлення…" class="${INP}"></textarea><button class="${BTN} px-4">Надіслати</button></form><p id="win" class="mt-1 text-xs text-mist/60"></p><p id="msg" class="mt-2 text-sm text-mist/80"></p>`);
+  <div class="mt-3 ${c.client_id ? 'flex flex-wrap gap-2' : 'grid grid-cols-2 gap-2'}">${c.client_id ? '<button id="oc" class="' + BTN2 + ' px-3 py-2 text-sm">Картка клієнта</button>' : '<button id="lk" class="' + BTN2 + ' whitespace-nowrap px-2.5 py-2 text-center text-sm leading-tight">Прив\'язати клієнта</button><button id="mk" class="' + BTN2 + ' whitespace-nowrap px-2.5 py-2 text-center text-sm leading-tight">Створити клієнта</button>'}</div>
+  <div id="thr" class="mt-3 max-h-[54vh] space-y-2 overflow-y-auto rounded-xl bg-canvas p-3 text-sm"></div>
+  <form id="sf2" class="mt-3 flex items-end gap-2"><textarea name="t" rows="1" required placeholder="Повідомлення…" class="${INP} min-h-[2.75rem] max-h-28 resize-none py-2.5"></textarea><button type="submit" aria-label="Надіслати" class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-canvas transition hover:brightness-110 disabled:opacity-40"><svg class="h-5 w-5 translate-x-[1px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button></form><p id="win" class="mt-1 text-xs text-mist/60"></p><p id="msg" class="mt-2 text-sm text-mist/80"></p>`, {
+        wrapClass: 'fixed inset-0 z-30 overflow-y-auto bg-black/70 p-1.5 sm:p-3',
+        boxClass: 'mx-auto my-2 max-w-2xl rounded-2xl bg-card p-3.5 sm:my-4 sm:p-5'
+      });
       $('x').onclick = closeModal;
       const load = async () => {
         if (!$('thr')) return; const { data } = await sb.from('messages').select('*').eq('conversation_id', c.id).order('created_at').limit(200), box = $('thr'), end = box.scrollTop + box.clientHeight >= box.scrollHeight - 40;
