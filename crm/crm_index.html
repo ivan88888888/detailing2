@@ -17,48 +17,39 @@
       background: #121316
     }
 
-    /* Вхід: темний екран зі світінням і нижнім "листом" із формою */
-    .login {
+.login {
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
-      flex-direction: column;
-      background: #121316
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem calc(2rem + env(safe-area-inset-bottom));
+      background: #1a1b1e;
     }
 
-    .login-hero {
+.login-hero {
       position: relative;
       height: 17vh;
       height: 17dvh;
       min-height: 110px;
-      background: linear-gradient(180deg, #17181b 0%, #17181b 35%, rgba(255, 85, 0, .5) 85%, #ff5500 100%)
+      background: #121316
     }
 
-    .login-hero::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 1px;
-      background: rgba(244, 241, 234, .6)
-    }
-
-    .login-sheet {
+.login-sheet {
       flex: 1;
       margin-top: -1px;
       padding: 1.75rem 1.5rem calc(2rem + env(safe-area-inset-bottom));
       background: #1a1b1e;
-      border: 1px solid rgba(244, 241, 234, .12);
-      border-bottom: 0;
-      border-radius: 18px 18px 0 0
+      border: 0;
+      border-radius: 18px 18px 0 0;
     }
 
-    .login-form {
+.login-form {
+      width: 100%;
       max-width: 22rem;
       margin: 0 auto;
       display: grid;
-      gap: .75rem
+      gap: .75rem;
     }
 
     .lg-title {
