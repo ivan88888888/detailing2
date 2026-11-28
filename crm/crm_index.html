@@ -205,7 +205,14 @@
     const app = document.getElementById('app');
     const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const fmt = d => d ? new Date(d).toLocaleString('uk-UA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
-    const ST = { new: 'Нова', in_progress: 'Думає', booked: 'Записаний', client: 'Став клієнтом', lost: 'Не підійшло' };
+    const ST = {
+        new: 'Нова',
+        no_answer: 'Не взяв трубку',
+        in_progress: 'Думає',
+        booked: 'Записаний',
+        client: 'Став клієнтом',
+        lost: 'Не підійшло'
+      };
     const INP = 'w-full rounded-xl border border-ink/20 bg-canvas px-4 py-3 text-base placeholder:text-mist/40 focus:border-accent focus:outline-none';
     const BTN = 'rounded-xl bg-accent px-5 py-3 font-bold text-canvas';
     const BTN2 = 'rounded-xl border border-ink/25 px-5 py-3 font-semibold';
@@ -314,7 +321,7 @@
 
     /* ===== Ліди ===== */
     async function viewLeads() {
-      $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Ліди</h1><div class="my-4 flex flex-wrap gap-2">${['new', 'in_progress', 'booked', 'client', 'lost', 'all'].map(k => `<button data-f="${k}" class="rounded-full border px-4 py-2 text-sm ${filter === k ? 'border-accent bg-accent font-bold text-canvas' : 'border-card text-mist/80'}">${ST[k] || 'Усі'}</button>`).join('')}</div><div id="list" class="space-y-2"></div>`;
+      $('view').innerHTML = `<h1 class="text-2xl font-extrabold">Ліди</h1><div class="my-4 flex flex-wrap gap-2">${['new', 'no_answer', 'in_progress', 'booked', 'client', 'lost', 'all'].map(k => `<button data-f="${k}" class="rounded-full border px-4 py-2 text-sm ${filter === k ? 'border-accent bg-accent font-bold text-canvas' : 'border-card text-mist/80'}">${ST[k] || 'Усі'}</button>`).join('')}</div><div id="list" class="space-y-2"></div>`;
       document.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { filter = b.dataset.f; viewLeads(); });
       let r = sb.from('leads').select('*').order('created_at', { ascending: false }).limit(200); if (filter !== 'all') r = r.eq('status', filter);
       const { data, error } = await r; if (error) return $('list').textContent = 'Помилка завантаження: ' + error.message;
@@ -767,7 +774,7 @@
       const [a, b] = dayRange(new Date()), today = iso(new Date()), soon = iso(new Date(Date.now() + 7 * 864e5));
       const [nl, fu, ap, rm, st] = await Promise.all([
         sb.from('leads').select('*').eq('status', 'new').order('created_at'),
-        sb.from('leads').select('*').in('status', ['in_progress', 'booked']).lte('next_contact_at', today).order('next_contact_at'),
+        sb.from('leads').select('*').in('status', ['no_answer', 'in_progress', 'booked']).lte('next_contact_at', today).order('next_contact_at'),
         sb.from('appointments').select('*, clients(name,phone,telegram,viber), cars(model)').eq('status', 'planned').gte('starts_at', a).lt('starts_at', b).order('starts_at'),
         sb.from('order_items').select('id,name,remind_at,orders(client_id,clients(id,name,phone,telegram,viber,consent_marketing))').not('remind_at', 'is', null).lte('remind_at', soon).order('remind_at'), sb.from('v_stock').select('*').eq('active', true)]);
       if (nl.error || ap.error || rm.error) return $('tb').textContent = 'Помилка завантаження.';
