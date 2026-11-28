@@ -266,7 +266,7 @@
   </div>
   <nav class="app-nav fixed inset-x-0 bottom-0 z-20" style="padding-bottom:env(safe-area-inset-bottom)">
   ${mainTabs.map(([k, l]) => `<button data-tab="${k}" class="font-semibold ${tab === k ? 'is-active text-accent' : 'text-mist/70'}">${l}</button>`).join('')}
-  <button id="more-btn" type="button" aria-expanded="false" class="font-semibold ${isExtraActive ? 'is-active text-accent' : 'text-mist/70'}">Ще..</button></nav>`;
+  <button id="more-btn" type="button" aria-expanded="false" class="font-semibold ${isExtraActive ? 'is-active text-accent' : 'text-mist/70'}">Ще</button></nav>`;
 
       const nextNav = document.querySelector('.app-nav');
       if (nextNav && navScrollLeft) nextNav.scrollLeft = navScrollLeft;
